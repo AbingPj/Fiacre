@@ -1,0 +1,17 @@
+{
+    "presets": [
+        [
+            "@babel/env",
+            {
+                "forceAllTransforms": true,
+                "targets": {
+                    "node": "current"
+                }
+            }
+        ]
+    ],
+    "sourceMaps": true,
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import"
+    ]
+}

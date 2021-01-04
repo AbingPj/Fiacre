@@ -1,0 +1,162 @@
+<style lang="scss" scoped>
+.items {
+  border: 2px solid lightgray !important;
+  .cart-items {
+    margin: 20px 0px 20px 0px;
+    padding: 20px 15px 0px 15px;
+    max-height: 500px;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    overflow-y: scroll; /* Add vertical scrollbar */
+    .cart-item {
+      padding: 10px;
+      background-color: lightgray;
+      .cart-item-image {
+        width: 85px;
+        height: 85px;
+        object-fit: cover;
+        padding: 0px;
+        margin: 0px 10px 0px 0px;
+        background-color: white;
+        margin: 0px 10px 0px 0px;
+      }
+      .cart-item-texts {
+        padding-left: 10px;
+        text-align: left;
+        // background-color: red;
+        .item-name {
+          font-size: 20px;
+        }
+        p {
+          margin-bottom: 0px;
+        }
+        .qty-options {
+          color: #339f25;
+          padding: 0px;
+          font-size: 20px;
+          .plusminus {
+            background: transparent;
+            border: 0px;
+            color: gray;
+            font-size: 20px;
+          }
+        }
+      }
+
+      .cart-item-close-container {
+        width: 20%;
+        padding: 0px;
+        position: relative;
+        #x {
+          position: absolute;
+          top: 0px;
+          right: 5px;
+          background: transparent;
+          border: 0px;
+          color: gray;
+        }
+        #sub-total {
+          //   background: white;
+          position: absolute;
+          bottom: 0px;
+          right: 5px;
+          font-size: 20px;
+          .ws {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <div class="col-lg-8 col-md-7  items">
+    <div class="row">
+      <div class="col-sm-12 cart-items">
+        <div v-if="cart.length == 0" class="text-center mt-5">
+          <h3>You Dont Have Selected Products.</h3>
+          <h5>
+            <a href="/products">Back To Products</a>
+          </h5>
+        </div>
+
+        <ul class="list-group">
+          <li
+            v-for="(item, index) in cart"
+            :key="index"
+            class="list-group-item d-flex cart-item"
+            style="margin-bottom:10px;"
+          >
+            <div>
+              <img :src="item.image_link" class="cart-item-image" />
+            </div>
+            <div class="cart-item-texts flex-grow-1">
+              <p>
+                <span class="item-name">
+                  <b>{{item.name}}</b>
+                </span>
+                <br />
+                <span v-if="customer_role == 2">$ {{item.member_price}}/{{item.unit}}</span>
+                <span v-else-if="customer_role == 3">$ {{item.wholesale_price}}/{{item.unit}}</span>
+                <span v-else>$ {{item.price}}/{{item.unit}}</span>
+                <br />
+
+                <br />
+
+                <span class="qty-options">
+                  <b>qty:</b>
+                  <button type="button" class="plusminus" @click="subQty(item)">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                  </button>
+                  <b>{{item.qty}}</b>
+                  <button type="button" class="plusminus" @click="addQty(item)">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                  </button>
+                </span>
+              </p>
+            </div>
+            <div class="cart-item-close-container ml-auto">
+              <button type="button" id="x" @click="removeItemInCart(item)">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+              <div id="sub-total" class="text-right">
+                <b v-if="customer_role == 2">$ {{displayNumber(item.member_price * item.qty)}}</b>
+                <b
+                  v-else-if="customer_role == 3"
+                >$ {{displayNumber(item.wholesale_price * item.qty)}}</b>
+                <b v-else>$ {{displayNumber(item.price * item.qty)}}</b>
+                <br />
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: ["cart", "customer_role"],
+  methods: {
+    displayNumber(value) {
+      var n = parseFloat(value).toFixed(2);
+      var withCommas = Number(n).toLocaleString("en", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      return withCommas;
+    },
+    subQty(item) {
+      this.$parent.subQty(item);
+    },
+    addQty(item) {
+      this.$parent.addQty(item);
+    },
+    removeItemInCart(item) {
+      this.$parent.removeItemInCart(item);
+    },
+  },
+};
+</script>

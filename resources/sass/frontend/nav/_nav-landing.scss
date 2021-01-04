@@ -1,0 +1,47 @@
+
+
+.nav-fixed-landing{
+    z-index:2;
+    width:100%;
+    margin-top: 1.5rem !important;
+    // position: sticky;
+    // top:0;
+    @include mobile {
+        margin-top: 0 !important;
+        // position: static;
+    }
+}
+
+
+nav.sunfarmacy-nav-landing{
+
+    // position: sticky;
+    top: 0;
+    width: 100%;
+    // top: -1.5rem;
+
+    @include mobile {
+        margin-top:  0px !important;
+    }
+       @include tablet {
+        margin-top: 0px!important;
+    }
+
+
+}
+
+// nav.sunfarmacy-nav-landing-2{
+//     margin-top: 1.5rem !important;
+//     position: fixed;
+//     margin-top:  0px !important;
+//     width: 100%;
+//     top: 0;
+
+//     @include mobile {
+//         margin-top:  0px !important;
+//     }
+//        @include tablet {
+//         margin-top: 0px!important;
+//       }
+
+// }

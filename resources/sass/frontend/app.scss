@@ -1,0 +1,17 @@
+@import "../global";
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Nunito");
+
+// Bootstrap Overrides
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/src/index.scss";
+
+// Pages
+@import "pages/dashboard";
+@import "pages/auth/register";
+@import "pages/auth/register-success";
+@import "pages/terms-of-use";
