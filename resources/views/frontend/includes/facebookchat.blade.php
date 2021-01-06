@@ -1,5 +1,5 @@
  <!-- Load Facebook SDK for JavaScript -->
- <div id="fb-root"></div>
+ {{-- <div id="fb-root"></div>
  <script>
      window.fbAsyncInit = function() {
          FB.init({
@@ -23,4 +23,4 @@
      attribution=setup_tool
      page_id="184422341637617"
      theme_color="#88c43a">
- </div>
+ </div> --}}
