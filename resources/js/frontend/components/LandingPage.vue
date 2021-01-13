@@ -71,17 +71,11 @@
           <b-nav-text class="text-color border-right p-3">Term of Sale & Return Policy</b-nav-text>
         </a>
         <a href="/privacy-policy">
-          <b-nav-text class="text-color border-right p-3">Privacy Policy</b-nav-text>
+          <b-nav-text class="text-color p-3">Privacy Policy</b-nav-text>
         </a>
-        <b-nav-text class="text-color p-3">
-          Follow us on: &nbsp;
-          <i class="mr-2 fab fa-facebook"></i>
-          <i class="mr-2 fab fa-instagram"></i>
-          <i class="mr-2 fab fa-twitter"></i>
-        </b-nav-text>
       </b-nav>
       <b-nav justified align="center" class="bg-transparent">
-        <b-nav-text class="text-secondary p-3 mr-3">© 2020 Copyright, sunfarmacy.com</b-nav-text>
+        <b-nav-text class="text-secondary p-3 mr-3">© 2021 Copyright, fiacrefoods.com</b-nav-text>
       </b-nav>
     </div>
   </div>
