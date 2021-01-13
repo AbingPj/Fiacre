@@ -96,6 +96,7 @@ require __DIR__ . '/auth.php';
 require __DIR__ . '/log-viewer.php';
 require __DIR__ . '/products.php';
 require __DIR__ . '/orders.php';
+require __DIR__ . '/organization.php';
 require __DIR__ . '/customers.php';
 require __DIR__ . '/sales-report.php';
 require __DIR__ . '/reports-order-by-customer.php';

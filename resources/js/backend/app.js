@@ -76,6 +76,15 @@ const OrderShow =
     () => import(/* webpackChunkName: "js/b/OrderShow" */ './components/orders/show.vue');
 
 
+
+const Organization =
+    () => import(/* webpackChunkName: "js/b/Order" */ './components/organization/index.vue');
+const OrganizationShow =
+    () => import(/* webpackChunkName: "js/b/OrderShow" */ './components/organization/show.vue');
+const OrganizationAdd =
+    () => import(/* webpackChunkName: "js/b/OrderShow" */ './components/organization/add.vue');
+
+
 // customers
 // Vue.component("admin-customers-page", require("./components/customers/index.vue").default);
 // Vue.component("admin-customers-show-page", require("./components/customers/show.vue").default);
@@ -334,6 +343,10 @@ const adminVueApp = new Vue({
         'admin-pickup-zones-edit': ZonPickEdit,
         'admin-referrals-coupon': Referrals,
         'admin-prmotions': Promotions,
+        'admin-organization': Organization,
+        'admin-organization-show': OrganizationShow,
+        'admin-organization-add': OrganizationAdd,
+
 
     }
 });
