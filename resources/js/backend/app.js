@@ -78,11 +78,13 @@ const OrderShow =
 
 
 const Organization =
-    () => import(/* webpackChunkName: "js/b/Order" */ './components/organization/index.vue');
+    () => import(/* webpackChunkName: "js/b/Org" */ './components/organization/index.vue');
 const OrganizationShow =
-    () => import(/* webpackChunkName: "js/b/OrderShow" */ './components/organization/show.vue');
+    () => import(/* webpackChunkName: "js/b/OrgShow" */ './components/organization/show.vue');
 const OrganizationAdd =
-    () => import(/* webpackChunkName: "js/b/OrderShow" */ './components/organization/add.vue');
+    () => import(/* webpackChunkName: "js/b/OrgAdd" */ './components/organization/add.vue');
+const OrganizationUpdate =
+    () => import(/* webpackChunkName: "js/b/OrgUpdate" */ './components/organization/update.vue');
 
 
 // customers
@@ -346,6 +348,7 @@ const adminVueApp = new Vue({
         'admin-organization': Organization,
         'admin-organization-show': OrganizationShow,
         'admin-organization-add': OrganizationAdd,
+        'admin-organization-update': OrganizationUpdate,
 
 
     }
