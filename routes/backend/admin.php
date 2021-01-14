@@ -58,6 +58,8 @@ Route::group(['prefix' => 'orders/{order_id}'], function () {
 Route::get('organization', [OrganizationController::class, 'index'])->name('organization.index');
 Route::get('organization/show', [OrganizationController::class, 'show'])->name('organization.show');
 Route::get('organization/add', [OrganizationController::class, 'add'])->name('organization.add');
+Route::get('api/getOrganization', [OrganizationController::class, 'getOrganization'])->name('organization.getOrganization');
+Route::post('api/addOrganization', [OrganizationController::class, 'addOrganization'])->name('organization.addOrganization');
 
 
 //Categories
