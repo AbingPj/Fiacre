@@ -14,7 +14,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light sunfarm">
     <div class="container">
         <a id="navbrand" href="{{ route('frontend.index') }}" class="navbar-brand sunfarm-navbrand">
-            <img id="navbrand-image" src="{{ asset($store_settings->image_path) }}" class="sunfarm-navbrand-image" />
+            <img id="navbrand-image" src="{{ asset($store_settings->image_link) }}" class="sunfarm-navbrand-image" />
         </a>
 
         <button class="navbar-toggler navbar-toggler-right sunfarm-togggler-config" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="@lang('labels.general.toggle_navigation')">
