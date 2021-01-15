@@ -4,7 +4,7 @@
 <?php
 
 Breadcrumbs::for('admin.organization.index', function ($trail) {
-    $trail->push('Organization', route('admin.orders.index'));
+    $trail->push('Organization', route('admin.organization.index'));
 });
 
 Breadcrumbs::for('admin.organization.add', function ($trail) {
@@ -12,10 +12,10 @@ Breadcrumbs::for('admin.organization.add', function ($trail) {
     $trail->push(__('Add New Organization'), route('admin.organization.add'));
 });
 
-// Breadcrumbs::for('admin.organization.show', function ($trail,$id) {
-//     $trail->parent('admin.orders.index');
-//     $trail->push('Order No. '.$id, route('admin.orders.show',$id));
-// });
+Breadcrumbs::for('admin.organization.show', function ($trail,$org_id) {
+    $trail->parent('admin.organization.index');
+    $trail->push('Organization id: . '.$org_id, route('admin.organization.show',$org_id));
+});
 
 
 

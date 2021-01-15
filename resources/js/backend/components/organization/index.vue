@@ -11,13 +11,9 @@
 						<i class="fas fa-plus-square mr-2"></i> Add New Organization
 					</button>
 				</h3>
-				<br />
 			</div>
 			<div class="col-md-6"></div>
 		</div>
-		<br />
-		<br />
-
 		<div
 			class="row mt-4"
 			style="font-family: Source Sans Pro, sans-serif !important"
@@ -29,6 +25,8 @@
 							<!-- <th scope="col">#</th> -->
 							<th>Organization Name</th>
 							<th>Type</th>
+                            <th>OptionC Id</th>
+                            <th>Contact Person</th>
 							<th>Status</th>
 							<th>Actions</th>
 						</tr>
@@ -43,32 +41,33 @@
 								>
 							</td>
 							<td>
-								{{ item.org_type }}
+								{{ item.atr_type_label }}
+							</td>
+                            <td>
+								{{ item.org_optionc_id }}
+							</td>
+                            <td>
+								{{ item.atr_contact_person }}
 							</td>
 							<td>
-								{{ item.org_status }}
+								{{ item.atr_active_label }}
 							</td>
 
 							<td>
 								<button
-									:disabled="item.customer_role == 1"
 									type="button"
-									@click="viewCustomer('/admin/customers/' + item.id)"
+									@click="viewOrganization(item)"
 									class="btn btn-sm btn-info"
 								>
-									<i class="far fa-eye mr-2"></i>View Profile
+									<i class="far fa-eye mr-2"></i>View More
 								</button>
-								<!-- <button type="button" @click="viewCustomer('/admin/customers/'+item.id)" class="btn btn-sm btn-info"> <i class="far fa-eye mr-2"></i>View Profile</button> -->
-								<a
-									:href="
-										'/admin/reports/orders-by-customers/' +
-										item.id +
-										'/' +
-										item.full_name
-									"
-									class="btn btn-sm btn-success"
-									>Orders</a
+                                <button
+									type="button"
+									@click="deleteOrganization(item)"
+									class="btn btn-sm btn-danger"
 								>
+								    <i class="fas fa-trash mr-2"></i>Delete
+								</button>
 							</td>
 							<!-- <td>
                     <span v-for="(sub, index2) in item.sub_categories" :key="index2">{{sub.name}},</span>
@@ -113,6 +112,12 @@
 			this.getOrganization();
 		},
 		methods: {
+            viewOrganization(data){
+                window.location.href= `/admin/organization/show/${data.id}`;
+            },
+            deleteOrganization(){
+
+            },
 			prepareDataTable() {
 				$(document).ready(function () {
 					$("#customers-table").DataTable({

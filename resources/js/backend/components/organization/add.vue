@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<h2 class="card-title mb-0">
-					<i class="fas fa-sitemap"></i> Add New Organization
+					<i class="fas fa-sitemap mr-3"></i> Add New Organization
 				</h2>
 			</div>
 			<div class="col-md-6"></div>
@@ -25,7 +25,7 @@
 					/>
 				</div>
 				<div class="form-group">
-					<label for="name">Email</label>
+					<label for="name">Email (must be unique)</label>
 					<input
 						v-model="org.email"
 						id="email"
@@ -47,20 +47,222 @@
 				</div>
 				<div class="form-group">
 					<label for="name">Organization Type</label>
+					<br />
+					<div class="custom-control custom-radio custom-control-inline">
+						<input
+							type="radio"
+							id="customRadioInline1"
+							name="customRadioInline1"
+							class="custom-control-input"
+							value="1"
+							v-model="org.type"
+						/>
+						<label class="custom-control-label" for="customRadioInline1"
+							>Parish/Church</label
+						>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input
+							type="radio"
+							id="customRadioInline2"
+							name="customRadioInline1"
+							class="custom-control-input"
+							value="2"
+							v-model="org.type"
+						/>
+						<label class="custom-control-label" for="customRadioInline2"
+							>School</label
+						>
+					</div>
+				</div>
+				<div class="mt-5 mb-1">
+					<h4>Address</h4>
+				</div>
+				<div class="form-group">
+					<label for="name">Street</label>
 					<input
-						v-model="org.type"
+						v-model="org.street"
 						id="type"
 						name="type"
 						class="form-control rounded-0"
-						type="number"
+						type="text"
+					/>
+				</div>
+				<div class="form-group">
+					<label for="name">Town/County/City</label>
+					<v-select
+						@search="fetchOptions"
+						v-model="org.cityprov"
+						:options="cities"
+						:multiple="false"
+						:disabled="false"
+						:clearable="true"
+						:searchable="true"
+						:filterable="true"
+						:taggable="true"
+						:no-drop="false"
+						:push-tags="true"
+						:select-on-tab="true"
+					></v-select>
+				</div>
+				<div class="form-group">
+					<label for="name">State</label>
+					<v-select
+						label="name"
+						v-model="org.state"
+						:reduce="(state) => state.id"
+						:options="states"
+						:clearable="false"
+					></v-select>
+				</div>
+				<div class="form-group">
+					<label for="name">Zipcode</label>
+					<input
+						v-model="org.zipcode"
+						class="form-control rounded-0"
+						type="text"
+					/>
+				</div>
+				<div class="mt-5 mb-1">
+					<h4>Contact Numbers</h4>
+				</div>
+				<div class="form-group">
+					<label for="name">Landline</label>
+					<vue-phone-number-input
+						@update="onUpdate"
+						:default-country-code="defaultCountry"
+						no-country-selector
+						:error="results.isValid == false"
+						v-model="org.contact_land"
+						:class="'rounded-0'"
+						:translations="{
+							phoneNumberLabel: 'Landline Number',
+						}"
+					>
+					</vue-phone-number-input>
+
+					<label
+						class="text-light"
+						:class="results.isValid == false ? 'd-none' : 'd-block'"
+						>.</label
+					>
+					<label
+						class="text-danger"
+						:class="results.isValid != false ? 'd-none' : 'd-block'"
+						>Contact Number is not valid in US.</label
+					>
+				</div>
+				<div class="form-group">
+					<label for="name">Mobile</label>
+					<vue-phone-number-input
+						@update="onUpdate2"
+						:default-country-code="defaultCountry"
+						no-country-selector
+						:error="results2.isValid == false"
+						v-model="org.contact_mobile"
+					>
+					</vue-phone-number-input>
+					<label
+						class="text-light"
+						:class="results2.isValid == false ? 'd-none' : 'd-block'"
+						>.</label
+					>
+					<label
+						class="text-danger"
+						:class="results2.isValid != false ? 'd-none' : 'd-block'"
+						>Contact Number is not valid in US.</label
+					>
+				</div>
+
+				<div class="mt-5 mb-1">
+					<h4>Contact Person</h4>
+				</div>
+
+				<div class="form-group">
+					<label for="name">Title</label>
+					<input
+						v-model="org.contact_title"
+						class="form-control rounded-0"
+						type="text"
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="name">First Name</label>
+					<input
+						v-model="org.contact_fname"
+						class="form-control rounded-0"
+						type="text"
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="name">Last Name</label>
+					<input
+						v-model="org.contact_lname"
+						class="form-control rounded-0"
+						type="text"
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="name">Suffix</label>
+					<input
+						v-model="org.contact_suffix"
+						class="form-control rounded-0"
+						type="text"
+					/>
+				</div>
+
+				<div class="mt-5 mb-1">
+					<h4>Others</h4>
+				</div>
+
+				<div class="form-group">
+					<label for="name">Diocese</label>
+					<input
+						v-model="org.diocese"
+						class="form-control rounded-0"
+						type="text"
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="name">Website</label>
+					<input
+						v-model="org.website"
+						class="form-control rounded-0"
+						type="text"
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="exampleFormControlFile1">Logo</label>
+					<input
+						type="file"
+						class="form-control-file"
+						id="exampleFormControlFile1"
+						accept="image/png, image/jpeg, image/jpg"
+						@change="onFileChange"
+					/>
+					<img
+						v-if="LogoPreview"
+						:src="LogoPreview"
+						alt=""
+						style="width: 150px; height: 110px"
+						class="mt-1 mb-3"
 					/>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-sm-12">
-				<button class="mr-2 btn btn-success-2 rounded-0" @click="addOrganization()">
-					<i class="fas fa-save"></i> Save
+			<div class="col-md-7">
+				<hr />
+				<button
+					class="mr-2 btn btn-success-1 rounded-0 float-right"
+					@click="addOrganization()"
+				>
+					<i class="fas fa-save mr-3"></i> Save
 				</button>
 			</div>
 		</div>
@@ -75,12 +277,12 @@
 					name: "",
 					email: "",
 					optionc_id: "",
-					type: "",
+					type: "1",
 					lat: "",
 					lng: "",
-					state: "",
-					cityprov: "",
 					street: "",
+					cityprov: "",
+					state: "",
 					zipcode: "",
 					contact_land: "",
 					contact_mobile: "",
@@ -92,28 +294,72 @@
 					website: "",
 					logo: "",
 				},
+				states: [],
+				cities: [],
+				LogoPreview: null,
+				defaultCountry: "US",
+				results: {},
+				results2: {},
 			};
 		},
 
-		mounted() {
-			$(document).ready(function () {
-				$("#customers-table").DataTable({
-					lengthMenu: [
-						[10, 25, 50, -1],
-						[10, 25, 50, "All"],
-					],
-					iDisplayLength: -1,
-				});
-			});
+		created() {
+			this.getStates();
 		},
-		created() {},
+
 		methods: {
+			onUpdate(payload) {
+				this.results = payload;
+			},
+			onUpdate2(payload) {
+				this.results2 = payload;
+			},
+			onFileChange(e) {
+				//   console.log(e);
+				const file = e.target.files[0];
+				this.org.logo = file;
+				this.LogoPreview = URL.createObjectURL(file);
+			},
+			getStates() {
+				axios
+					.get("/states")
+					.then((res) => {
+						this.states = res.data;
+					})
+					.catch((err) => {
+						console.error(err);
+					});
+			},
+			fetchOptions(search, loading) {
+				if (this.timer) {
+					clearTimeout(this.timer);
+					this.timer = null;
+				}
+
+				this.timer = setTimeout(() => {
+					this.getCities(search);
+				}, 300);
+			},
+
+			async getCities(searching = null) {
+				let param;
+				param = {
+					search: searching,
+				};
+				await axios({
+					method: "get",
+					url: "/data/searchcities",
+					params: param,
+				}).then((res) => {
+					this.cities = res.data;
+				});
+			},
+
 			addOrganization() {
-                let formBody = new FormData();
-                formBody.append('name', this.org.name);
-                formBody.append('email', this.org.email);
-                formBody.append('optionc_id', this.org.optionc_id);
-                formBody.append('', this.org.optionc_id);
+				var formBody = new FormData();
+				for (var key in this.org) {
+					formBody.append(key, this.org[key]);
+				}
 				axios
 					.post(`/admin/api/addOrganization`, formBody)
 					.then((res) => {
@@ -145,20 +391,28 @@
 	};
 </script>
 
+<style>
+	.vs__dropdown-toggle {
+		border-radius: 0 !important;
+	}
+	.vs__search {
+		line-height: 1.5;
+	}
+</style>
 
 <style lang="scss" scoped>
 	.form-group {
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
-	.form-control {
-		//   background: #f0f3f5;
-	}
+
 	.input-group-text {
 		background: #d9dfe2;
 	}
+
 	.text-success {
 		color: #339f25 !important;
 	}
+
 	.btn-success-1 {
 		color: #fff !important;
 		background-color: #339f25 !important;
@@ -168,6 +422,7 @@
 	.btn-upload {
 		//   line-height: 5;
 		margin-right: 10px;
+
 		i {
 			font-size: 50px;
 		}
@@ -180,6 +435,7 @@
 
 		border-color: rgb(51, 159, 37, 0.5) !important;
 	}
+
 	#preview {
 		img {
 			width: 110px;

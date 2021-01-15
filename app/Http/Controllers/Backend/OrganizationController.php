@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class OrganizationController extends Controller
 {
@@ -18,9 +19,15 @@ class OrganizationController extends Controller
     {
         return view('backend.organization.index');
     }
-    public function show()
+    public function show($org_id)
     {
-        return view('backend.organization.show');
+        $org = Organization::findOrFail($org_id);
+        return view('backend.organization.show', compact('org'));
+    }
+    public function getOrganizationInfo($org_id)
+    {
+        $org = Organization::findOrFail($org_id);
+        return response()->json($org, 200);
     }
     public function add()
     {

@@ -24,6 +24,13 @@ Vue.use(VueEvents)
 import JsonExcel from "vue-json-excel";
 Vue.component("downloadExcel", JsonExcel);
 
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+import 'vue-select/dist/vue-select.css';
+
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 
 // import wysiwyg from "vue-wysiwyg";
 // Vue.use(wysiwyg, {
