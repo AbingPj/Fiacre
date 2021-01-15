@@ -54,7 +54,7 @@ class Store extends Model
                 $photo = url('storage/' . $implode_path);
             }
         } else {
-            $photo = "/img/no-product-image.png";
+            $photo = "";
         }
 
         return $photo;
