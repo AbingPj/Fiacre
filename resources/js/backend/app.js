@@ -24,6 +24,13 @@ Vue.use(VueEvents)
 import JsonExcel from "vue-json-excel";
 Vue.component("downloadExcel", JsonExcel);
 
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+import 'vue-select/dist/vue-select.css';
+
+import VuePhoneNumberInput from 'vue-phone-number-input';
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 
 // import wysiwyg from "vue-wysiwyg";
 // Vue.use(wysiwyg, {
@@ -74,6 +81,17 @@ const Order =
     () => import(/* webpackChunkName: "js/b/Order" */ './components/orders/index.vue');
 const OrderShow =
     () => import(/* webpackChunkName: "js/b/OrderShow" */ './components/orders/show.vue');
+
+
+
+const Organization =
+    () => import(/* webpackChunkName: "js/b/Org" */ './components/organization/index.vue');
+const OrganizationShow =
+    () => import(/* webpackChunkName: "js/b/OrgShow" */ './components/organization/show.vue');
+const OrganizationAdd =
+    () => import(/* webpackChunkName: "js/b/OrgAdd" */ './components/organization/add.vue');
+const OrganizationUpdate =
+    () => import(/* webpackChunkName: "js/b/OrgUpdate" */ './components/organization/update.vue');
 
 
 // customers
@@ -334,6 +352,11 @@ const adminVueApp = new Vue({
         'admin-pickup-zones-edit': ZonPickEdit,
         'admin-referrals-coupon': Referrals,
         'admin-prmotions': Promotions,
+        'admin-organization': Organization,
+        'admin-organization-show': OrganizationShow,
+        'admin-organization-add': OrganizationAdd,
+        'admin-organization-update': OrganizationUpdate,
+
 
     }
 });

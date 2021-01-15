@@ -15,6 +15,7 @@ use App\Http\Controllers\Backend\SalesReportController;
 use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\DeliveryPickUpZoneController;
 use App\Http\Controllers\Backend\PromotionsController;
+use App\Http\Controllers\Backend\OrganizationController;
 
 // All route names are prefixed with 'admin.'.
 Route::redirect('/', '/admin/dashboard', 301);
@@ -51,6 +52,16 @@ Route::group(['prefix' => 'orders/{order_id}'], function () {
     // Order Products
     Route::get('/', [OrdersController::class, 'show'])->name('orders.show');
 });
+
+
+//Organization
+Route::get('organization', [OrganizationController::class, 'index'])->name('organization.index');
+Route::get('organization/show/{org_id}', [OrganizationController::class, 'show'])->name('organization.show');
+Route::get('organization/add', [OrganizationController::class, 'add'])->name('organization.add');
+Route::get('api/getOrganization', [OrganizationController::class, 'getOrganization'])->name('organization.getOrganization');
+Route::post('api/addOrganization', [OrganizationController::class, 'addOrganization'])->name('organization.addOrganization');
+Route::post('api/updateOrganization', [OrganizationController::class, 'updateOrganization'])->name('organization.updateOrganization');
+Route::post('api/getOrganizationInfo/{org_id}', [OrganizationController::class, 'getOrganizationInfo'])->name('organization.getOrganizationInfo');
 
 
 //Categories
