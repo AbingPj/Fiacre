@@ -12,10 +12,10 @@ class AddAdminSeeder extends Seeder
         $this->disableForeignKeys();
 
         $user =  User::create([
-            'first_name' => 'Super Sun',
+            'first_name' => 'Fiacre',
             'last_name' => 'Admin',
-            'email' => 'admin@sunfarmacy.com',
-            'password' => 'secret',
+            'email' => 'admin@fiacrefoods.com',
+            'password' => 'password@secret',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
             'is_billing_updated' => 1,
