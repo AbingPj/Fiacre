@@ -81,6 +81,7 @@
         "vue-programmatic-invisible-google-recaptcha": "^2.1.3",
         "vue-quick-chat": "^1.2.5",
         "vue-select": "^3.10.8",
-        "vue-wysiwyg": "^1.7.2"
+        "vue-wysiwyg": "^1.7.2",
+        "vue2-google-maps": "^0.10.7"
     }
 }

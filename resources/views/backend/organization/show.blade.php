@@ -4,6 +4,7 @@
 @section('title', app_name() . ' | Orders')
 
 @section('content')
+<admin-messages></admin-messages>
 <div class="card">
     <div class="card-body">
         {{-- <admin-orders-show-page
@@ -13,7 +14,7 @@
             action="{{route('admin.orders.details.save')}}"
         ></admin-orders-show-page> --}}
 
-        <admin-organization-show></admin-organization-show>
+        <admin-organization-show :propsorg="{{json_encode($org)}}"></admin-organization-show>
 
     </div>
 </div>
