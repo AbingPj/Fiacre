@@ -16,7 +16,7 @@
 				<div class="form-group">
 					<label for="name">Organization Name (Parish/School)</label>
 					<input
-						v-model="org.name"
+						v-model="org.org_name"
 						id="name"
 						name="name"
 						class="form-control rounded-0"
@@ -27,23 +27,24 @@
 				<div class="form-group">
 					<label for="name">Email (must be unique)</label>
 					<input
-						v-model="email"
+						v-model="org.org_email"
 						id="email"
 						name="email"
 						class="form-control rounded-0"
 						type="email"
 						placeholder="example@gmail.com"
-                        readonly
+						readonly
 					/>
 				</div>
 				<div class="form-group">
 					<label for="name">OptionC ID</label>
 					<input
-						v-model="org.optionc_id"
+						v-model="org.org_optionc_id"
 						id="optionc_id"
 						name="optionc_id"
 						class="form-control rounded-0"
-						type="number"
+						type="text"
+                        @keypress="onlyNumber"
 					/>
 				</div>
 				<div class="form-group">
@@ -56,7 +57,7 @@
 							name="customRadioInline1"
 							class="custom-control-input"
 							value="1"
-							v-model="org.type"
+							v-model="org.org_type"
 						/>
 						<label class="custom-control-label" for="customRadioInline1"
 							>Parish/Church</label
@@ -69,7 +70,7 @@
 							name="customRadioInline1"
 							class="custom-control-input"
 							value="2"
-							v-model="org.type"
+							v-model="org.org_type"
 						/>
 						<label class="custom-control-label" for="customRadioInline2"
 							>School</label
@@ -82,7 +83,7 @@
 				<div class="form-group">
 					<label for="name">Street</label>
 					<input
-						v-model="org.street"
+						v-model="org.org_street"
 						id="type"
 						name="type"
 						class="form-control rounded-0"
@@ -93,7 +94,7 @@
 					<label for="name">Town/County/City</label>
 					<v-select
 						@search="fetchOptions"
-						v-model="org.cityprov"
+						v-model="org.org_cityprov"
 						:options="cities"
 						:multiple="false"
 						:disabled="false"
@@ -108,21 +109,64 @@
 				</div>
 				<div class="form-group">
 					<label for="name">State</label>
-					<v-select
+					<!-- <v-select
 						label="name"
-						v-model="org.state"
+						v-model="org.org_state"
 						:reduce="(state) => state.id"
 						:options="states"
 						:clearable="false"
-					></v-select>
+					></v-select> -->
+					<region-select
+						v-model="org.org_state"
+						country="United States"
+						className="form-control rounded-0"
+						:countryName="true"
+						:regionName="true"
+						:region="org.org_state"
+						placeholder="Select State"
+					/>
 				</div>
 				<div class="form-group">
 					<label for="name">Zipcode</label>
 					<input
-						v-model="org.zipcode"
+						v-model="org.org_zipcode"
 						class="form-control rounded-0"
 						type="text"
 					/>
+				</div>
+				<div class="form-group">
+					<label for="name"
+						>Map Location <span class="text-danger">*</span></label
+					>
+					<div class="row">
+						<div class="col-4">
+							<input
+								v-model="org.org_lat"
+								class="form-control rounded-0"
+								placeholder="Latitude"
+								type="text"
+								readonly
+							/>
+						</div>
+						<div class="col-4">
+							<input
+								v-model="org.org_lng"
+								class="form-control rounded-0"
+								placeholder="Longitude"
+								type="text"
+								readonly
+							/>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-info" @click="openMap()">
+								<i class="fas fa-map-marker-alt mr-2"></i> Set Map
+								Location
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="mt-3">
+					<OrgMap ref="refOrgMap"></OrgMap>
 				</div>
 				<div class="mt-5 mb-1">
 					<h4>Contact Numbers</h4>
@@ -134,7 +178,7 @@
 						:default-country-code="defaultCountry"
 						no-country-selector
 						:error="results.isValid == false"
-						v-model="org.contact_land"
+						v-model="org.org_contact_land"
 						:class="'rounded-0'"
 						:translations="{
 							phoneNumberLabel: 'Landline Number',
@@ -160,7 +204,7 @@
 						:default-country-code="defaultCountry"
 						no-country-selector
 						:error="results2.isValid == false"
-						v-model="org.contact_mobile"
+						v-model="org.org_contact_mobile"
 					>
 					</vue-phone-number-input>
 					<label
@@ -182,7 +226,7 @@
 				<div class="form-group">
 					<label for="name">Title</label>
 					<input
-						v-model="org.contact_title"
+						v-model="org.org_contact_title"
 						class="form-control rounded-0"
 						type="text"
 					/>
@@ -191,7 +235,7 @@
 				<div class="form-group">
 					<label for="name">First Name</label>
 					<input
-						v-model="org.contact_fname"
+						v-model="org.org_contact_fname"
 						class="form-control rounded-0"
 						type="text"
 					/>
@@ -200,7 +244,7 @@
 				<div class="form-group">
 					<label for="name">Last Name</label>
 					<input
-						v-model="org.contact_lname"
+						v-model="org.org_contact_lname"
 						class="form-control rounded-0"
 						type="text"
 					/>
@@ -209,7 +253,7 @@
 				<div class="form-group">
 					<label for="name">Suffix</label>
 					<input
-						v-model="org.contact_suffix"
+						v-model="org.org_contact_suffix"
 						class="form-control rounded-0"
 						type="text"
 					/>
@@ -222,7 +266,7 @@
 				<div class="form-group">
 					<label for="name">Diocese</label>
 					<input
-						v-model="org.diocese"
+						v-model="org.org_diocese"
 						class="form-control rounded-0"
 						type="text"
 					/>
@@ -231,7 +275,7 @@
 				<div class="form-group">
 					<label for="name">Website</label>
 					<input
-						v-model="org.website"
+						v-model="org.org_website"
 						class="form-control rounded-0"
 						type="text"
 					/>
@@ -260,7 +304,7 @@
 			<div class="col-md-7">
 				<hr />
 				<button
-					class="mr-2 btn btn-success-1 rounded-0 float-right"
+					class="mr-2 btn btn-info rounded-0 float-right"
 					@click="updateOrganization()"
 				>
 					<i class="fas fa-save mr-3"></i> Save Changes
@@ -271,46 +315,64 @@
 </template>
 
 <script>
+	import OrgMap from "./map3.vue";
+	import Errors from "../../errorClass";
 	export default {
-        props:['organization'],
+		components: {
+			OrgMap: OrgMap,
+		},
+		props: ["propsorg"],
 		data() {
 			return {
-                email: "",
-				org: {
-                    org_id: "",
-					name: "",
-					optionc_id: "",
-					type: "1",
-					lat: "",
-					lng: "",
-					street: "",
-					cityprov: "",
-					state: "",
-					zipcode: "",
-					contact_land: "",
-					contact_mobile: "",
-					contact_title: "",
-					contact_fname: "",
-					contact_lname: "",
-					contact_suffix: "",
-					diocese: "",
-					website: "",
-					logo: "",
-				},
+				email: "",
+				org: {},
+				image_file: null,
 				states: [],
 				cities: [],
 				LogoPreview: null,
 				defaultCountry: "US",
 				results: {},
 				results2: {},
+				errors: new Errors(),
 			};
 		},
 
 		created() {
+			this.LogoPreview = this.propsorg.atr_logo_link;
+			this.org = this.propsorg;
 			this.getStates();
+		},
+		mounted() {
+			setTimeout(() => {
+				var marker = {
+					lat: Number(this.propsorg.org_lat),
+					lng: Number(this.propsorg.org_lng),
+				};
+				this.$refs.refOrgMap.MarkerLocation = marker;
+				this.$refs.refOrgMap.center = marker;
+			}, 1000);
 		},
 
 		methods: {
+			onlyNumber($event) {
+				//console.log($event.keyCode); //keyCodes value
+				let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+				if (keyCode < 48 || keyCode > 57) {
+					// 46 is dot
+					$event.preventDefault();
+				}
+			},
+			openMap() {
+				var address =
+					this.org.org_street +
+					", " +
+					this.org.org_cityprov +
+					", " +
+					this.org.org_state +
+					", " +
+					this.org.org_zipcode;
+				this.$refs.refOrgMap.geocoding(address);
+			},
 			onUpdate(payload) {
 				this.results = payload;
 			},
@@ -320,7 +382,7 @@
 			onFileChange(e) {
 				//   console.log(e);
 				const file = e.target.files[0];
-				this.org.logo = file;
+				this.image_file = file;
 				this.LogoPreview = URL.createObjectURL(file);
 			},
 			getStates() {
@@ -358,37 +420,36 @@
 				});
 			},
 
-			addOrganization() {
-				var formBody = new FormData();
-				for (var key in this.org) {
-					formBody.append(key, this.org[key]);
-				}
-				axios
-					.post(`/admin/api/addOrganization`, formBody)
-					.then((res) => {
-						alert("success");
-					})
-					.catch((err) => {
-						console.error(err);
-						alert("Something went wrong");
-					});
-            },
-
-
 			updateOrganization() {
 				var formBody = new FormData();
 				for (var key in this.org) {
-					formBody.append(key, this.org[key]);
+					if (this.org[key] !== null) {
+						formBody.append(key, this.org[key]);
+					}
 				}
+				if (this.image_file) {
+					formBody.append("image_file", this.image_file);
+				}
+
 				axios
-					.post(`/admin/api/updateOrganization`, formBody)
+					.post(`/admin/api/updateOrganization`, formBody, {
+						headers: { "Content-Type": "multipart/form-data" },
+					})
 					.then((res) => {
-						alert("success");
+						window.location.href = "/admin/organization";
 					})
 					.catch((err) => {
 						console.error(err);
-						alert("Something went wrong");
+						if (err.response) {
+							this.errors.record(err.response.data.errors);
+							this.showErrorMessage(this.errors.getArrayOfMessages());
+							window.scrollTo(0, 0);
+						}
 					});
+			},
+			showErrorMessage(errors) {
+				//   console.log(shit);
+				this.$events.fire("showErrorMessage", errors);
 			},
 		},
 		computed: {

@@ -14,7 +14,10 @@
 		>
 			<div class="col-md-7">
 				<div class="form-group">
-					<label for="name">Organization Name (Parish/School)</label>
+					<label for="name"
+						>Organization Name (Parish/School)
+						<span class="text-danger font-weight-bold">*</span>
+					</label>
 					<input
 						v-model="org.name"
 						id="name"
@@ -25,7 +28,10 @@
 					/>
 				</div>
 				<div class="form-group">
-					<label for="name">Email (must be unique)</label>
+					<label for="name"
+						>Email (must be unique)
+						<span class="text-danger">*</span></label
+					>
 					<input
 						v-model="org.email"
 						id="email"
@@ -42,7 +48,8 @@
 						id="optionc_id"
 						name="optionc_id"
 						class="form-control rounded-0"
-						type="number"
+						type="text"
+						@keypress="onlyNumber"
 					/>
 				</div>
 				<div class="form-group">
@@ -79,7 +86,9 @@
 					<h4>Address</h4>
 				</div>
 				<div class="form-group">
-					<label for="name">Street</label>
+					<label for="name"
+						>Street <span class="text-danger">*</span></label
+					>
 					<input
 						v-model="org.street"
 						id="type"
@@ -89,7 +98,9 @@
 					/>
 				</div>
 				<div class="form-group">
-					<label for="name">Town/County/City</label>
+					<label for="name"
+						>Town/County/City <span class="text-danger">*</span></label
+					>
 					<v-select
 						@search="fetchOptions"
 						v-model="org.cityprov"
@@ -106,23 +117,71 @@
 					></v-select>
 				</div>
 				<div class="form-group">
-					<label for="name">State</label>
-					<v-select
+					<label for="name"
+						>State <span class="text-danger">*</span></label
+					>
+					<!-- <v-select
 						label="name"
 						v-model="org.state"
 						:reduce="(state) => state.id"
 						:options="states"
 						:clearable="false"
-					></v-select>
+					></v-select> -->
+					<region-select
+						v-model="org.state"
+						country="United States"
+						className="form-control rounded-0"
+						:countryName="true"
+						:regionName="true"
+						:region="org.state"
+						placeholder="Select State"
+					/>
 				</div>
 				<div class="form-group">
-					<label for="name">Zipcode</label>
+					<label for="name"
+						>Zipcode <span class="text-danger">*</span></label
+					>
 					<input
 						v-model="org.zipcode"
 						class="form-control rounded-0"
 						type="text"
 					/>
 				</div>
+				<div class="form-group">
+					<label for="name"
+						>Map Location <span class="text-danger">*</span></label
+					>
+					<div class="row">
+						<div class="col-4">
+							<input
+								v-model="org.lat"
+								class="form-control rounded-0"
+								placeholder="Latitude"
+								type="text"
+								readonly
+							/>
+						</div>
+						<div class="col-4">
+							<input
+								v-model="org.lng"
+								class="form-control rounded-0"
+								placeholder="Longitude"
+								type="text"
+								readonly
+							/>
+						</div>
+						<div class="col-4">
+							<button class="btn btn-info" @click="openMap()">
+								<i class="fas fa-map-marker-alt mr-2"></i> Set Map
+								Location
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="mt-3">
+					<OrgMap ref="refOrgMap"></OrgMap>
+				</div>
+
 				<div class="mt-5 mb-1">
 					<h4>Contact Numbers</h4>
 				</div>
@@ -270,7 +329,18 @@
 </template>
 
 <script>
+	//   const OrgMap = () =>
+	//   import(
+	//     /* webpackChunkName: "js/b/OrgMap" */ "./map.vue"
+	//   );
+
+	import OrgMap from "./map2.vue";
+	import Errors from "../../errorClass";
+
 	export default {
+		components: {
+			OrgMap: OrgMap,
+		},
 		data() {
 			return {
 				org: {
@@ -292,7 +362,7 @@
 					contact_suffix: "",
 					diocese: "",
 					website: "",
-					logo: "",
+					logo: null,
 				},
 				states: [],
 				cities: [],
@@ -300,6 +370,7 @@
 				defaultCountry: "US",
 				results: {},
 				results2: {},
+				errors: new Errors(),
 			};
 		},
 
@@ -308,6 +379,25 @@
 		},
 
 		methods: {
+			onlyNumber($event) {
+				//console.log($event.keyCode); //keyCodes value
+				let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+				if (keyCode < 48 || keyCode > 57) {
+					// 46 is dot
+					$event.preventDefault();
+				}
+			},
+			openMap() {
+				var address =
+					this.org.street +
+					", " +
+					this.org.cityprov +
+					", " +
+					this.org.state +
+					", " +
+					this.org.zipcode;
+				this.$refs.refOrgMap.geocoding(address);
+			},
 			onUpdate(payload) {
 				this.results = payload;
 			},
@@ -358,17 +448,32 @@
 			addOrganization() {
 				var formBody = new FormData();
 				for (var key in this.org) {
-					formBody.append(key, this.org[key]);
+                    console.log(key);
+					if (key == "logo") {
+                        if(this.org[key] !=  null){
+                            formBody.append(key, this.org[key]);
+                        }
+					} else {
+						formBody.append(key, this.org[key]);
+					}
 				}
 				axios
 					.post(`/admin/api/addOrganization`, formBody)
 					.then((res) => {
-						alert("success");
+						window.location.href = "/admin/organization";
 					})
 					.catch((err) => {
 						console.error(err);
-						alert("Something went wrong");
+						if (err.response) {
+							this.errors.record(err.response.data.errors);
+							this.showErrorMessage(this.errors.getArrayOfMessages());
+							window.scrollTo(0, 0);
+						}
 					});
+			},
+			showErrorMessage(errors) {
+				//   console.log(shit);
+				this.$events.fire("showErrorMessage", errors);
 			},
 		},
 		computed: {

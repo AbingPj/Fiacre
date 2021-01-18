@@ -4,6 +4,7 @@
 @section('title', app_name() . ' | Organization | Add')
 
 @section('content')
+<admin-messages></admin-messages>
 <div class="card">
     <div class="card-body">
         <admin-organization-add></admin-organization-add>

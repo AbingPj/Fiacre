@@ -32,6 +32,16 @@ import VuePhoneNumberInput from 'vue-phone-number-input';
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 
+import * as VueGoogleMaps from 'vue2-google-maps'
+Vue.use(VueGoogleMaps, {
+    load: {
+      key: process.env.MIX_GOOGLE_API_KEY,
+      libraries: "places" // necessary for places input
+    }
+});
+
+import vueCountryRegionSelect from 'vue-country-region-select';
+Vue.use(vueCountryRegionSelect);
 // import wysiwyg from "vue-wysiwyg";
 // Vue.use(wysiwyg, {
 //     hideModules: { image: true },
