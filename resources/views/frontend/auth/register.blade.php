@@ -6,7 +6,7 @@
 @section('meta')
     <meta property="og:title" content="Sign Up" />
     <meta property="og:url"content="{{ url()->current() }}" />
-    <meta property="og:image" content="{{url('/img/sunfarmacy/bg-signup.jpg') }}" />
+    <meta property="og:image" content="{{url('/img/fiacre/bg_signup.jpg') }}" />
     <meta property="og:image:alt" content="Sign Up" />
 @endsection
 
