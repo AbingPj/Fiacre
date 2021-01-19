@@ -141,7 +141,7 @@ class OrganizationController extends Controller
         // $data->org_contact_email= $request->org_contact_email;
         // $data->org_diocese = $request->org_contact_diocese;
         $data->org_diocese = $request->org_diocese;
-        $data->org_website = $request->_org_website;
+        $data->org_website = $request->org_website;
         // $data->org_logo= $request->logo;
         // $data->org_is_active= $request->contact_is_active;
         if ($request->hasFile('image_file')) {
