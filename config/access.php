@@ -30,6 +30,7 @@ return [
         'default_role' => 'user',
         'sunclub_user' => 'sunclub_user',
         'wholesale_user' => 'wholesale_user',
+        'org_user' => 'org_user',
 
         /*
          * Whether or not new users need to be approved by an administrator before logging in
