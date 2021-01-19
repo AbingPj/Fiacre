@@ -15,6 +15,7 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id');
             $table->string('org_name');
             $table->string('org_email')->unique(); // considers as login email acc.
             $table->bigInteger('org_optionc_id')->nullable(); // organizationalId/ParishId
@@ -35,8 +36,9 @@ class CreateOrganizationsTable extends Migration
             $table->string('org_diocese')->nullable();
             $table->text('org_website')->nullable();
             $table->text('org_logo')->nullable();
-            $table->integer('org_status')->default(1);
+            // $table->integer('org_status')->default(1);
             $table->boolean('org_is_active')->default(false);
+            $table->boolean('org_is_deleted')->default(false);
             $table->timestamps();
         });
     }
