@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AddOrgRequest extends FormRequest
 {
@@ -25,8 +26,8 @@ class AddOrgRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'email' => ['required', 'email'],
-            // 'optionc_id' => ['required'],
+            // 'email' => ['required', 'email'],
+            'email' => ['required', 'string', 'email', Rule::unique('users')],
             'type' => ['required'],
             'lat' => ['required'],
             'lng' => ['required'],
