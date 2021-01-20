@@ -64,6 +64,7 @@ class OrganizationController extends Controller
                 'confirmed' => false,
                 'is_billing_updated' => 1,
                 'customer_role' => 0,
+                'is_org' => 1,
             ]);
 
             $user->assignRole(config('access.users.org_user'));
