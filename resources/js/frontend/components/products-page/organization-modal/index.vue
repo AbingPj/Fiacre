@@ -29,13 +29,15 @@
 									</button> -->
 								</h5>
 								<!-- <transition name="fade"> -->
-									<AddressStep v-if="step == 1"></AddressStep>
+									<address-step v-if="step == 1"></address-step>
 								<!-- </transition> -->
 								<!-- <transition name="fade"> -->
-									<OrganizationStep
+									<organizations-step
+                                        ref="orgref"
                                         :address="Address"
+                                        :organizations="NearestOraganization"
 										v-if="step == 2"
-									></OrganizationStep>
+									></organizations-step>
 								<!-- </transition> -->
 							</div>
 						</div>
@@ -53,18 +55,28 @@
 	import OrganizationStep from "./organization.vue";
 	export default {
 		components: {
-			AddressStep,
-			OrganizationStep,
+			"address-step":AddressStep,
+			"organizations-step":OrganizationStep,
 		},
 		data() {
 			return {
                 step: 1,
-                Address:""
+                Address:"",
+                street: "",
+				city: "",
+				state: "",
+				zip: "",
+                NearestOraganization: [],
 			};
 		},
 		methods: {
+            test() {
+                console.log(this.$refs.orgref);
+            },
 			next() {
-				this.step++;
+                this.step++;
+                // console.log(this.$refs.orgref);
+                // this.$refs.orgref.organizations = this.NearestOraganization;
 			},
 			prev() {
 				this.step--;

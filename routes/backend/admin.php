@@ -61,6 +61,7 @@ Route::get('organization/add', [OrganizationController::class, 'add'])->name('or
 Route::get('api/getOrganization', [OrganizationController::class, 'getOrganization'])->name('organization.getOrganization');
 Route::post('api/addOrganization', [OrganizationController::class, 'addOrganization'])->name('organization.addOrganization');
 Route::post('api/updateOrganization', [OrganizationController::class, 'updateOrganization'])->name('organization.updateOrganization');
+Route::post('api/deleteOrganization/{org_id}', [OrganizationController::class, 'deleteOrganization'])->name('organization.deleteOrganization');
 Route::post('api/getOrganizationInfo/{org_id}', [OrganizationController::class, 'getOrganizationInfo'])->name('organization.getOrganizationInfo');
 
 

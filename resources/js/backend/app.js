@@ -302,6 +302,7 @@ const Promotions =
 
 /// Others
 Vue.component("admin-messages", require("./components/Messages.vue").default);
+Vue.component("delete-org-modal", require("./components/organization/delete.vue").default);
 
 /// Customer Chat PAUSE DEVELOPMENT
 // Vue.component("admin-chat-customers", require("./components/chatcustomer/index.vue").default);

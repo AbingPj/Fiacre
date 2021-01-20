@@ -25,8 +25,8 @@
 							<!-- <th scope="col">#</th> -->
 							<th>Organization Name</th>
 							<th>Type</th>
-                            <th>OptionC Id</th>
-                            <th>Contact Person</th>
+							<th>OptionC Id</th>
+							<th>Contact Person</th>
 							<th>Status</th>
 							<th>Actions</th>
 						</tr>
@@ -43,10 +43,10 @@
 							<td>
 								{{ item.atr_type_label }}
 							</td>
-                            <td>
+							<td>
 								{{ item.org_optionc_id }}
 							</td>
-                            <td>
+							<td>
 								{{ item.atr_contact_person }}
 							</td>
 							<td>
@@ -61,12 +61,12 @@
 								>
 									<i class="far fa-eye mr-2"></i>View More
 								</button>
-                                <button
+								<button
 									type="button"
 									@click="deleteOrganization(item)"
 									class="btn btn-sm btn-danger"
 								>
-								    <i class="fas fa-trash mr-2"></i>Delete
+									<i class="fas fa-trash mr-2"></i>Delete
 								</button>
 							</td>
 							<!-- <td>
@@ -94,6 +94,7 @@
           </h4>
         </div>
       </div> -->
+			<delete-org-modal ref="deleteOrgModal"></delete-org-modal>
 		</div>
 	</div>
 </template>
@@ -112,12 +113,15 @@
 			this.getOrganization();
 		},
 		methods: {
-            viewOrganization(data){
-                window.location.href= `/admin/organization/show/${data.id}`;
-            },
-            deleteOrganization(){
-
-            },
+			viewOrganization(data) {
+				window.location.href = `/admin/organization/show/${data.id}`;
+			},
+			deleteOrganization(data) {
+				// $('#deleteOrgModal').show();
+				this.$refs.deleteOrgModal.name = data.org_name;
+				this.$refs.deleteOrgModal.id = data.id;
+				$("#deleteOrgModal").modal("show");
+			},
 			prepareDataTable() {
 				$(document).ready(function () {
 					$("#customers-table").DataTable({
