@@ -45,9 +45,8 @@ class Organization extends Model
             unset($explode_path[0]);
             $implode_path = implode('/', $explode_path);
             $photo = url('storage/' . $implode_path);
-
         } else {
-           $photo = null;
+            $photo = null;
         }
 
         return $photo;
@@ -55,6 +54,40 @@ class Organization extends Model
 
     public function getAtrContactPersonAttribute()
     {
-        return $this->org_contact_title . ' ' . $this->org_contact_fname. ' ' . $this->org_contact_lname . ' ' . $this->org_contact_suffix;
+        return $this->org_contact_title . ' ' . $this->org_contact_fname . ' ' . $this->org_contact_lname . ' ' . $this->org_contact_suffix;
+    }
+
+    public function scopeNearestInMiles($query, $mi, $centerLat, $centerLng)
+    {
+        return $query
+            ->select(\DB::raw("*,(3958.8  *
+                                acos(
+                                        cos( radians(" . $centerLat . ") ) *
+                                        cos( radians( org_lat ) ) *
+                                        cos( radians( org_lng ) - radians(" . $centerLng . ") ) +
+                                        sin( radians(" . $centerLat . ")) *
+                                        sin( radians( org_lat ) )
+                                    )
+                            )
+                            AS distance"))
+            ->having('distance', '<', $mi)
+            ->orderBy('distance');
+    }
+
+    public function scopeNearestInKilometer($query, $km, $centerLat, $centerLng)
+    {
+        return $query
+            ->select(\DB::raw("*,(6371  *
+                                acos(
+                                        cos( radians(" . $centerLat . ") ) *
+                                        cos( radians( org_lat ) ) *
+                                        cos( radians( org_lng ) - radians(" . $centerLng . ") ) +
+                                        sin( radians(" . $centerLat . ")) *
+                                        sin( radians( org_lat ) )
+                                    )
+                            )
+                            AS distance"))
+            ->having('distance', '<', $km)
+            ->orderBy('distance');
     }
 }

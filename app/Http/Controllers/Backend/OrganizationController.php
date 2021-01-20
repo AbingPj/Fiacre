@@ -34,6 +34,15 @@ class OrganizationController extends Controller
         $org = Organization::findOrFail($org_id);
         return response()->json($org, 200);
     }
+
+    public function deleteOrganization($org_id){
+        $org = Organization::findOrFail($org_id);
+        $org->org_is_deleted = 1;
+        $org->save();
+        return response()->json($org, 200);
+    }
+
+
     public function add()
     {
         return view('backend.organization.add');
@@ -41,7 +50,7 @@ class OrganizationController extends Controller
 
     public function getOrganization()
     {
-        $organization = Organization::all();
+        $organization = Organization::where('org_is_deleted',0)->get();
         return response()->json($organization, 200);
     }
 

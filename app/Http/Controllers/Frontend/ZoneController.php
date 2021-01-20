@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ZoneController extends Controller
 {
@@ -101,4 +103,25 @@ class ZoneController extends Controller
 
         return response()->json($test, 200);
     }
+
+    public function getNearesOraganization(Request $request)
+    {
+        $mi = 10;
+        $centerLat = $request->lat;
+        $centerLng = $request->lng;
+        $orgs = Organization::nearestInMiles($mi,$centerLat,$centerLng)->get();
+        foreach ($orgs as $key => $value) {
+            $value->f_distance = number_format($value->distance, 2) . ' mi';
+        }
+        if($orgs->count() > 0){
+            return response()->json($orgs, 200);
+        }else{
+            return response()->json("Address has no nearby organization", 422);
+        }
+
+
+
+
+    }
+
 }

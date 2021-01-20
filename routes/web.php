@@ -83,6 +83,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     Route::get('/getNearbyPickupZone', 'ZoneController@getNearbyPickupZone');
     Route::get('/getNearbyDeliveryZone', 'ZoneController@getNearbyDeliveryZone');
+    Route::get('/getNearesOraganization', 'ZoneController@getNearesOraganization');
 
 
     Route::get('referrals', [ReferralPageController::class, 'index'])->name('referrals');

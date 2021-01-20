@@ -11,9 +11,10 @@
 			</div>
 			<div class="row my-2">
 				<div class="col-12">
-					<v-select
-						@search="fetchOptions"
-						:options="cities"
+					<!-- <v-select
+                        label="org_name"
+						:options="organizations"
+                        :reduce="org => org.id"
 						:multiple="false"
 						:disabled="false"
 						:clearable="true"
@@ -24,7 +25,16 @@
 						:push-tags="true"
 						:select-on-tab="true"
 						placeholder="Select Partner"
-					></v-select>
+					></v-select> -->
+
+                     <v-select
+                        label="org_name"
+                        v-model="selectedOrganization"
+                        :reduce="org => org.id"
+                        :options="organizations"
+                        :clearable="false"
+                        placeholder="Please Select Partner"
+                      ></v-select>
 				</div>
 			</div>
 		</div>
@@ -44,10 +54,11 @@
 </template>
 <script>
 	export default {
-		props: ["address"],
+		props: ["address","organizations"],
 		data() {
 			return {
-				cities: [],
+                // organizations: [],
+                selectedOrganization:null,
 			};
 		},
 		methods: {
