@@ -6,7 +6,7 @@
 		role="dialog"
 		aria-labelledby="guestSelectingOrganizationModal"
 		aria-hidden="true"
-        data-backdrop="static"
+		data-backdrop="static"
 	>
 		<div class="modal-dialog guest-payment-modaol-dialog" role="document">
 			<div class="modal-content">
@@ -29,15 +29,20 @@
 									</button> -->
 								</h5>
 								<!-- <transition name="fade"> -->
-									<address-step v-if="step == 1"></address-step>
+								<AddressStep
+									v-if="step == 1"
+									:user="user"
+									:guest="guest"
+								></AddressStep>
 								<!-- </transition> -->
 								<!-- <transition name="fade"> -->
-									<organizations-step
-                                        ref="orgref"
-                                        :address="Address"
-                                        :organizations="NearestOraganization"
-										v-if="step == 2"
-									></organizations-step>
+								<OrganizationStep
+									ref="orgref"
+									:address="Address"
+									:organizations="NearestOraganization"
+									v-if="step == 2"
+									:user="user"
+								></OrganizationStep>
 								<!-- </transition> -->
 							</div>
 						</div>
@@ -51,32 +56,54 @@
 </template>
 
 <script>
-	import AddressStep from "./address.vue";
-	import OrganizationStep from "./organization.vue";
+	// import AddressStep from "./address.vue";
+	// import OrganizationStep from "./organization.vue";
 	export default {
-		components: {
-			"address-step":AddressStep,
-			"organizations-step":OrganizationStep,
+		props: ["guest", "user"],
+		// components: {
+		// 	"address-step": AddressStep,
+		// 	"organizations-step": OrganizationStep,
+		// },
+		created() {
+			if (this.guest == 1) {
+                this.step = 1;
+            $("#guestSelectingOrganizationModal").modal("show");
+
+			} else {
+
+				if (this.user.customer_role == 0) {
+					console.log("Customer Role is 0");
+					$("#guestSelectingOrganizationModal").modal("hide");
+				} else if(this.user.customer_role == 1) {
+                    this.step = 1;
+                    $("#guestSelectingOrganizationModal").modal("show");
+				} else{
+                    this.step = 2;
+                    console.log(this.user.customer_role);
+                    this.Address = this.user.atr_full_address;
+                    $("#guestSelectingOrganizationModal").modal("show");
+                }
+			}
 		},
 		data() {
 			return {
-                step: 1,
-                Address:"",
-                street: "",
+				step: 1,
+				Address: "",
+				street: "",
 				city: "",
 				state: "",
 				zip: "",
-                NearestOraganization: [],
+				NearestOraganization: [],
 			};
 		},
 		methods: {
-            test() {
-                console.log(this.$refs.orgref);
-            },
+			test() {
+				console.log(this.$refs.orgref);
+			},
 			next() {
-                this.step++;
-                // console.log(this.$refs.orgref);
-                // this.$refs.orgref.organizations = this.NearestOraganization;
+				this.step++;
+				// console.log(this.$refs.orgref);
+				// this.$refs.orgref.organizations = this.NearestOraganization;
 			},
 			prev() {
 				this.step--;
@@ -87,25 +114,25 @@
 
 <style>
 	/* .fade-enter-active,
-	.fade-leave-active {
-		transition: opacity 0.5s;
-	}
-	.fade-enter,
-	.fade-leave-to {
-		opacity: 0;
-	}
+			.fade-leave-active {
+				transition: opacity 0.5s;
+			}
+			.fade-enter,
+			.fade-leave-to {
+				opacity: 0;
+			}
 
-	.slide-fade-enter-active {
-		transition: all 0.3s ease;
-	}
-	.slide-fade-leave-active {
-		transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-	}
-	.slide-fade-enter,
-	.slide-fade-leave-to {
-		transform: translateX(10px);
-		opacity: 0;
-	} */
+			.slide-fade-enter-active {
+				transition: all 0.3s ease;
+			}
+			.slide-fade-leave-active {
+				transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+			}
+			.slide-fade-enter,
+			.slide-fade-leave-to {
+				transform: translateX(10px);
+				opacity: 0;
+			} */
 </style>
 
 <style lang="scss" scoped>

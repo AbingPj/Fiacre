@@ -455,4 +455,20 @@ class ProductsController extends Controller
 
         return redirect('/admin/products/' . $product_id . '/edit')->withFlashSuccess(__('alerts.backend.products.created'));;
     }
+
+
+
+    public function productSelectOrganization($product_id)
+    {
+        $product = Product::find($product_id);
+
+        return view('backend.products.product-organization', [
+            'product' => $product,
+            'product_id' => $product_id,
+        ]);
+        // return view('backend.products.edit-bundle', compact('product', 'categories', 'selectas'));
+    }
+
+
+
 }

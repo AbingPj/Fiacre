@@ -102,6 +102,9 @@
           </div>
           <div class="ml-auto text-right">
             <div>
+            <button class="btn btn-sm btn-warning" @click="organization(product)">
+                <i class="fas fa-sitemap mr-2"></i>Select Org.
+              </button>
               <button class="btn btn-sm btn-success" @click="preview(product)">
                 <i class="far fa-eye mr-2"></i>View
               </button>
@@ -244,6 +247,10 @@ export default {
         });
     },
 
+    organization(product){
+      var link = "/admin/product/productSelectOrganization/" + product.id;
+      window.location.href = link;
+    },
     preview(product) {
       var link =
         product.is_bundle == 1 ?

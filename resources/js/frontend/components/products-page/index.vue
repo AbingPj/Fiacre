@@ -341,7 +341,7 @@
         <div class="col">
           <products-page-modal ref="productmodal"></products-page-modal>
           <products-warning-modal :minimum="wholesaler_minimum_order_amount"></products-warning-modal>
-          <OrganizationModal></OrganizationModal>
+          <OrganizationModal :guest="guest" :user="user"></OrganizationModal>
         </div>
       </div>
     </div>
@@ -379,7 +379,7 @@ const prodGrid = () =>
     /* webpackChunkName: "js/f/prodGrid" */ "./productsViewGrid.vue"
   );
 
-import OrganizationModal from "./organization-modal/index"
+// import OrganizationModal from "./organization-modal/index"
 
 export default {
   components: {
@@ -390,7 +390,7 @@ export default {
     'products-user-balance': prodUserBalance,
     'products-list': prodlist,
     'products-grid': prodGrid,
-    OrganizationModal,
+    // OrganizationModal,
   },
   //   props: {
   //     propproducts: Array,
@@ -428,7 +428,7 @@ export default {
     this.categories = categories;
   },
   mounted() {
-      $("#guestSelectingOrganizationModal").modal("show");
+    //   $("#guestSelectingOrganizationModal").modal("show");
     // $("#addToCartModal").on("shown.bs.modal", function () {
     //   $("body.modal-open").removeAttr("style");
     //   $("sticky-top").removeAttr("style");

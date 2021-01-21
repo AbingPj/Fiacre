@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Backend\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Product\ProductBundleStoreRequest;
 use App\Http\Requests\Backend\Product\ProductBundleUpdateRequest;
+use App\Models\Organization;
 use App\Models\Product;
 use App\Models\ProductBundle;
 use App\Models\ProductCategory;
+use App\Models\ProductOrganization;
 use App\Models\ProductSubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -269,5 +271,45 @@ class ProductsController extends Controller
             'to' => $lap->lastItem(),
             'total' => $lap->total(),
         ];
+    }
+
+    public function productsorganizations($product_id)
+    {
+        $orgs = Organization::all();
+        foreach ($orgs as $key => $value) {
+            $value->selected = false;
+            if(ProductOrganization::where('product_id',$product_id)->where('organization_id',$value->id)->exists()){
+                $value->selected = true;
+            };
+        }
+        return response()->json($orgs);
+    }
+
+    public function productSelectOrganizationSaveChanges(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $productOrganization  = ProductOrganization::where('product_id', $request->product_id)->delete();
+            $organizations = $request->organizations;
+            foreach ($organizations as $key => $value) {
+                // dd($value['selected']);
+                if($value['selected'] == true){
+                    $prodOrg = new ProductOrganization;
+                    $prodOrg->product_id = $request->product_id;
+                    $prodOrg->organization_id = $value['id'];
+                    $prodOrg->save();
+                }
+            }
+            DB::commit();
+            return response()->json('success', 200);
+        }
+        catch(Exception $e){
+            DB::rollback();
+            return response()->json([
+                'status' => 'fail',
+                'message' => $e->getMessage()
+            ], 400);
+        }
+
     }
 }

@@ -40,6 +40,10 @@ Breadcrumbs::for('admin.products.edit.bundle', function ($trail, $id) {
     $trail->push(__('Edit Bundle'), route('admin.products.edit.bundle', $id));
 });
 
+Breadcrumbs::for('admin.products.productSelectOrganization', function ($trail, $id) {
+    $trail->parent('admin.products.index');
+    $trail->push(__('Select Organization'), route('admin.products.productSelectOrganization', $id));
+});
 
 
 // Breadcrumbs::for('admin.auth.user.edit', function ($trail, $id) {

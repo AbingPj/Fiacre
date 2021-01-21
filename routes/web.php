@@ -124,6 +124,12 @@ Route::group(['namespace' => 'Backend\API', 'prefix' => 'api/admin', 'middleware
     Route::get('/subcategory/{category_id}', 'ProductsController@getSubCategory')->name('admin.api.subcategory');
 
 
+
+
+    Route::get('/productsorganizations/{product_id}', 'ProductsController@productsorganizations');
+    Route::post('product/productSelectOrganizationSaveChanges','ProductsController@productSelectOrganizationSaveChanges');
+
+
     Route::get('/products2', 'ProductsController@getProducts2');
 
 

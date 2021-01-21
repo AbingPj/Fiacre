@@ -28,6 +28,7 @@ Route::post('products', [ProductsController::class, 'store'])->name('products.st
 Route::post('product/visible', [ProductsController::class, 'productVisible'])->name('products.visible');
 Route::post('product/instocks', [ProductsController::class, 'storeQuantity'])->name('products.store.quantity');
 Route::post('product/instocks/update', [ProductsController::class, 'updateQuantity'])->name('products.update.quantity');
+Route::get('product/productSelectOrganization/{product_id}', [ProductsController::class, 'productSelectOrganization'])->name('products.productSelectOrganization');
 
 // Specific Product
 Route::group(['prefix' => 'products/{product_id}'], function () {

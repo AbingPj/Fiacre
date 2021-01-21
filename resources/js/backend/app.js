@@ -82,6 +82,9 @@ const ProdBunCreate =
 const ProdBunEdit =
     () => import(/* webpackChunkName: "js/b/ProdBunEdit" */ './components/products/edit-bundle.vue');
 
+const SelectOrganization =
+    () => import(/* webpackChunkName: "js/b/ProdBunEdit" */ './components/products/selectOrganization.vue');
+
 
 // Orders
 // Vue.component("admin-orders-page", require("./components/orders/index.vue").default);
@@ -303,6 +306,7 @@ const Promotions =
 /// Others
 Vue.component("admin-messages", require("./components/Messages.vue").default);
 Vue.component("delete-org-modal", require("./components/organization/delete.vue").default);
+Vue.component("SelectOrganizationModal", require("./components/products/selectOrganizationModal.vue").default);
 
 /// Customer Chat PAUSE DEVELOPMENT
 // Vue.component("admin-chat-customers", require("./components/chatcustomer/index.vue").default);
@@ -367,7 +371,7 @@ const adminVueApp = new Vue({
         'admin-organization-show': OrganizationShow,
         'admin-organization-add': OrganizationAdd,
         'admin-organization-update': OrganizationUpdate,
-
+        'admin-products-select-organization': SelectOrganization,
 
     }
 });

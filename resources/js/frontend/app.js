@@ -185,6 +185,13 @@ const productCart = () => import(/* webpackChunkName: "js/f/productCart" */ './c
 // Vue.component("dilvery-zone-modal", require("./components/ChooseDeliveryZoneModal.vue").default);
 
 
+Vue.component("OrganizationModal", require("./components/products-page/organization-modal/index.vue").default);
+Vue.component("AddressStep", require("./components/products-page/organization-modal/address.vue").default);
+Vue.component("OrganizationStep", require("./components/products-page/organization-modal/organization.vue").default);
+// Vue.component("dilvery-zone-modal", require("./components/ChooseDeliveryZoneModal.vue").default);
+
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
