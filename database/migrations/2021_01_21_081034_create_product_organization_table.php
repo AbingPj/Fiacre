@@ -14,10 +14,12 @@ class CreateProductOrganizationTable extends Migration
     public function up()
     {
         Schema::create('product_organization', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('product_id');
-            $table->bigInteger('organization_id');
-            $table->timestamps();
+            $table->bigIncrements('prodorg_id');
+            $table->bigInteger('prodorg_product_id');
+            $table->bigInteger('prodorg_organization_id');
+            // $table->timestamps();
+            $table->timestamp('prodorg_created_at', 0)->nullable();
+            $table->timestamp('prodorg_updated_at', 0)->nullable();
         });
     }
 
