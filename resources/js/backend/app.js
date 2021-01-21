@@ -83,7 +83,7 @@ const ProdBunEdit =
     () => import(/* webpackChunkName: "js/b/ProdBunEdit" */ './components/products/edit-bundle.vue');
 
 const SelectOrganization =
-    () => import(/* webpackChunkName: "js/b/ProdBunEdit" */ './components/products/selectOrganization.vue');
+    () => import(/* webpackChunkName: "js/b/ProdSelectOrg" */ './components/products/selectOrganization.vue');
 
 
 // Orders
