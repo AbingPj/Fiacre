@@ -6,48 +6,73 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\Product\ProductBundleUpdateRequest;
 use App\Models\Auth\User;
 use App\Models\OrderProduct;
+use App\Models\Organization;
 use App\Models\Product;
 use App\Models\ProductBundle;
 use App\Models\ProductCategory;
+use App\Models\ProductOrganization;
 use App\Models\Store;
 use App\ProductInStock;
 use App\Services\ImagePathService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use ParagonIE\Certainty\Bundle;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
+    public function proceedOptionCid(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'optionc_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['error' => $errors], 422);
+        }
+
+        $org = Organization::where('org_optionc_id', $request->optionc_id)->first();
+        if (!empty($org)) {
+            return response()->json('success', 200);
+        } else {
+            return response()->json('Sorry, your school is not yet registered', 404);
+        }
+    }
+
     public function getProducts(Request $request)
     {
+        $org_id = $request->org_id;
 
         if ($request->has('name') && $request->has('category')) {
-            $products = Product::with('category:id,name','sub_category:id,name')
-                ->where('is_visible', 1)
-                ->where('name', 'LIKE', "%$request->name%")
-                ->where('category_id', $request->category)
-                ->where('status', '!=', 3)
-                ->OrderBy('created_at', 'DESC')
+            $products = Product::productOrg($org_id)->with('category:id,name', 'sub_category:id,name')
+                ->where('products.is_visible', 1)
+                ->where('products.name', 'LIKE', "%$request->name%")
+                ->where('products.category_id', $request->category)
+                ->where('products.status', '!=', 3)
+                ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('name')) {
-            $products = Product::with('category:id,name','sub_category:id,name')
-                ->where('is_visible', 1)
-                ->where('name', 'LIKE', "%$request->name%")
-                ->where('status', '!=', 3)
-                ->OrderBy('created_at', 'DESC')
+            $products = Product::productOrg($org_id)
+                ->with('category:id,name', 'sub_category:id,name')
+                ->where('products.is_visible', 1)
+                ->where('products.name', 'LIKE', "%$request->name%")
+                ->where('products.status', '!=', 3)
+                ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('category')) {
-            $products = Product::with('category:id,name','sub_category:id,name')
-                ->where('is_visible', 1)
-                ->where('category_id', $request->category)
-                ->where('status', '!=', 3)
-                ->OrderBy('created_at', 'DESC')
+            $products = Product::productOrg($org_id)
+                ->with('category:id,name', 'sub_category:id,name')
+                ->where('products.is_visible', 1)
+                ->where('products.category_id', $request->category)
+                ->where('products.status', '!=', 3)
+                ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else {
-            $products = Product::with('category:id,name','sub_category:id,name')
-                ->where('is_visible', 1)
-                ->where('status', '!=', 3)
-                ->OrderBy('created_at', 'DESC')
+            $products = Product::productOrg($org_id)
+                ->with('category:id,name', 'sub_category:id,name')
+                ->where('products.is_visible', 1)
+                ->where('products.status', '!=', 3)
+                ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         }
 

@@ -31,6 +31,9 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     include_route_files(__DIR__ . '/frontend/');
     /// Products Page
     Route::get('/products', 'ProductsController@index')->name('products');
+    Route::post('/proceed/optioncid', 'ProductsController@proceedOptionCid')->name('proceedOptionCid');
+
+
     Route::get('/data/products', 'ProductsController@getProducts')->name('data.products');
     ///Checkot and placeorder and thank you page
     Route::get('/products/checkout', 'PlaceOrderController@index')->name('products.checkout');

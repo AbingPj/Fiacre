@@ -36,22 +36,34 @@ class Product extends Model
     //     return 1;
     // }
 
+    public function scopeProductOrg($query, $org_id)
+    {
+        $query->join('product_organization', 'products.id', '=', 'product_organization.prodorg_product_id')->where('product_organization.prodorg_organization_id', $org_id);
+
+        return $query;
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Models\ProductCategory');
     }
 
-   public function sub_category()
-   {
-       return $this->belongsTo('App\Models\ProductSubCategory', 'sub_category_id');
-   }
+    public function productorganization()
+    {
+        return $this->hasMany('App\Models\ProductOrganization', 'prodorg_product_id');
+    }
 
-   public function getAtrTaxPercentageAttribute()
+    public function sub_category()
+    {
+        return $this->belongsTo('App\Models\ProductSubCategory', 'sub_category_id');
+    }
+
+    public function getAtrTaxPercentageAttribute()
     {
         $tax = 0;
         if (!empty($this->category_id)) {
             $category = ProductCategory::find($this->category_id);
-            if($category){
+            if ($category) {
                 $tax = $category->tax;
             }
         }
@@ -63,10 +75,10 @@ class Product extends Model
         $amount = 0;
         if (!empty($this->category_id)) {
             $category = ProductCategory::find($this->category_id);
-            if(!empty($category)){
-                if($this->is_bundle == 1){
+            if (!empty($category)) {
+                if ($this->is_bundle == 1) {
                     $amount =  $this->getBundlePrice('retailer') * ($category->tax /  100);
-                }else{
+                } else {
                     $amount = $this->price * ($category->tax /  100);
                 }
             }
@@ -80,15 +92,13 @@ class Product extends Model
         $amount = 0;
         if (!empty($this->category_id)) {
             $category = ProductCategory::find($this->category_id);
-            if(!empty($category)){
-                if($this->is_bundle == 1){
+            if (!empty($category)) {
+                if ($this->is_bundle == 1) {
                     $amount =  $this->getBundlePrice('member') * ($category->tax /  100);
-                }else{
+                } else {
                     $amount = $this->member_price * ($category->tax /  100);
                 }
             }
-
-
         }
         // return floatval(number_format($amount, 2));
         return floatval($amount);
@@ -99,10 +109,10 @@ class Product extends Model
         $amount = 0;
         if (!empty($this->category_id)) {
             $category = ProductCategory::find($this->category_id);
-            if(!empty($category)){
-                if($this->is_bundle == 1){
+            if (!empty($category)) {
+                if ($this->is_bundle == 1) {
                     $amount =  $this->getBundlePrice('wholesale') * ($category->tax /  100);
-                }else{
+                } else {
                     $amount = $this->wholesale_price * ($category->tax /  100);
                 }
             }

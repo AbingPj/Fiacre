@@ -27,6 +27,7 @@ class AddOrgRequest extends FormRequest
         return [
             'name' => ['required'],
             // 'email' => ['required', 'email'],
+            'optionc_id' => [Rule::unique('organizations', 'org_optionc_id')],
             'email' => ['required', 'string', 'email', Rule::unique('users')],
             'type' => ['required'],
             // 'lat' => ['required'],

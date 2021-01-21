@@ -278,7 +278,7 @@ class ProductsController extends Controller
         $orgs = Organization::all();
         foreach ($orgs as $key => $value) {
             $value->selected = false;
-            if(ProductOrganization::where('product_id',$product_id)->where('organization_id',$value->id)->exists()){
+            if(ProductOrganization::where('prodorg_product_id',$product_id)->where('prodorg_organization_id',$value->id)->exists()){
                 $value->selected = true;
             };
         }
@@ -289,14 +289,14 @@ class ProductsController extends Controller
     {
         DB::beginTransaction();
         try{
-            $productOrganization  = ProductOrganization::where('product_id', $request->product_id)->delete();
+            $productOrganization  = ProductOrganization::where('prodorg_product_id', $request->product_id)->delete();
             $organizations = $request->organizations;
             foreach ($organizations as $key => $value) {
                 // dd($value['selected']);
                 if($value['selected'] == true){
                     $prodOrg = new ProductOrganization;
-                    $prodOrg->product_id = $request->product_id;
-                    $prodOrg->organization_id = $value['id'];
+                    $prodOrg->prodorg_product_id = $request->product_id;
+                    $prodOrg->prodorg_organization_id = $value['id'];
                     $prodOrg->save();
                 }
             }

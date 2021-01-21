@@ -341,7 +341,8 @@
         <div class="col">
           <products-page-modal ref="productmodal"></products-page-modal>
           <products-warning-modal :minimum="wholesaler_minimum_order_amount"></products-warning-modal>
-          <OrganizationModal :guest="guest" :user="user"></OrganizationModal>
+          <!-- <OrganizationModal :guest="guest" :user="user"></OrganizationModal> -->
+          <EnterOptionCModal :guest="guest" :user="user"></EnterOptionCModal>
         </div>
       </div>
     </div>
