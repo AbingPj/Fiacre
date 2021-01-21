@@ -51,7 +51,9 @@ class Product extends Model
         $tax = 0;
         if (!empty($this->category_id)) {
             $category = ProductCategory::find($this->category_id);
-            $tax = $category->tax;
+            if($category){
+                $tax = $category->tax;
+            }
         }
         return $tax;
     }
