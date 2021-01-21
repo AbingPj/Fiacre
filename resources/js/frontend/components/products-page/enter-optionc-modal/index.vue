@@ -81,8 +81,11 @@
 				axios
 					.post(`/proceed/optioncid`, data)
 					.then((res) => {
+                        this.$parent.org_id = res.data.id;
+                        this.$parent.getResults();
 						console.log(res);
-						LoadingOverlayHide();
+                        LoadingOverlayHide();
+                        $("#enterOptionCIdModal").modal("hide");
 					})
 					.catch((err) => {
 						if (err.response) {

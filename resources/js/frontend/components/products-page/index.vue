@@ -419,6 +419,7 @@ export default {
       category: "All",
       name: "",
       btn: "search",
+      org_id:null,
     };
   },
   created() {
@@ -477,20 +478,24 @@ export default {
           category: this.category,
           name: this.name,
           page: page,
+          org_id: this.org_id,
         };
       } else if (this.name != "") {
         param = {
           name: this.name,
           page: page,
+          org_id: this.org_id,
         };
       } else if (this.category != "All") {
         param = {
           category: this.category,
           page: page,
+          org_id: this.org_id,
         };
       } else {
         param = {
           page: page,
+          org_id: this.org_id,
         };
       }
       axios({
