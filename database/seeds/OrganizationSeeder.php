@@ -23,7 +23,7 @@ class OrganizationSeeder extends Seeder
                 'first_name' => $obj->org_contact_fname,
                 'last_name' => $obj->org_contact_lname,
                 'email' => $obj->org_email,
-                'password' => 'secret-'.$obj->org_email,
+                'password' => 'secret@123',
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed' => false,
                 'is_billing_updated' => 1,
