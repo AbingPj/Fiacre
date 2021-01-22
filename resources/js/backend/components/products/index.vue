@@ -119,7 +119,7 @@
                     product.atr_qty_label == 'Low of Stock' ? 'text-warning': 'text-success'
                   ">{{product.atr_qty_label}}</span>
               <!-- {{product.is_visible == 1? 'In Stock' : 'Out of Stock'}} -->
-              <br />Remaining qty:
+              <br />Remaining Qty:
               <b>{{product.atr_qty}} / {{product.unit}}</b>
             </p>
           </div>

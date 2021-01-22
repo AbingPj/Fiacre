@@ -117,7 +117,7 @@
                   >$ {{displayNumberWithComma(item.wholesale_price)}}/{{item.unit}}</span>
                   <span v-else>$ {{displayNumberWithComma(item.price)}}/{{item.unit}}</span>
                   <br />
-                  <span style="color:#339f25; padding:0px;">qty: {{item.qty}} {{item.unit}}</span>
+                  <span style="color:#339f25; padding:0px;">Qty: {{item.qty}} {{item.unit}}</span>
                 </p>
               </div>
               <div class="cart-item-close-container ml-auto w-25">

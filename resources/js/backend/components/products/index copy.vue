@@ -101,7 +101,7 @@
                   "
                 >{{product.stock_label}}</span>
                 <!-- {{product.is_visible == 1? 'In Stock' : 'Out of Stock'}} -->
-                <br />Remaining qty:
+                <br />Remaining Qty:
                 <b>{{product.quantity}} / {{product.unit}}</b>
               </p>
             </div>

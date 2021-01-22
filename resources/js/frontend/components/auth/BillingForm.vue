@@ -338,9 +338,13 @@
             </b-col>
           </b-row>
         </b-col>
+        <!-- Formerly Membership Card -->
         <b-col>
+          <!--
           <md-card class="mb-4">
             <md-card-content>
+              <h5>Choice of School/Parish</h5>
+              
               <div class="s-user-type">
                 <ValidationProvider name="userType" rules="required">
                   <label>I want to be a:</label>
@@ -382,13 +386,15 @@
                   </ValidationProvider>
                 </div>
               </div>
+              
             </md-card-content>
           </md-card>
+          -->
         </b-col>
+        
       </b-row>
       <b-row>
         <b-col offset-md="2" md="6">
-
           <br />
           <br />
           <p>
