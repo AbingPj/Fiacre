@@ -48,7 +48,12 @@
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
                             @can('view backend')
-                                <a href="{{ route('admin.dashboard') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
+                                @if ($logged_in_user->isAdmin())
+                                    <a href="{{ route('admin.dashboard') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
+                                @endif
+                                @if ($logged_in_user->isOrganization())
+                                    <a href="{{ route('admin.org.profile') }}" class="dropdown-item">@lang('navs.frontend.user.administration')</a>
+                                @endif
                             @endcan
 
                             <a href="{{ route('frontend.user.account') }}" class="dropdown-item">@lang('navs.frontend.user.account')</a>
