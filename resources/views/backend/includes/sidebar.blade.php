@@ -1,6 +1,7 @@
 <div class="sidebar" style="background-color: #43425D;">
     <nav class="sidebar-nav">
         <ul class="nav">
+            @if ($logged_in_user->isAdmin())
             <li class="nav-title">
                 @lang('menus.backend.sidebar.general')
             </li>
@@ -311,7 +312,9 @@
                             </li>
                         </ul>
             </li>
+            @endif
 
+            @include('backend.includes.sidebar-admin-org')
 
 
         </ul>

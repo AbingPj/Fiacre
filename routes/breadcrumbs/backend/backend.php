@@ -93,6 +93,7 @@ Breadcrumbs::for('admin.settings.referralsCoupon', function ($trail) {
 
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/admin-org.php';
 require __DIR__ . '/log-viewer.php';
 require __DIR__ . '/products.php';
 require __DIR__ . '/orders.php';

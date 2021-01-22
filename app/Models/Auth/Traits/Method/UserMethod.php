@@ -93,6 +93,11 @@ trait UserMethod
         return $this->hasRole(config('access.users.admin_role'));
     }
 
+    public function isOrganization()
+    {
+        return $this->hasRole(config('access.users.org_user'));
+    }
+
     public function isSunClubMember()
     {
         return $this->customer_role == 2;

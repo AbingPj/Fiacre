@@ -14,4 +14,9 @@ trait RoleMethod
     {
         return $this->name === config('access.users.admin_role');
     }
+
+    public function isOrganization()
+    {
+        return $this->name === config('access.users.org_user');
+    }
 }

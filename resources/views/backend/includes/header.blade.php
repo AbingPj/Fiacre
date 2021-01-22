@@ -14,10 +14,11 @@
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('frontend.index') }}"><i class="fas fa-home"></i></a>
         </li>
-
+        @if ($logged_in_user->isAdmin())
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ route('admin.dashboard') }}">@lang('navs.frontend.dashboard')</a>
         </li>
+        @endif
 
         {{-- @if(config('locale.status') && count(config('locale.languages')) > 1)
             <li class="nav-item px-3 dropdown">

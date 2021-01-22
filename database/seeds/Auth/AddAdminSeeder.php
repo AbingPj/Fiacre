@@ -14,8 +14,8 @@ class AddAdminSeeder extends Seeder
         $user =  User::create([
             'first_name' => 'Fiacre',
             'last_name' => 'Admin',
-            'email' => 'admin@fiacrefoods.com',
-            'password' => 'password@secret',
+            'email' => 'admin@gmail.com',
+            'password' => 'password',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
             'is_billing_updated' => 1,

@@ -32,7 +32,12 @@ if (! function_exists('home_route')) {
     {
         if (auth()->check()) {
             if (auth()->user()->can('view backend')) {
-                return 'admin.dashboard';
+                if(auth()->user()->isAdmin()){
+                    return 'admin.dashboard';
+                }else if(auth()->user()->isOrganization()){
+                    return 'admin.org.profile';
+                }
+
             }
 
             return 'frontend.products.checkout';
