@@ -9,3 +9,7 @@ Breadcrumbs::for('admin.org.products', function ($trail) {
     $trail->push('Organization Products', route('admin.org.products'));
 });
 
+Breadcrumbs::for('admin.org.showProduct', function ($trail,$id) {
+    $trail->parent('admin.org.products');
+    $trail->push('Product: '.$id, route('admin.org.showProduct',$id));
+});

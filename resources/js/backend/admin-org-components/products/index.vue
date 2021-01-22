@@ -38,7 +38,7 @@
 								{{ item.name }}
 							</td>
 							<td>{{ item.price }}/{{ item.unit }}</td>
-							<td>0</td>
+							<td>{{ getSubPrice(item) }}</td>
 							<td>
 								{{ item.is_visible == 1 ? "show" : "hide" }}
 							</td>
@@ -78,8 +78,16 @@
 			this.getProducts();
 		},
 		methods: {
+			getSubPrice(item) {
+				if (item.weeks != null) {
+					var price = item.weeks * item.price;
+					return '$ ' + price + "/" + item.weeks + ' weeks';
+				} else {
+					return 'no subcription set yet';
+				}
+			},
 			viewOrganization(data) {
-				window.location.href = `/admin/organization/show/${data.id}`;
+				window.location.href = `/admin/org/products/subcription/${data.id}`;
 			},
 			prepareDataTable() {
 				$(document).ready(function () {

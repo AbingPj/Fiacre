@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\ProductInStock;
+use App\Models\ProductSubcription;
 use App\Services\ImagePathService;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Product extends Model
 {
@@ -52,6 +54,12 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\ProductOrganization', 'prodorg_product_id');
     }
+
+    public function productsubcription()
+    {
+        return $this->hasMany('App\Models\ProductSubcription', 'prodsub_product_id');
+    }
+
 
     public function sub_category()
     {
@@ -249,5 +257,27 @@ class Product extends Model
         }
 
         return $price;
+    }
+
+    public function getSubcriptionWeeks($org_id)
+    {
+
+        $weeks = null;
+
+        $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
+            ->where('prodsub_product_id', $this->id)
+            ->first();
+
+        if (!empty($prodSub)) {
+            $start =  Carbon::parse($prodSub->prodsub_start_date);
+            $now = Carbon::now();
+            $end =  Carbon::parse($prodSub->prodsub_end_date);
+            // dump($start);
+            // dump($end);
+            $weeks = $now->diffInWeeks($end);
+        } else {
+            $weeks = null;
+        }
+        return $weeks;
     }
 }

@@ -15,6 +15,9 @@ import datePicker from 'vue-bootstrap-datetimepicker';
 Vue.use(datePicker);
 Vue.component('pagination', require('laravel-vue-pagination'));
 
+// import { DatePicker as VueTwoDatePicker} from 'vue2-datepicker';
+// Vue.use(VueTwoDatePicker)
+
 
 import VueEvents from 'vue-events'
 Vue.use(VueEvents)
@@ -321,6 +324,9 @@ const AdminOrgProfile =
 const AdminOrgProducts =
     () => import(/* webpackChunkName: "js/b/adminOrgProducts" */ './admin-org-components/products/index.vue');
 
+const AdminOrgProductsSub =
+    () => import(/* webpackChunkName: "js/b/adminOrgProductsSub" */ './admin-org-components/products/subcription.vue');
+
 
 const adminVueApp = new Vue({
     el: "#adminVueApp",
@@ -379,6 +385,7 @@ const adminVueApp = new Vue({
         'admin-products-select-organization': SelectOrganization,
         'admin-org-profile': AdminOrgProfile,
         'admin-org-products': AdminOrgProducts,
+        'admin-org-products-sub': AdminOrgProductsSub,
 
     }
 });
