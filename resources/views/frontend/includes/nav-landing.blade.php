@@ -44,7 +44,10 @@
                                 @endif
                             @endcan
 
-                            <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Route::is('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
+                            @if( Auth::user()->customer_role == 2 || Auth::user()->customer_role == 3)
+                                <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Route::is('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
+                            @endif
+
                             @if( Auth::user()->customer_role == 2 || Auth::user()->customer_role == 3)
                                 <a href="/myprofile" class="dropdown-item">Billing Profile</a>
                             @elseif(Auth::user()->customer_role == 1)
