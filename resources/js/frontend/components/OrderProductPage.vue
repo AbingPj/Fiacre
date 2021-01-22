@@ -167,7 +167,7 @@
                     <br />
                     <br />
                     <span class="qty-options">
-                      <b>qty:</b>
+                      <b>Qty:</b>
                       <b>{{or_prod.updated_quantity}} / {{or_prod.product.unit}}</b>
                     </span>
                   </p>

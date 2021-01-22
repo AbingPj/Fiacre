@@ -142,6 +142,7 @@
           </b-col>
         </b-row>
       </b-col>
+      <!--
       <b-col>
         <md-card class="mb-4">
           <md-card-content>
@@ -168,6 +169,7 @@
           </md-card-content>
         </md-card>
       </b-col>
+      -->
     </b-row>
   </b-container>
 </div>

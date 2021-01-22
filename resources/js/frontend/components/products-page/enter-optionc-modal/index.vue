@@ -15,8 +15,8 @@
 						<div class="row">
 							<div class="col" style="padding: 0px !important">
 								<h5>
-									<i class="far fa-credit-card"></i> Selecting
-									Orgnization
+									<i class="fas fa-sitemap"></i> Selecting
+									Organization
 								</h5>
 
 								<div class="my-5 mx-5">
@@ -38,7 +38,7 @@
 													@click="proceed()"
 													class="btn btn-sm btn-info"
 												>
-													Proceed
+													See Products
 												</button>
 											</div>
 										</div>
@@ -82,6 +82,7 @@
 					.post(`/proceed/optioncid`, data)
 					.then((res) => {
                         this.$parent.org_id = res.data.id;
+						this.$parent.org_name = res.data.org_name;
                         this.$parent.getResults();
 						console.log(res);
                         LoadingOverlayHide();

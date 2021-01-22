@@ -259,7 +259,7 @@
               </b-col>
             </b-row>
           </b-col>
-          <b-col>
+          <!-- <b-col>
             <user-type-component
               :sun_is_cancelled="sun_is_cancelled"
               :sunclub_choices="sunclub_choices"
@@ -270,11 +270,12 @@
               :selected_amount="selectedAmount"
             ></user-type-component>
           </b-col>
+          -->
         </b-row>
       </b-container>
     </div>
 
-    <cancel-membership-modal :cancel_action="cancel_action"></cancel-membership-modal>
+    <!-- <cancel-membership-modal :cancel_action="cancel_action"></cancel-membership-modal> -->
   </div>
   <!-- </form> -->
 </template>

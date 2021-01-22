@@ -31,9 +31,13 @@
                   <br />
                   <span v-if="category" class="minmax-color">{{category.name}}</span>
                   <span v-if="sub_category" class="minmax-color">, {{sub_category.name}}</span>
+                  <br />                  
+                  <span class="mb-2 mr-2 mb-sm-0">
+                      <strong>Subscription</strong>
+                  </span>                  
                 </p>
 
-                <div class="d-flex">
+                <div class="d-flex align-items-center">
                   <div>
                     <label class="mr-2">
                       <strong>Qty:</strong>
@@ -57,6 +61,7 @@
                   <div class="ml-auto">
                     <button type="button" class="btn btn-success" @click="addToCart()">Add to Cart</button>
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -71,7 +76,7 @@
                     style="padding: 2px 10px 2px 10px;"
                   >
                     <div class="d-flex">
-                      <div style="width:50px">{{item.qty}}/{{item.unit}} &nbsp; &nbsp; &nbsp;</div>
+                      <div style="width:20%">{{item.qty}}/{{item.unit}} &nbsp; &nbsp; &nbsp;</div>
                       <div>
                         <img
                           :src="item.image_link"
