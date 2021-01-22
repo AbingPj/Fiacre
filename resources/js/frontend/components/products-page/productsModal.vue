@@ -71,7 +71,7 @@
                     style="padding: 2px 10px 2px 10px;"
                   >
                     <div class="d-flex">
-                      <div style="width:50px">{{item.qty}}/{{item.unit}} &nbsp; &nbsp; &nbsp;</div>
+                      <div style="width:20%">{{item.qty}}/{{item.unit}} &nbsp; &nbsp; &nbsp;</div>
                       <div>
                         <img
                           :src="item.image_link"
