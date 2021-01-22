@@ -35,8 +35,8 @@ Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.use(VueGoogleMaps, {
     load: {
-      key: process.env.MIX_GOOGLE_API_KEY,
-      libraries: "places" // necessary for places input
+        key: process.env.MIX_GOOGLE_API_KEY,
+        libraries: "places" // necessary for places input
     }
 });
 
@@ -318,6 +318,10 @@ const AdminOrgProfile =
     () => import(/* webpackChunkName: "js/b/adminOrgProfile" */ './admin-org-components/profile/index.vue');
 
 
+const AdminOrgProducts =
+    () => import(/* webpackChunkName: "js/b/adminOrgProducts" */ './admin-org-components/products/index.vue');
+
+
 const adminVueApp = new Vue({
     el: "#adminVueApp",
     components: {
@@ -374,6 +378,7 @@ const adminVueApp = new Vue({
         'admin-organization-update': OrganizationUpdate,
         'admin-products-select-organization': SelectOrganization,
         'admin-org-profile': AdminOrgProfile,
+        'admin-org-products': AdminOrgProducts,
 
     }
 });

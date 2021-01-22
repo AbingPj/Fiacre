@@ -8,4 +8,12 @@
        Profile
     </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link {{
+        active_class(Route::is('admin.org.products'))
+    }}" href="{{ route('admin.org.products') }}">
+        <i class="nav-icon fas fa-boxes"></i>
+        Assigned Products
+    </a>
+</li>
 @endif
