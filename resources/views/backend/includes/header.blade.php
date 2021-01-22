@@ -19,6 +19,11 @@
             <a class="nav-link" href="{{ route('admin.dashboard') }}">@lang('navs.frontend.dashboard')</a>
         </li>
         @endif
+        @if ($logged_in_user->isOrganization())
+            <li class="nav-item px-3">
+                <a class="nav-link" href="{{ route('admin.org.profile') }}">{{$org->org_name}}</a>
+            </li>
+        @endif
 
         {{-- @if(config('locale.status') && count(config('locale.languages')) > 1)
             <li class="nav-item px-3 dropdown">

@@ -314,7 +314,8 @@ Vue.component("SelectOrganizationModal", require("./components/products/selectOr
 // Vue.component("admin-chat-customer-show", require("./components/chatcustomer/show.vue").default);
 // Vue.component("admin-chat-customer-list", require("./components/chatcustomer/customerlist.vue").default);
 
-
+const AdminOrgProfile =
+    () => import(/* webpackChunkName: "js/b/adminOrgProfile" */ './admin-org-components/profile/index.vue');
 
 
 const adminVueApp = new Vue({
@@ -372,6 +373,7 @@ const adminVueApp = new Vue({
         'admin-organization-add': OrganizationAdd,
         'admin-organization-update': OrganizationUpdate,
         'admin-products-select-organization': SelectOrganization,
+        'admin-org-profile': AdminOrgProfile,
 
     }
 });

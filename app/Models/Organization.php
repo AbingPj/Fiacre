@@ -11,9 +11,15 @@ class Organization extends Model
         'atr_logo_link',
         'atr_type_label',
         'atr_active_label',
-        'atr_contact_person'
+        'atr_contact_person',
+        'atr_address'
     ];
 
+    public function getAtrAddressAttribute()
+    {
+        $address = $this->org_street. ', '. $this->org_cityprov . ', '.$this->org_state . ', ' . $this->org_zipcode;
+        return $address;
+    }
 
     public function getAtrTypeLabelAttribute()
     {

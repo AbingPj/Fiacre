@@ -7,7 +7,9 @@
 <admin-messages></admin-messages>
 <div class="card">
     <div class="card-body">
-        <admin-organization-show :propsorg="{{json_encode($org)}}"></admin-organization-show>
+        {{-- {{$org->org_name}} --}}
+        {{-- <admin-organization-show :propsorg="{{json_encode($org)}}"></admin-organization-show> --}}
+        <admin-org-profile :propsorg="{{json_encode($org)}}"></admin-org-profile>
 
     </div>
 </div>
