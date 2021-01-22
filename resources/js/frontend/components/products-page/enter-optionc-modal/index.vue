@@ -15,8 +15,7 @@
 						<div class="row">
 							<div class="col" style="padding: 0px !important">
 								<h5>
-									<i class="fas fa-sitemap"></i> Selecting
-									Organization
+									<i class="fas fa-sitemap"></i> Selecting Organization
 								</h5>
 
 								<div class="my-5 mx-5">
@@ -56,6 +55,7 @@
 </template>
 
 <script>
+	import cookies from "js-cookie";
 	export default {
 		props: ["guest", "user"],
 		mounted() {
@@ -81,12 +81,25 @@
 				axios
 					.post(`/proceed/optioncid`, data)
 					.then((res) => {
-                        this.$parent.org_id = res.data.id;
+						this.$parent.org_id = res.data.id;
 						this.$parent.org_name = res.data.org_name;
-                        this.$parent.getResults();
+						this.$parent.getResults();
+						cookies.remove("ff-org-id");
+						cookies.remove("ff-org-name");
+						cookies.remove("ff-org-address");
+						const expiryTime = new Date(new Date().getTime() + 86400 * 1000);
+						cookies.set("ff-org-id", res.data.id, {
+							expires: expiryTime,
+						});
+						cookies.set("ff-org-name", res.data.org_name, {
+							expires: expiryTime,
+                        });
+                        cookies.set("ff-org-address", res.data.atr_address, {
+							expires: expiryTime,
+						});
 						console.log(res);
-                        LoadingOverlayHide();
-                        $("#enterOptionCIdModal").modal("hide");
+						LoadingOverlayHide();
+						$("#enterOptionCIdModal").modal("hide");
 					})
 					.catch((err) => {
 						if (err.response) {
@@ -110,25 +123,25 @@
 
 <style>
 	/* .fade-enter-active,
-												.fade-leave-active {
-													transition: opacity 0.5s;
-												}
-												.fade-enter,
-												.fade-leave-to {
-													opacity: 0;
-												}
+															.fade-leave-active {
+																transition: opacity 0.5s;
+															}
+															.fade-enter,
+															.fade-leave-to {
+																opacity: 0;
+															}
 
-												.slide-fade-enter-active {
-													transition: all 0.3s ease;
-												}
-												.slide-fade-leave-active {
-													transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-												}
-												.slide-fade-enter,
-												.slide-fade-leave-to {
-													transform: translateX(10px);
-													opacity: 0;
-												} */
+															.slide-fade-enter-active {
+																transition: all 0.3s ease;
+															}
+															.slide-fade-leave-active {
+																transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+															}
+															.slide-fade-enter,
+															.slide-fade-leave-to {
+																transform: translateX(10px);
+																opacity: 0;
+															} */
 </style>
 
 <style lang="scss" scoped>

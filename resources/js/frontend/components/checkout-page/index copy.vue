@@ -97,7 +97,7 @@
             </div>
             <table class="table">
               <tbody>
-                <!-- <tr v-if="guest == 0">
+                <tr v-if="guest == 0">
                   <td colspan="2">
                     <div class="mb-2">
                       Your Address:
@@ -106,6 +106,7 @@
                         class="btn-edit float-right"
                         @click="editAddress()"
                       >
+                        <!-- <i class="fas fa-pencil-alt"></i> -->
                         <i class="fas fa-edit"></i>
                       </button>
                     </div>
@@ -133,6 +134,7 @@
                       <div v-if="guestHasAddress">
                         <i class="fas fa-map-marker mr-2"></i>
                         {{guestAddress}}
+                        <!-- {{guestAddress.street_address}},{{guestAddress.city}},{{guestAddress.state}},{{guestAddress.zipcode}} -->
                       </div>
 
                       <div v-else class="text-center">
@@ -143,7 +145,7 @@
                       </div>
                     </div>
                   </td>
-                </tr> -->
+                </tr>
 
                 <tr>
                   <td colspan="2">
@@ -155,7 +157,6 @@
                           type="radio"
                           value="deliver"
                           v-model="shipments"
-                          disabled
                         />
                         <label class="form-check-label" for="inlineRadio1">Deliver</label>
                       </div>
@@ -172,7 +173,7 @@
                   </td>
                 </tr>
 
-                <!-- <tr v-if="shipments == 'deliver'">
+                <tr v-if="shipments == 'deliver'">
                   <td colspan="2" v-if="nearestDeliveryZones.length != 0 ">
                     <div class="mb-2">Nearest Delivery Zone:</div>
                     <div class="ml-3">
@@ -199,18 +200,6 @@
                   </td>
                   <td colspan="2" v-if="nearestPickupZones.length == 0 ">
                     <div class="ml-3">No nearby zones of your address</div>
-                  </td>
-                </tr> -->
-
-                 <tr>
-                  <td colspan="2">
-                    <div class="mb-2">School/Parish:</div>
-                    <div class="ml-3">
-                      <b>{{org_name}}</b>
-                      <br />
-                      <i class="fas fa-map-marker mr-2"></i>
-                     {{org_address}}
-                    </div>
                   </td>
                 </tr>
 
@@ -312,7 +301,7 @@
             <div class="col-md-12 text-center place-order-btn-container mt-auto">
               <h6 v-if="guest == 0" class="text-danger">{{errorMessage}}</h6>
 
-              <!-- <button
+              <button
                 v-if="guest == 0"
                 type="button"
                 class="btn btn-lg btn-primary w-100"
@@ -325,22 +314,6 @@
                 type="button"
                 class="btn btn-lg btn-primary w-100"
                 @click="guestProcessToPayment()"
-                :disabled="placeorder"
-              >PROCEED to PAYMENT</button> -->
-
-              <button
-                v-if="guest == 0"
-                type="button"
-                class="btn btn-lg btn-primary w-100"
-                @click="underConstruction()"
-                :disabled="placeorder"
-              >PLACE ORDER</button>
-
-              <button
-                v-if="guest == 1"
-                type="button"
-                class="btn btn-lg btn-primary w-100"
-                @click="underConstruction()"
                 :disabled="placeorder"
               >PROCEED to PAYMENT</button>
             </div>
@@ -461,7 +434,6 @@ const ChPGpaymentModal = () =>
   import(
     /* webpackChunkName: "js/f/ChPGpaymentModal" */ "./guestPaymentModal.vue"
   );
-  import cookies from "js-cookie";
 
 export default {
   components: {
@@ -487,7 +459,7 @@ export default {
     return {
       products: [],
 
-      shipments: "pickup",
+      shipments: "deliver",
       shipmentsOptions: [
         { text: "Deliver", value: "deliver" },
         { text: "Pick-up", value: "pickup" },
@@ -515,10 +487,7 @@ export default {
       guestAddressModalIsReady: false,
 
       needToSetBillingInfo: false,
-      googleAPIKEY: process.env.MIX_GOOGLE_API_KEY,
-      org_id:cookies.get('ff-org-id'),
-      org_name:cookies.get('ff-org-name'),
-      org_address:cookies.get('ff-org-address')
+      googleAPIKEY: process.env.MIX_GOOGLE_API_KEY
     };
   },
   computed: {
@@ -528,12 +497,6 @@ export default {
       } else {
         return 0;
       }
-    },
-    underConstruction(){
-        LoadingOverlay();
-        setTimeout(() => {
-            LoadingOverlayHide();
-        }, 5000);
     },
     totalAmount() {
       if (this.cart.length == 0) {

@@ -52,7 +52,7 @@
         </td>
       </tr>
 
-      <tr>
+      <!-- <tr>
         <td>Delivery Fee</td>
         <td>
           <div class="d-flex justify-content-between">
@@ -60,7 +60,7 @@
             <div class="text-right">{{ displayNumber(shipments_price)}}</div>
           </div>
         </td>
-      </tr>
+      </tr> -->
        <tr>
         <td>Tax</td>
         <td>
