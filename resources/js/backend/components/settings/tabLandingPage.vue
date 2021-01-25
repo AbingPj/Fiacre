@@ -26,7 +26,7 @@
           <div class="form-group mb-3">
             <label for="landing_header" class="font-weight-bold">Banner Logo</label>
             <br />
-            <img :src="logo" style="width:120px; height:80px; object-fit: cover;" />
+            <img :src="logo" style="width:80%; height:auto; object-fit: cover;" />
             <br />
             <div class="input-group mt-3 mb-3 w-75">
               <div class="custom-file">
