@@ -31,14 +31,19 @@
                   <br />
                   <span v-if="category" class="minmax-color">{{category.name}}</span>
                   <span v-if="sub_category" class="minmax-color">, {{sub_category.name}}</span>
-                  <br />                  
+                  <br />
                   <span class="mb-2 mr-2 mb-sm-0">
                       <strong>Subscription</strong>
-                  </span>                  
+                  </span>
                 </p>
 
                 <div class="d-flex align-items-center">
                   <div>
+                    <label class="mr-2">
+                      <strong>$ {{product.subscription_price}} / {{product.weeks}} weeks</strong>
+                    </label>
+                  </div>
+                  <!-- <div>
                     <label class="mr-2">
                       <strong>Qty:</strong>
                     </label>
@@ -57,11 +62,11 @@
                     <span class="mb-2 mr-2 mb-sm-0">
                       <strong>{{ product.unit }}</strong>
                     </span>
-                  </div>
+                  </div> -->
                   <div class="ml-auto">
                     <button type="button" class="btn btn-success" @click="addToCart()">Add to Cart</button>
                   </div>
-                  
+
                 </div>
               </div>
             </div>

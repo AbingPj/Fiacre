@@ -96,14 +96,13 @@ class ProductsController extends Controller
                     }
                 }
                 $value->selected_products = $selected;
-
-                $value->weeks = $value->getSubcriptionWeeks($org_id);
-                if ($value->weeks == '-') {
-                    $value->subscirption_price = 'no subscription yet';
-                } else {
-                    $subscription_price = $value->price * $value->weeks;
-                    $value->subscirption_price = round($subscription_price, 2);
-                }
+            }
+            $value->weeks = $value->getSubcriptionWeeks($org_id);
+            if ($value->weeks == '-') {
+                $value->subscription_price = 'no subscription yet';
+            } else {
+                $subscription_price = $value->price * $value->weeks;
+                $value->subscription_price = round($subscription_price, 2);
             }
             return $value;
         });

@@ -332,6 +332,7 @@
             :cart="cart"
             :customer_role="user.customer_role"
             :minimum="wholesaler_minimum_order_amount"
+            :guest="guest"
           ></products-page-order-summary>
         </div>
       </div>
