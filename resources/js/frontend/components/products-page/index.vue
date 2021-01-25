@@ -166,7 +166,7 @@
 
 <template>
   <div class="margin-content-2">
-    <products-user-balance-mobile :guest="guest" :user="user"></products-user-balance-mobile>
+    <!-- <products-user-balance-mobile :guest="guest" :user="user"></products-user-balance-mobile> -->
     <div class="container search-container">
       <div class="row">
         <div :class="display == 'box'? 'col-md-8 col-lg-9' : 'col-md-8'">
@@ -260,12 +260,12 @@
                 <i class="fas fa-times-circle"></i>
               </button>
             </span>
-            
+
           </div>
         </div>
         <div :class="display == 'box'? 'col-md-4 col-lg-3' : 'col-md-4'">
           <h6 class="text-success">{{org_name}}</h6>
-          <products-user-balance :guest="guest" :user="user"></products-user-balance>
+          <!-- <products-user-balance :guest="guest" :user="user"></products-user-balance> -->
         </div>
       </div>
     </div>

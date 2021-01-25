@@ -52,7 +52,7 @@
   <div class="container mt-1 mb-5 main-conatiner">
     <div class="row">
       <div class="col-12">
-        <users-balance :user="user" :guest="guest"></users-balance>
+        <!-- <users-balance :user="user" :guest="guest"></users-balance> -->
       </div>
     </div>
     <div class="row">
