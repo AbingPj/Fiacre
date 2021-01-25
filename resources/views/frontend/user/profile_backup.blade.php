@@ -24,9 +24,9 @@
         :propscities="{{json_encode($cities)}}"
         :propsstates="{{json_encode($states)}}"
         action="{{route('frontend.profile.update')}}"
-        {{-- :propssunclub_choices="{{json_encode($sunclub_choices)}}" --}}
-        {{-- wholesaler_discount="{{$wholesaler_discount}}" --}}
-        {{-- cancel_action="{{route('frontend.auth.cancel.sunclub.subscription')}}" --}}
+        :propssunclub_choices="{{json_encode($sunclub_choices)}}"
+        wholesaler_discount="{{$wholesaler_discount}}"
+        cancel_action="{{route('frontend.auth.cancel.sunclub.subscription')}}"
         cc_sc_action="{{route('frontend.profile.saveCC.sc')}}"
         cc_ws_action="{{route('frontend.profile.saveCC.ws')}}"
         ach_sc_action="{{route('frontend.profile.saveACH.sc')}}"

@@ -107,6 +107,9 @@ class ProductsController extends Controller
 
     public function index()
     {
+
+
+
         \App\Services\TotalViewService::getView("prod indx");
 
         $products = Product::with('category:id,name')->where('is_visible', 1)->where('status', '!=', 3)->paginate(3);
@@ -118,15 +121,23 @@ class ProductsController extends Controller
         if (Auth::guest() == false) {
             $user = User::find(Auth::user()->id);
             $user->image_path = $user->getPicture();
-            if (auth()->user()->customer_role == 2) {
-                $sunclub_user = 1;
-                $user->balance = $user->getSunClubBalance();
-                $user->discount = $user->getUserDiscount();
-            } else {
-                $sunclub_user = 0;
-                $user->balance = 0;
-                $user->discount = $user->getUserDiscount();
+
+            if(auth()->user()->isOrganization()){
+                return redirect('/admin/org/products');
             }
+            if(auth()->user()->isAdmin()){
+                return redirect('/admin/products');
+            }
+            // if (auth()->user()->customer_role == 2) {
+            //     $sunclub_user = 1;
+            //     $user->balance = $user->getSunClubBalance();
+            //     $user->discount = $user->getUserDiscount();
+            // } else {
+            //     $sunclub_user = 0;
+            //     $user->balance = 0;
+            //     $user->discount = $user->getUserDiscount();
+            // }
+            $sunclub_user = 0;
         } else {
             $sunclub_user = 0;
             $user = [];

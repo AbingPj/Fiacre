@@ -98,6 +98,16 @@ trait UserMethod
         return $this->hasRole(config('access.users.org_user'));
     }
 
+    public function isDefaultRole()
+    {
+        return $this->hasRole(config('access.users.default_role'));
+    }
+
+    public function isFiacreCustomerRole()
+    {
+        return $this->hasRole(config('access.users.fiacre_customer_role'));
+    }
+
     public function isSunClubMember()
     {
         return $this->customer_role == 2;

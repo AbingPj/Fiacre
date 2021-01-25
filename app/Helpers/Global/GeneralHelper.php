@@ -39,8 +39,8 @@ if (! function_exists('home_route')) {
                 }
 
             }
-
-            return 'frontend.products.checkout';
+            return 'frontend.products';
+            // return 'frontend.products.checkout';
         }
 
         return 'frontend.index';

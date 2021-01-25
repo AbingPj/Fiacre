@@ -31,6 +31,7 @@ return [
         'sunclub_user' => 'sunclub_user',
         'wholesale_user' => 'wholesale_user',
         'org_user' => 'org_user',
+        'fiacre_customer_role' => 'fiacre_customer_role',
 
         /*
          * Whether or not new users need to be approved by an administrator before logging in

@@ -106,12 +106,13 @@ class LoginController extends Controller
         }
 
 
-        if($user->sun_is_expired == 1) {
-            // dd('expired');
-            return redirect()->intended($this->redirectPath())->withExpiredMessage('Expired');
-        }else{
-            return redirect()->intended($this->redirectPath());
-        }
+        // if($user->sun_is_expired == 1) {
+        //     // dd('expired');
+        //     return redirect()->intended($this->redirectPath())->withExpiredMessage('Expired');
+        // }else{
+        //     return redirect()->intended($this->redirectPath());
+        // }
+        return redirect()->intended($this->redirectPath());
 
     }
 

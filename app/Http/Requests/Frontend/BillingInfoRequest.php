@@ -34,7 +34,7 @@ class BillingInfoRequest extends FormRequest
             'zipcode' => ['required'],
 
             'billing_token_type' => ['required'],  // (1)(cc)Credit Card or (2)(ach)ACH
-            'subscription' => ['required'],  // (1)sunclub member or (2)wholesale rember
+            // 'subscription' => ['required'],  // (1)sunclub member or (2)wholesale rember
 
             'card_type' =>  ['required_if:billing_token_type,1'],
             'card_number' => ['required_if:billing_token_type,1'],
@@ -47,17 +47,17 @@ class BillingInfoRequest extends FormRequest
             'ach_account_number' => ['required_if:billing_token_type,2'],
             'ach_routing' => ['required_if:billing_token_type,2'],
 
-            'business_designation' => ['required_if:subscription,2'],
-            'business_name' =>  ['required_if:subscription,2'],
-            'business_street_address' =>  ['required_if:subscription,2'],
-            'business_city' =>  ['required_if:subscription,2'],
-            'business_state' =>  ['required_if:subscription,2'],
-            'business_zipcode' =>  ['required_if:subscription,2'],
+            // 'business_designation' => ['required_if:subscription,2'],
+            // 'business_name' =>  ['required_if:subscription,2'],
+            // 'business_street_address' =>  ['required_if:subscription,2'],
+            // 'business_city' =>  ['required_if:subscription,2'],
+            // 'business_state' =>  ['required_if:subscription,2'],
+            // 'business_zipcode' =>  ['required_if:subscription,2'],
 
 
             ///Images
             'image_file' => ['image'],
-            'business_image_file' => ['image'],
+            // 'business_image_file' => ['image'],
 
             // 'g-recaptcha-response' => ['required_if:captcha_status,true', 'captcha'],
 

@@ -24,6 +24,7 @@ class PermissionRoleTableSeeder extends Seeder
         Role::create(['name' => config('access.users.sunclub_user')]);
         Role::create(['name' => config('access.users.wholesale_user')]);
         $org_user_role = Role::create(['name' => config('access.users.org_user')]);
+        Role::create(['name' => config('access.users.fiacre_customer_role')]);
 
         // Create Permissions
         Permission::create(['name' => 'view backend']);

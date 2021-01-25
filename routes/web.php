@@ -54,7 +54,8 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
 
     /// FinishSignup Congtroller
-    Route::post('/submitfisnishsignup', 'FinishSignUpController@finishSignUp');
+    // Route::post('/submitfisnishsignup', 'FinishSignUpController@finishSignUp');
+    Route::post('/submitfisnishsignup', 'FinishSignUpController2@finishSignUp');
 
     ////
     Route::get('/myprofile', 'UserProfileController@index');
