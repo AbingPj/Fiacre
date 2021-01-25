@@ -60,6 +60,7 @@ class PlaceOrderController extends Controller
                 $user->balance = 0;
                 $user->discount = $user->getUserDiscount();
             }
+            $userBilling =  BillingInfo::where('user_id', $user->id)->first();
         } else {
             $sunclub_user = 0;
             $user = [];
@@ -76,6 +77,7 @@ class PlaceOrderController extends Controller
                 'user' => $user,
                 'delivery_fee' => $store->delivery_fee,
                 'wholesaler_minimum_order_amount' => $store->wholesaler_minimum_order_amount,
+                'user_billing_type' => $userBilling->CC_or_ACH,
             ]
         );
     }

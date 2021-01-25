@@ -97,22 +97,24 @@
                   <b>{{item.name}}</b>
                 </span>
                 <br />
-                <span v-if="customer_role == 2">$ {{item.member_price}}/{{item.unit}}</span>
+                <!-- <span v-if="customer_role == 2">$ {{item.member_price}}/{{item.unit}}</span>
                 <span v-else-if="customer_role == 3">$ {{item.wholesale_price}}/{{item.unit}}</span>
-                <span v-else>$ {{item.price}}/{{item.unit}}</span>
+                <span v-else>$ {{item.price}}/{{item.unit}}</span> -->
+                <span>$ {{item.price}}/{{item.unit}}</span>
                 <br />
 
                 <br />
 
                 <span class="qty-options">
-                  <b>qty:</b>
+                  <!-- <b>qty:</b>
                   <button type="button" class="plusminus" @click="subQty(item)">
                     <i class="fa fa-minus-circle" aria-hidden="true"></i>
                   </button>
                   <b>{{item.qty}}</b>
                   <button type="button" class="plusminus" @click="addQty(item)">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                  </button>
+                  </button> -->
+                  {{item.price}}  X  {{item.weeks}} weeks =
                 </span>
               </p>
             </div>
@@ -121,11 +123,12 @@
                 <i class="fa fa-times" aria-hidden="true"></i>
               </button>
               <div id="sub-total" class="text-right">
-                <b v-if="customer_role == 2">$ {{displayNumber(item.member_price * item.qty)}}</b>
+                <!-- <b v-if="customer_role == 2">$ {{displayNumber(item.member_price * item.qty)}}</b>
                 <b
                   v-else-if="customer_role == 3"
                 >$ {{displayNumber(item.wholesale_price * item.qty)}}</b>
-                <b v-else>$ {{displayNumber(item.price * item.qty)}}</b>
+                <b v-else>$ {{displayNumber(item.price * item.qty)}}</b> -->
+                <b>$ {{displayNumber(item.subscription_price)}}</b>
                 <br />
               </div>
             </div>

@@ -12,6 +12,7 @@
         :propproducts="{{json_encode($products)}}"
         :wholesaler_minimum_order_amount="{{$wholesaler_minimum_order_amount}}"
         expected_delivery_dates="{{$store_settings->atr_expected_delivery_date}}"
+        user_billing_type="{{ $user_billing_type }}"
     ></checkout-page>
 
 @endsection
