@@ -135,9 +135,10 @@
 									<!-- <span style="color: #339f25; padding: 0px"
 										>Qty: {{ item.qty }} {{ item.unit }}</span
 									> -->
-                                    <span style="color: #339f25; padding: 0px"
-										> {{ displayNumberWithComma(item.price) }} * {{ item.weeks }} weeks = </span
-									>
+									<span style="color: #339f25; padding: 0px">
+										{{ displayNumberWithComma(item.price) }} *
+										{{ item.weeks }} weeks =
+									</span>
 								</p>
 							</div>
 							<div class="cart-item-close-container ml-auto w-25">
@@ -146,7 +147,12 @@
 								</button>
 								<span id="sub-total">
 									<!-- <b>$ {{ displayNumberWithComma(subTotal(item)) }}</b> -->
-									<b>$ {{ displayNumberWithComma(item.subscription_price) }}</b>
+									<b
+										>$
+										{{
+											displayNumberWithComma(item.subscription_price)
+										}}</b
+									>
 								</span>
 							</div>
 						</li>
@@ -169,8 +175,13 @@
 					if (this.guest == "1") {
 						$("#modalLogin").modal("show");
 					} else {
-						LoadingOverlay();
-						window.location.href = "/products/checkout";
+                        if (this.customer_role == 1) {
+                            LoadingOverlay();
+						    window.location.href = "/register/success/confirmed";
+                        }else{
+                            LoadingOverlay();
+						    window.location.href = "/products/checkout";
+                        }
 					}
 					// if (this.customer_role == 3) {
 					//   if (this.totalAmount < this.minimum) {
