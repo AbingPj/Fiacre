@@ -12,7 +12,7 @@
 			class="row mt-4"
 			style="font-family: Source Sans Pro, sans-serif !important"
 		>
-			<div class="col-md-7">
+			<div class="col-md-7 col-sm-12">
 				<div class="form-group">
 					<label for="name">Organization Name (Parish/School)</label>
 					<input
@@ -44,7 +44,7 @@
 						name="optionc_id"
 						class="form-control rounded-0"
 						type="text"
-                        @keypress="onlyNumber"
+						@keypress="onlyNumber"
 					/>
 				</div>
 				<div class="form-group">
@@ -299,6 +299,33 @@
 					/>
 				</div>
 			</div>
+			<div class="col-md-5 col-sm-12">
+				<!-- <div class="mb-1">
+
+				</div> -->
+				<table id="org-products-table" class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2"><h4>Assigned Products</h4></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(item, index) in products" :key="index">
+							<td style="width:70px;">
+								<img
+									:src="item.image_link"
+									alt=""
+									style="width: 60px; height: 40px; object-fit: cover"
+								/>
+							</td>
+							<td>
+								{{ item.name }} <br>
+                                - {{ getSubPrice(item) }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-7">
@@ -334,13 +361,15 @@
 				results: {},
 				results2: {},
 				errors: new Errors(),
+				products: [],
 			};
 		},
 
 		created() {
 			this.LogoPreview = this.propsorg.atr_logo_link;
 			this.org = this.propsorg;
-			this.getStates();
+            this.getStates();
+            this.getProducts(this.propsorg.id);
 		},
 		mounted() {
 			setTimeout(() => {
@@ -354,6 +383,24 @@
 		},
 
 		methods: {
+			getProducts(id) {
+				axios
+					.get(`/admin/api/getOrgAssignedProducts/${id}`)
+					.then((res) => {
+						this.products = res.data;
+					})
+					.catch((err) => {
+						console.error(err);
+						alert("Something went wrong");
+					});
+			},
+			getSubPrice(item) {
+				var data = item.subscirption_price;
+				if (data != "no subscription yet") {
+					return "$ " + data + "/" + item.weeks + " weeks";
+				}
+				return data;
+			},
 			onlyNumber($event) {
 				//console.log($event.keyCode); //keyCodes value
 				let keyCode = $event.keyCode ? $event.keyCode : $event.which;

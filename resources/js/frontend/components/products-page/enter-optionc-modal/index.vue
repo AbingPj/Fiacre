@@ -84,6 +84,13 @@
 						this.$parent.org_id = res.data.id;
 						this.$parent.org_name = res.data.org_name;
 						this.$parent.getResults();
+						var ff_org_id = cookies.get("ff-org-id");
+						if (ff_org_id != res.data.id) {
+							var cart = [];
+							localStorage.setItem("cart", JSON.stringify(cart));
+							localStorage.setItem("cart_badge", cart.length);
+							this.$events.fire("updateCartBadge", "update cart");
+						}
 						cookies.remove("ff-org-id");
 						cookies.remove("ff-org-name");
 						cookies.remove("ff-org-address");
@@ -93,10 +100,11 @@
 						});
 						cookies.set("ff-org-name", res.data.org_name, {
 							expires: expiryTime,
-                        });
-                        cookies.set("ff-org-address", res.data.atr_address, {
+						});
+						cookies.set("ff-org-address", res.data.atr_address, {
 							expires: expiryTime,
 						});
+
 						console.log(res);
 						LoadingOverlayHide();
 						$("#enterOptionCIdModal").modal("hide");
@@ -123,25 +131,25 @@
 
 <style>
 	/* .fade-enter-active,
-															.fade-leave-active {
-																transition: opacity 0.5s;
-															}
-															.fade-enter,
-															.fade-leave-to {
-																opacity: 0;
-															}
+																		.fade-leave-active {
+																			transition: opacity 0.5s;
+																		}
+																		.fade-enter,
+																		.fade-leave-to {
+																			opacity: 0;
+																		}
 
-															.slide-fade-enter-active {
-																transition: all 0.3s ease;
-															}
-															.slide-fade-leave-active {
-																transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-															}
-															.slide-fade-enter,
-															.slide-fade-leave-to {
-																transform: translateX(10px);
-																opacity: 0;
-															} */
+																		.slide-fade-enter-active {
+																			transition: all 0.3s ease;
+																		}
+																		.slide-fade-leave-active {
+																			transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+																		}
+																		.slide-fade-enter,
+																		.slide-fade-leave-to {
+																			transform: translateX(10px);
+																			opacity: 0;
+																		} */
 </style>
 
 <style lang="scss" scoped>

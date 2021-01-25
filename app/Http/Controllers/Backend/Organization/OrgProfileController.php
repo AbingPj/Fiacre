@@ -12,7 +12,7 @@ class OrgProfileController extends Controller
     public function index()
     {
         //    $categories =  ProductCategory::all()->sortBy("name");
-        $org = Organization::find(auth()->user()->id);
+        $org = Organization::where('user_id',auth()->user()->id)->first();
         return view('backend.admin-org.org-profie', compact('org'));
     }
 }

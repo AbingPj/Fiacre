@@ -70,7 +70,7 @@ Route::group([
     Route::post('api/updateOrganization', [OrganizationController::class, 'updateOrganization'])->name('organization.updateOrganization');
     Route::post('api/deleteOrganization/{org_id}', [OrganizationController::class, 'deleteOrganization'])->name('organization.deleteOrganization');
     Route::post('api/getOrganizationInfo/{org_id}', [OrganizationController::class, 'getOrganizationInfo'])->name('organization.getOrganizationInfo');
-
+    Route::get('/api/getOrgAssignedProducts/{org_id}', [OrganizationController::class, 'getAssignedProducts'])->name('organization.getAssignedProducts');
 
     //Categories
     Route::get('categories', [CategoriesController::class, 'index'])->name('categories.index');

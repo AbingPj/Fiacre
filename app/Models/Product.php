@@ -39,11 +39,37 @@ class Product extends Model
     // }
 
     public function scopeProductOrg($query, $org_id)
+    // public function scopeProductOrgWithSubscription($query, $org_id)
     {
-        $query->join('product_organization', 'products.id', '=', 'product_organization.prodorg_product_id')->where('product_organization.prodorg_organization_id', $org_id);
+        $query->join(
+            'product_organization',
+            'products.id',
+            '=',
+            'product_organization.prodorg_product_id'
+        )
+            ->where('product_organization.prodorg_organization_id', $org_id);
 
         return $query;
     }
+
+    public function scopeProductOrgWithSubscription($query, $org_id)
+    {
+        $query->join(
+            'product_organization',
+            'products.id',
+            '=',
+            'product_organization.prodorg_product_id'
+        )->join(
+            'product_subcriptions',
+            'products.id',
+            '=',
+            'product_subcriptions.prodsub_product_id'
+        )
+            ->where('product_organization.prodorg_organization_id', $org_id)
+            ->where('product_subcriptions.prodsub_organization_id', $org_id);
+        return $query;
+    }
+
 
     public function category()
     {
@@ -261,7 +287,7 @@ class Product extends Model
 
     public function getSubcriptionWeeks($org_id)
     {
-
+    // dd($org_id);
         $weeks = null;
 
         $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
@@ -276,7 +302,7 @@ class Product extends Model
             // dump($end);
             $weeks = $now->diffInWeeks($end);
         } else {
-            $weeks = null;
+            $weeks = "-";
         }
         return $weeks;
     }

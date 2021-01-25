@@ -20,6 +20,8 @@
 							<th>Image</th>
 							<th>Product Name</th>
 							<th>Price</th>
+							<!-- <th>Total No. Weeks</th> -->
+							<th>Current No. Weeks</th>
 							<th>Subcription Price</th>
 							<th>Visibility</th>
 							<th>Actions</th>
@@ -37,7 +39,8 @@
 							<td>
 								{{ item.name }}
 							</td>
-							<td>{{ item.price }}/{{ item.unit }}</td>
+							<td>$ {{ item.price }}/{{ item.unit }}</td>
+							<td>{{ getNumberOfWeeks(item) }}</td>
 							<td>{{ getSubPrice(item) }}</td>
 							<td>
 								{{ item.is_visible == 1 ? "show" : "hide" }}
@@ -78,13 +81,19 @@
 			this.getProducts();
 		},
 		methods: {
-			getSubPrice(item) {
-				if (item.weeks != null) {
-					var price = item.weeks * item.price;
-					return '$ ' + price + "/" + item.weeks + ' weeks';
-				} else {
-					return 'no subcription set yet';
+			getNumberOfWeeks(item) {
+				var data = "-";
+				if (item.weeks != "-") {
+					data = item.weeks + " week(s)";
 				}
+				return data;
+			},
+			getSubPrice(item) {
+				var data = item.subscirption_price;
+				if (data != "no subscription yet") {
+					return "$ " + data + "/" + item.weeks + " weeks";
+				}
+				return data;
 			},
 			viewOrganization(data) {
 				window.location.href = `/admin/org/products/subcription/${data.id}`;

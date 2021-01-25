@@ -41,10 +41,10 @@ class ProductsController extends Controller
 
     public function getProducts(Request $request)
     {
-        $org_id = $request->org_id;
+        $org_id = (int) $request->org_id;
 
         if ($request->has('name') && $request->has('category')) {
-            $products = Product::productOrg($org_id)->with('category:id,name', 'sub_category:id,name')
+            $products = Product::productOrgWithSubscription($org_id)->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.name', 'LIKE', "%$request->name%")
                 ->where('products.category_id', $request->category)
@@ -52,7 +52,7 @@ class ProductsController extends Controller
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('name')) {
-            $products = Product::productOrg($org_id)
+            $products = Product::productOrgWithSubscription($org_id)
                 ->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.name', 'LIKE', "%$request->name%")
@@ -60,7 +60,7 @@ class ProductsController extends Controller
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('category')) {
-            $products = Product::productOrg($org_id)
+            $products = Product::productOrgWithSubscription($org_id)
                 ->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.category_id', $request->category)
@@ -68,7 +68,7 @@ class ProductsController extends Controller
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else {
-            $products = Product::productOrg($org_id)
+            $products = Product::productOrgWithSubscription($org_id)
                 ->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.status', '!=', 3)
@@ -77,14 +77,13 @@ class ProductsController extends Controller
         }
 
 
-        $products->getCollection()->transform(function ($value) {
+        $products->getCollection()->transform(function ($value) use($org_id) {
             $value->selected = false;
             $value->qty = 1;
             if ($value->is_bundle == 1) {
                 $value->price = $value->getBundlePrice('retailer');
-                $value->member_price = $value->getBundlePrice('member');
-                $value->wholesale_price = $value->getBundlePrice('wholesale');
-
+                // $value->member_price = $value->getBundlePrice('member');
+                // $value->wholesale_price = $value->getBundlePrice('wholesale');
                 $selected = [];
                 $bundle_products = ProductBundle::where('bundle_id', $value->id)->get();
                 foreach ($bundle_products as $key2 => $value2) {
@@ -97,6 +96,14 @@ class ProductsController extends Controller
                     }
                 }
                 $value->selected_products = $selected;
+
+                $value->weeks = $value->getSubcriptionWeeks($org_id);
+                if ($value->weeks == '-') {
+                    $value->subscirption_price = 'no subscription yet';
+                } else {
+                    $subscription_price = $value->price * $value->weeks;
+                    $value->subscirption_price = round($subscription_price, 2);
+                }
             }
             return $value;
         });
@@ -122,10 +129,10 @@ class ProductsController extends Controller
             $user = User::find(Auth::user()->id);
             $user->image_path = $user->getPicture();
 
-            if(auth()->user()->isOrganization()){
+            if (auth()->user()->isOrganization()) {
                 return redirect('/admin/org/products');
             }
-            if(auth()->user()->isAdmin()){
+            if (auth()->user()->isAdmin()) {
                 return redirect('/admin/products');
             }
             // if (auth()->user()->customer_role == 2) {

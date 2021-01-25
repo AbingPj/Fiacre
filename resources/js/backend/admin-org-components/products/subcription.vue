@@ -15,23 +15,157 @@
 		>
 			<div class="col-lg-12 col-md-12">
 				<div>
+					<label for="">
+						<div class="form-group">
+							<label for="name">Select day of subcription</label>
+							<br />
+							<div
+								class="custom-control custom-radio custom-control-inline"
+							>
+								<input
+									type="radio"
+                                    id="monday"
+                                    name="day"
+									class="custom-control-input"
+									value="1"
+									v-model="day"
+								/>
+								<label
+									class="custom-control-label"
+									for="monday"
+									>Monday</label
+								>
+							</div>
+							<div
+								class="custom-control custom-radio custom-control-inline"
+							>
+								<input
+									type="radio"
+                                     id="tuesday"
+                                     name="day"
+									class="custom-control-input"
+									value="2"
+									v-model="day"
+								/>
+								<label
+									class="custom-control-label"
+									for="tuesday"
+									>Tuesday</label
+								>
+							</div>
+							<div
+								class="custom-control custom-radio custom-control-inline"
+							>
+								<input
+									type="radio"
+                                        id="wednesday"
+                                        name="day"
+									class="custom-control-input"
+									value="3"
+									v-model="day"
+								/>
+								<label
+									class="custom-control-label"
+									for="wednesday"
+									>Wednesday</label
+								>
+							</div>
+							<div
+								class="custom-control custom-radio custom-control-inline"
+							>
+								<input
+									type="radio"
+                                     id="thurdsay"
+                                     name="day"
+									class="custom-control-input"
+									value="4"
+									v-model="day"
+								/>
+								<label
+									class="custom-control-label"
+									for="thurdsay"
+									>Thursday</label
+								>
+							</div>
+							<div
+								class="custom-control custom-radio custom-control-inline"
+							>
+								<input
+									type="radio"
+                                     id="friday"
+                                     name="day"
+									class="custom-control-input"
+									value="5"
+									v-model="day"
+								/>
+								<label
+									class="custom-control-label"
+									for="friday"
+									>Friday</label
+								>
+							</div>
+							<div
+								class="custom-control custom-radio custom-control-inline"
+							>
+								<input
+									type="radio"
+                                     id="saturday"
+                                     name="day"
+									class="custom-control-input"
+									value="6"
+									v-model="day"
+								/>
+								<label
+									class="custom-control-label"
+									for="saturday"
+									>Saturday</label
+								>
+							</div>
+							<div
+								class="custom-control custom-radio custom-control-inline"
+							>
+								<input
+									type="radio"
+                                     id="sunday"
+                                     name="day"
+									class="custom-control-input"
+									value="7"
+									v-model="day"
+								/>
+								<label
+									class="custom-control-label"
+									for="sunday"
+									>Sunday</label
+								>
+							</div>
+						</div>
+					</label>
+					<br />
+					<br />
 					<label for="">Start Date</label>
+					<br />
 					<VueTwoDatePicker
 						v-model="start"
 						format="YYYY-MM-DD hh:mm:ss"
 						type="datetime"
 						placeholder="Select date"
 						valueType="format"
+                        :default-value="addDays(1)"
+						:disabled-date="disabledBeforeTodayAndAfterTwoWeek"
 					></VueTwoDatePicker>
 					<br />
+					<br />
 					<label for="">End Date</label>
+					<br />
 					<VueTwoDatePicker
 						v-model="end"
 						format="YYYY-MM-DD hh:mm:ss"
 						type="datetime"
 						placeholder="Select date"
 						valueType="format"
+						:disabled-date="disabledBeforeTodayAndAfterTwoWeek"
 					></VueTwoDatePicker>
+					<br />
 					<br />
 					<button class="btn btn-success" @click="saveChanges()">
 						save changes
@@ -47,15 +181,17 @@
 	import "vue2-datepicker/index.css";
 	export default {
 		components: { VueTwoDatePicker: DatePicker },
-		props: ["prod", "propstart", "propend"],
+		props: ["prod", "propday", "propstart", "propend"],
 		created() {
 			this.start = this.propstart;
 			this.end = this.propend;
+			this.day = this.propday;
 		},
 		data() {
 			return {
 				start: null,
 				end: null,
+				day: null,
 			};
 		},
 		methods: {
@@ -64,6 +200,7 @@
 					start: this.start,
 					end: this.end,
 					product_id: this.prod.id,
+					day: this.day,
 				};
 				axios
 					.post("/admin/org/products/saveSubscription", data)
@@ -75,6 +212,21 @@
 						console.error(err);
 						alert(err);
 					});
+			},
+			disabledBeforeTodayAndAfterTwoWeek(date) {
+				const today = this.addDays(1);
+				today.setHours(0, 0, 0, 0);
+
+				// return (
+				// 	date < today ||
+				// 	date > new Date(today.getTime() + 13 * 24 * 3600 * 1000)
+				// );
+                return (date < today);
+			},
+			addDays(days) {
+				var result = new Date();
+				result.setDate(result.getDate() + days);
+				return result;
 			},
 		},
 	};

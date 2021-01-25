@@ -7,6 +7,7 @@ use App\Http\Requests\Backend\AddOrgRequest;
 use App\Http\Requests\Backend\UpdateOrgRequest;
 use App\Models\Auth\User;
 use App\Models\Organization;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -163,5 +164,34 @@ class OrganizationController extends Controller
         }
         $data->save();
         return response()->json($data, 200);
+    }
+
+    public function getAssignedProducts($org_id)
+    {
+        $org = Organization::find($org_id);
+        $org_id = $org->id;
+
+        $products = Product::productOrg($org_id)
+            ->with('category:id,name', 'sub_category:id,name')
+            ->where('products.status', '!=', 3)
+            ->OrderBy('products.created_at', 'DESC')
+            ->get();
+
+        foreach ($products as $key => $prod) {
+            if ($prod->is_bundle == 1) {
+                $prod->price = $prod->getBundlePrice('retailer');
+                $prod->member_price = $prod->getBundlePrice('member');
+                $prod->wholesale_price = $prod->getBundlePrice('wholesale');
+            }
+            $prod->weeks = $prod->getSubcriptionWeeks($org_id);
+            if($prod->weeks == '-'){
+                $prod->subscirption_price = 'no subscription yet';
+            } else {
+                $subscription_price = $prod->price * $prod->weeks;
+                $prod->subscirption_price = round($subscription_price,2);
+            }
+        }
+
+        return response()->json($products, 200);
     }
 }

@@ -12,6 +12,7 @@
         <admin-org-products-sub
             propstart="{{$start}}"
             propend="{{$end}}"
+            propday="{{$day}}"
             :prod="{{json_encode($product)}}"
         >
         </admin-org-products-sub>

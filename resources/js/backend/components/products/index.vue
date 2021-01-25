@@ -108,17 +108,16 @@
               <button class="btn btn-sm btn-success" @click="preview(product)">
                 <i class="far fa-eye mr-2"></i>View
               </button>
-              <button class="btn btn-sm btn-info" @click="stocks(product.id)">
+              <!-- <button class="btn btn-sm btn-info" @click="stocks(product.id)">
                 <i class="fas fa-plus-square mr-2"></i>Quantities
-              </button>
+              </button> -->
             </div>
             <p>
               SKU: {{product.sku}}
               <br />
-              <span :class="product.atr_qty_label == 'Out of Stock' ? 'text-danger':
+              <!-- <span :class="product.atr_qty_label == 'Out of Stock' ? 'text-danger':
                     product.atr_qty_label == 'Low of Stock' ? 'text-warning': 'text-success'
-                  ">{{product.atr_qty_label}}</span>
-              <!-- {{product.is_visible == 1? 'In Stock' : 'Out of Stock'}} -->
+                  ">{{product.atr_qty_label}}</span> -->
               <br />Remaining Qty:
               <b>{{product.atr_qty}} / {{product.unit}}</b>
             </p>
@@ -135,7 +134,7 @@
       <pagination :data="paginatedproducts" :limit="5" size="small" align="left" @pagination-change-page="getResults"></pagination>
     </div>
     <div class="col-lg-4 col-md-4">
-      <div class="p-5" style="height:400px">
+      <!-- <div class="p-5" style="height:400px">
         <h3>Quick Details</h3>
         <br />
         <br />
@@ -156,7 +155,7 @@
           {{data.in_stock}} Items
           <span class="text-secondary">In Stock</span>
         </h4>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
