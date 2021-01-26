@@ -231,7 +231,13 @@
 							</b-col>
 						</b-row>
 					</b-col>
+					<b-col md="4">
+						<md-card class="mb-4 mt-4">
+							<md-card-content> Selected Organization </md-card-content>
+						</md-card>
+					</b-col>
 				</b-row>
+				<SelectOrganizationModal></SelectOrganizationModal>
 			</b-container>
 		</div>
 	</div>
@@ -343,6 +349,8 @@
 				this.sun_is_cancelled = this.user.sunclub.is_cancelled;
 				this.expiration_date = this.user.sunclub.expiration_date;
 			}
+
+			// $('#selectOrganizationModal2').modal('show');
 
 			// this.getCities2();
 			// this.cities2 = this.propscities;

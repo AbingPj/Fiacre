@@ -14,6 +14,7 @@
             propend="{{$end}}"
             propday="{{$day}}"
             :prod="{{json_encode($product)}}"
+            proplimit="{{$limit}}"
         >
         </admin-org-products-sub>
     </div>

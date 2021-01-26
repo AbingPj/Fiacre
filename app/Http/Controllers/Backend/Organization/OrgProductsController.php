@@ -60,15 +60,17 @@ class OrgProductsController extends Controller
         $start = null;
         $end = null;
         $day = null;
+        $limit = null;
 
         if (!empty($prodSub)) {
             $start = $prodSub->prodsub_start_date;
             $end = $prodSub->prodsub_end_date;
             $day = $prodSub->day;
+            $limit = $prodSub->limit_of_subscription;
         }
 
 
-        return view('backend.admin-org.org-product-show', compact('product', 'org', 'start', 'end', 'day'));
+        return view('backend.admin-org.org-product-show', compact('limit','product', 'org', 'start', 'end', 'day'));
     }
 
     public function saveSubscription(Request $request)
@@ -78,6 +80,7 @@ class OrgProductsController extends Controller
             'end' => 'required',
             'day' => 'required',
             'product_id' => 'required',
+            'limit' => 'required',
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();
@@ -94,6 +97,7 @@ class OrgProductsController extends Controller
             $prodSub->prodsub_start_date = Carbon::parse($request->start);
             $prodSub->prodsub_end_date = Carbon::parse($request->end);
             $prodSub->day = $request->day;
+            $prodSub->limit = $request->limit;
             $prodSub->save();
         } else {
             $newData = new ProductSubcription();
@@ -102,6 +106,7 @@ class OrgProductsController extends Controller
             $newData->prodsub_start_date = Carbon::parse($request->start);
             $newData->prodsub_end_date = Carbon::parse($request->end);
             $newData->day = $request->day;
+            $newData->limit = $request->limit;
             $newData->save();
         }
     }

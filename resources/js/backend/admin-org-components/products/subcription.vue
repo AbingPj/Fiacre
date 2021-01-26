@@ -166,6 +166,11 @@
 						:disabled-date="disabledBeforeTodayAndAfterTwoWeek"
 					></VueTwoDatePicker>
 					<br />
+                    <br />
+                    <label for="">Number of Subscription Limit</label>
+					<br />
+                    <input v-model="limit" class="form-control" style="width: 200px !important;" type="number">
+					<br />
 					<br />
 					<button class="btn btn-success" @click="saveChanges()">
 						save changes
@@ -181,17 +186,19 @@
 	import "vue2-datepicker/index.css";
 	export default {
 		components: { VueTwoDatePicker: DatePicker },
-		props: ["prod", "propday", "propstart", "propend"],
+		props: ["prod", "propday", "propstart", "propend", "proplimit"],
 		created() {
 			this.start = this.propstart;
 			this.end = this.propend;
 			this.day = this.propday;
+			this.limit = this.proplimit;
 		},
 		data() {
 			return {
 				start: null,
 				end: null,
 				day: null,
+				limit: null,
 			};
 		},
 		methods: {
@@ -200,7 +207,8 @@
 					start: this.start,
 					end: this.end,
 					product_id: this.prod.id,
-					day: this.day,
+                    day: this.day,
+                    limit: this.limit
 				};
 				axios
 					.post("/admin/org/products/saveSubscription", data)
