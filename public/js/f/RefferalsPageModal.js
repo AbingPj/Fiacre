@@ -1,2 +1,2 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[74],{nzn1:function(n,e,t){"use strict";t.r(e);var l=t("KHd+"),s=Object(l.a)({},(function(){var n=this.$createElement;return(this._self._c||n)("div")}),[],!1,null,null,null);e.default=s.exports}}]);
+(window.webpackJsonp=window.webpackJsonp||[]).push([[72],{nzn1:function(n,e,t){"use strict";t.r(e);var l=t("KHd+"),s=Object(l.a)({},(function(){var n=this.$createElement;return(this._self._c||n)("div")}),[],!1,null,null,null);e.default=s.exports}}]);
 //# sourceMappingURL=RefferalsPageModal.js.map
