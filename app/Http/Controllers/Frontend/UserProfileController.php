@@ -7,6 +7,7 @@ use App\Http\Requests\FrontEnd\UpdateBillingProfileRequest;
 use App\Models\Auth\User;
 use App\Models\BillingInfo;
 use App\Models\City;
+use App\Models\Organization;
 use App\Models\State;
 use App\Models\Store;
 use App\Models\SubscriptionSunclubChoice;
@@ -36,8 +37,19 @@ class UserProfileController extends Controller
         $cities =  City::orderBy('name')->take(100)->get();
 
 
-
         if ($user->is_fiacre_customer) {
+
+            if ($user->selected_org_id) {
+                $org = Organization::find($user->selected_org_id);
+                if (!empty($org)) {
+                    $user->organization = $org;
+                } else {
+                    $user->organization = null;
+                }
+            } else {
+                $user->organization = null;
+            }
+
 
             $user->image_path = $user->getPicture();
 

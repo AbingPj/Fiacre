@@ -33,9 +33,10 @@ class OrgProductsController extends Controller
 
         foreach ($products as $key => $prod) {
             if ($prod->is_bundle == 1) {
-                $prod->price = $prod->getBundlePrice('retailer');
-                $prod->member_price = $prod->getBundlePrice('member');
-                $prod->wholesale_price = $prod->getBundlePrice('wholesale');
+                // $prod->price = $prod->getBundlePrice('retailer');
+                $prod->price = round($prod->getBundlePrice('retailer'),2);
+                // $prod->member_price = $prod->getBundlePrice('member');
+                // $prod->wholesale_price = $prod->getBundlePrice('wholesale');
             }
             $prod->weeks = $prod->getSubcriptionWeeks($org_id);
             if($prod->weeks == '-'){
@@ -97,7 +98,7 @@ class OrgProductsController extends Controller
             $prodSub->prodsub_start_date = Carbon::parse($request->start);
             $prodSub->prodsub_end_date = Carbon::parse($request->end);
             $prodSub->day = $request->day;
-            $prodSub->limit = $request->limit;
+            $prodSub->limit_of_subscription = $request->limit;
             $prodSub->save();
         } else {
             $newData = new ProductSubcription();
@@ -106,7 +107,7 @@ class OrgProductsController extends Controller
             $newData->prodsub_start_date = Carbon::parse($request->start);
             $newData->prodsub_end_date = Carbon::parse($request->end);
             $newData->day = $request->day;
-            $newData->limit = $request->limit;
+            $newData->limit_of_subscription = $request->limit;
             $newData->save();
         }
     }

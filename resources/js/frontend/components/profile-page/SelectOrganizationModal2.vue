@@ -2,10 +2,10 @@
 	<div>
 		<div
 			class="modal fade"
-			id="selectOrganizationModal2"
+			id="selectOrganizationModal3"
 			tabindex="-1"
 			role="dialog"
-			aria-labelledby="selectOrganizationModal2Label"
+			aria-labelledby="selectOrganizationModal3Label"
 			aria-hidden="true"
 		>
 			<div class="modal-dialog product-modaol-dialog" role="document">
@@ -132,21 +132,9 @@
 		},
 		methods: {
 			select(data) {
-				LoadingOverlay();
-				let rawdata = {
-					org_id: data.id,
-				};
-				axios
-					.post(`/api/UpdateSelectedOrganization`, rawdata)
-					.then((res) => {
-						window.location.href = "/myprofile";
-						// LoadingOverlayHide();
-					})
-					.catch((err) => {
-						LoadingOverlayHide();
-						alert("Something Went Wrong");
-					});
-				// $("#selectOrganizationModal2").modal("hide");
+                this.$parent.org_id = data.id;
+                this.$parent.organization = data;
+                $("#selectOrganizationModal3").modal("hide");
 			},
 
 			searchType() {
@@ -192,12 +180,12 @@
 			let self = this;
 			// $("#selectOrganizationModal2").modal("show");
 
-			$("#selectOrganizationModal2").on("shown.bs.modal", function () {
+			$("#selectOrganizationModal3").on("shown.bs.modal", function () {
 				self.getProducts();
 				$("#searchInput").trigger("focus");
 			});
 
-			$("#selectOrganizationModal2").on("hidden.bs.modal", function () {
+			$("#selectOrganizationModal3").on("hidden.bs.modal", function () {
 				//   console.log("SHIT CLOSE");
 				self.search = "";
 			});

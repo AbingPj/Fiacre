@@ -362,57 +362,20 @@
 						</b-row>
 					</b-col>
 					<!-- Formerly Membership Card -->
-					<b-col>
-						<!--
-          <md-card class="mb-4">
-            <md-card-content>
-              <h5>Choice of School/Parish</h5>
+			        <b-col md="4">
+						<md-card class="mb-4 mt-4">
+							<md-card-content> Selected Organization
+                                <br>
+                                <span v-if="organization.org_name"> name: <b>{{ organization.org_name}}</b></span>
+                                 <br>
+                                 <span v-if="organization.org_optionc_id"> optionC id:<b>{{ organization.org_optionc_id}}</b></span>
+                                <br>
+                                <br>
+                                 <button type="button" class="btn btn-info btn-sm p-2" @click="SelectOrganizationMOdalShow()">  Select Organization </button>
+                            </md-card-content>
 
-              <div class="s-user-type">
-                <ValidationProvider name="userType" rules="required">
-                  <label>I want to be a:</label>
-                  <md-radio
-                    v-model="userType"
-                    name="subscription"
-                    value="1"
-                    class="md-primary"
-                  >SUN Club Member</md-radio>
-                  <md-radio
-                    v-if="wholesaler_signup_is_hide != 1"
-                    v-model="userType"
-                    name="subscription"
-                    value="2"
-                    class="md-primary"
-                  >Wholesale Partner (Discount: {{wholesaler_discount}}%)</md-radio>
-                </ValidationProvider>
-              </div>
-              <div v-if="userType === '1'">
-                <p>
-                  Sun Club Membership means you can directly order produce from the Farm and provide you store product updates. An
-                  <span
-                    class="font-weight-bold"
-                  >annual membership fee of ${{membership_fee.membership_fee}}</span>
-                  will give you the opportunity be part of the CSA program SunFarmacy will provide in the future.
-                </p>
-                <div class="s-user-type">
-                  <ValidationProvider name="selectedAmount" rules="required">
-                    <label>I choose:</label>
 
-                    <md-radio
-                      v-for="item in sunclub_choices"
-                      :key="item.id"
-                      name="subscription_sunclub_choice_id"
-                      v-model="selectedAmount"
-                      :value="item.id"
-                      class="md-primary"
-                    >{{item.price}} (discount:{{item.discount}}%)</md-radio>
-                  </ValidationProvider>
-                </div>
-              </div>
-
-            </md-card-content>
-          </md-card>
-          -->
+						</md-card>
 					</b-col>
 				</b-row>
 				<b-row>
@@ -433,6 +396,7 @@
 					</b-col>
 				</b-row>
 			</b-container>
+
 		</div>
 		<vue-programmatic-invisible-google-recaptcha
 			ref="invisibleRecaptcha2"
@@ -443,6 +407,7 @@
 			:showBadgeDesktop="true"
 			@recaptcha-callback="recaptchaCallback"
 		></vue-programmatic-invisible-google-recaptcha>
+        <SelectOrganizationModal2></SelectOrganizationModal2>
 	</form>
 </template>
 
@@ -497,7 +462,9 @@
 				},
 				timer: null,
 				cities3: [],
-				states2: [],
+                states2: [],
+                organization: {},
+                org_id: null,
 			};
 		},
 
@@ -543,6 +510,9 @@
 		},
 
 		methods: {
+            SelectOrganizationMOdalShow(){
+                $("#selectOrganizationModal3").modal("show");
+            },
 			fetchOptions(search, loading) {
 				if (this.timer) {
 					clearTimeout(this.timer);
@@ -579,7 +549,11 @@
 				let formData = new FormData(myForm);
 				formData.append("g-recaptcha-response", recaptchaToken);
 				formData.append("city", this.address.city);
-				formData.append("state", this.address.state);
+                formData.append("state", this.address.state);
+                if(this.org_id){
+                    formData.append("org_id", this.org_id);
+                }
+
 
 				axios
 					// .post(url, formData, {

@@ -69,7 +69,8 @@ class ProductsController extends Controller
 
         foreach ($products as $key => $prod) {
             if ($prod->is_bundle == 1) {
-                $prod->price = $prod->getBundlePrice('retailer');
+                // $prod->price = $prod->getBundlePrice('retailer');
+                $prod->price = round($prod->getBundlePrice('retailer'),2);
                 $prod->member_price = $prod->getBundlePrice('member');
                 $prod->wholesale_price = $prod->getBundlePrice('wholesale');
             }

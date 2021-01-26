@@ -67,7 +67,8 @@ class FiacrePlaceOrderController extends Controller
                     $product = Product::find($orderproduct->product_id);
                     if (!empty($product)) {
                         if ($product->is_bundle == 1) {
-                            $orderproduct->price = $product->getBundlePrice('retailer');
+                            // $orderproduct->price = $product->getBundlePrice('retailer');
+                            $orderproduct->price = round($product->getBundlePrice('retailer'),2);
                             $orderproduct->is_bundle = 1;
                             $orderproduct->bundle_percentage = $product->bundle_percentage;
                         } else {

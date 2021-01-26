@@ -190,6 +190,7 @@ Vue.component("EnterOptionCModal", require("./components/products-page/enter-opt
 Vue.component("AddressStep", require("./components/products-page/organization-modal/address.vue").default);
 Vue.component("OrganizationStep", require("./components/products-page/organization-modal/organization.vue").default);
 Vue.component("SelectOrganizationModal", require("./components/profile-page/selectOrganizationModal.vue").default);
+Vue.component("SelectOrganizationModal2", require("./components/profile-page/SelectOrganizationModal2.vue").default);
 // Vue.component("dilvery-zone-modal", require("./components/ChooseDeliveryZoneModal.vue").default);
 
 

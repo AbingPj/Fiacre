@@ -96,6 +96,9 @@ class FinishSignUpController2 extends Controller
             if (!empty($request->input('contact_number'))) {
                 $user->contact_number = $request->input('contact_number');
             }
+            if (!empty($request->input('org_id'))) {
+                $user->selected_org_id = $request->input('org_id');
+            }
 
 
             // stepd 2 added

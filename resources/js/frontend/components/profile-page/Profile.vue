@@ -233,7 +233,16 @@
 					</b-col>
 					<b-col md="4">
 						<md-card class="mb-4 mt-4">
-							<md-card-content> Selected Organization </md-card-content>
+							<md-card-content> Selected Organization
+                                <br>
+                                <span v-if="oraganization.org_name"> name: <b>{{ oraganization.org_name}}</b></span>
+                                 <br>
+                                 <span v-if="oraganization.org_optionc_id"> optionC id:<b>{{ oraganization.org_optionc_id}}</b></span>
+                                <br>
+                                <br>
+                                 <button type="button" class="btn btn-info btn-sm p-2" @click="SelectOrganizationMOdalShow()">  Select Organization </button>
+                            </md-card-content>
+
 						</md-card>
 					</b-col>
 				</b-row>
@@ -299,7 +308,8 @@
 				selectedCity: "",
 				selectedState: "",
 
-				user: {},
+                user: {},
+                oraganization: {},
 
 				sunclub_choices: [],
 
@@ -328,7 +338,11 @@
 
 		created() {
 			this.getStates();
-			this.user = this.propsuser;
+            this.user = this.propsuser;
+            if(this.propsuser.organization){
+                 this.oraganization = this.propsuser.organization;
+            }
+
 			this.profileImage = this.user.image_path;
 			this.selectedCity = this.user.city;
 			this.contactNumber2 = this.user.contact_number;
@@ -382,6 +396,9 @@
 		},
 
 		methods: {
+            SelectOrganizationMOdalShow(){
+                $("#selectOrganizationModal2").modal("show");
+            },
 			onUpdate(payload) {
 				this.results = payload;
 			},

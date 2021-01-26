@@ -59,14 +59,22 @@
 	export default {
 		props: ["guest", "user"],
 		mounted() {
-			console.log("mounted");
+			// console.log("mounted");
 			$("#enterOptionCIdModal").modal("show");
 			$("#enterOptionCIdModal").on("shown.bs.modal", function () {
 				$(document).off("focusin.modal");
 			});
 		},
 		created() {
-			console.log("created");
+			// console.log("created");
+			if (this.guest == 0) {
+				if (this.user.organization) {
+                    this.optionc_id = this.user.organization.org_optionc_id;
+                    setTimeout(() => {
+                        this.proceed();
+                    }, 500);
+				}
+			}
 		},
 		data() {
 			return {
@@ -134,25 +142,25 @@
 
 <style>
 	/* .fade-enter-active,
-																			.fade-leave-active {
-																				transition: opacity 0.5s;
-																			}
-																			.fade-enter,
-																			.fade-leave-to {
-																				opacity: 0;
-																			}
+																					.fade-leave-active {
+																						transition: opacity 0.5s;
+																					}
+																					.fade-enter,
+																					.fade-leave-to {
+																						opacity: 0;
+																					}
 
-																			.slide-fade-enter-active {
-																				transition: all 0.3s ease;
-																			}
-																			.slide-fade-leave-active {
-																				transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
-																			}
-																			.slide-fade-enter,
-																			.slide-fade-leave-to {
-																				transform: translateX(10px);
-																				opacity: 0;
-																			} */
+																					.slide-fade-enter-active {
+																						transition: all 0.3s ease;
+																					}
+																					.slide-fade-leave-active {
+																						transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+																					}
+																					.slide-fade-enter,
+																					.slide-fade-leave-to {
+																						transform: translateX(10px);
+																						opacity: 0;
+																					} */
 </style>
 
 <style lang="scss" scoped>

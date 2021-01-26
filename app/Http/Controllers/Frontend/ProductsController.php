@@ -21,6 +21,30 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
+    public function UpdateSelectedOrganization(Request $request)
+    {
+        if (Auth::guest() == false) {
+            $user = User::find(Auth::user()->id);
+            $user->selected_org_id = $request->org_id;
+            $user->save();
+        }
+    }
+    public function OrganizationSelection(Request $request)
+    {
+
+        $search = $request->search;
+        $products = Organization::where(function ($query) use ($search) {
+            $query->where('org_name', 'LIKE', "%$search%")
+                ->orWhere('org_optionc_id', 'LIKE', "%$search%");
+        })
+            ->paginate(50);
+
+        $products->getCollection()->transform(function ($value) {
+            $value->selected = false;
+            return $value;
+        });
+        return response()->json($products);
+    }
     public function proceedOptionCid(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -77,11 +101,11 @@ class ProductsController extends Controller
         }
 
 
-        $products->getCollection()->transform(function ($value) use($org_id) {
+        $products->getCollection()->transform(function ($value) use ($org_id) {
             $value->selected = false;
             $value->qty = 1;
             if ($value->is_bundle == 1) {
-                $value->price = $value->getBundlePrice('retailer');
+                $value->price = round($value->getBundlePrice('retailer'),2);
                 // $value->member_price = $value->getBundlePrice('member');
                 // $value->wholesale_price = $value->getBundlePrice('wholesale');
                 $selected = [];
@@ -126,6 +150,19 @@ class ProductsController extends Controller
 
         if (Auth::guest() == false) {
             $user = User::find(Auth::user()->id);
+
+            if ($user->selected_org_id) {
+                $org = Organization::find($user->selected_org_id);
+                if (!empty($org)) {
+                    $user->organization = $org;
+                } else {
+                    $user->organization = null;
+                }
+            } else {
+                $user->organization = null;
+            }
+
+
             $user->image_path = $user->getPicture();
 
             if (auth()->user()->isOrganization()) {
@@ -168,7 +205,13 @@ class ProductsController extends Controller
 
     public function feature()
     {
-        $products = Product::where('is_visible', 1)->where('status', '!=', 3)->get()->random(4);
+        $count = Product::where('is_visible', 1)->where('status', '!=', 3)->count();
+        // dd($count);
+        if ($count < 4) {
+            $products = Product::where('is_visible', 1)->where('status', '!=', 3)->get();
+        } else {
+            $products = Product::where('is_visible', 1)->where('status', '!=', 3)->get()->random(4);
+        }
         // $products = Product::all()->take(4);
 
         return response()->json($products, 200);

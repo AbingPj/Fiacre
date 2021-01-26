@@ -34,6 +34,8 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('/products', 'ProductsController@index')->name('products');
     Route::post('/proceed/optioncid', 'ProductsController@proceedOptionCid')->name('proceedOptionCid');
 
+    Route::get('/api/OrganizationSelection', 'ProductsController@OrganizationSelection')->name('OrganizationSelection');
+    Route::post('/api/UpdateSelectedOrganization', 'ProductsController@UpdateSelectedOrganization')->name('UpdateSelectedOrganization');
 
     Route::get('/data/products', 'ProductsController@getProducts')->name('data.products');
     ///Checkot and placeorder and thank you page
@@ -100,7 +102,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     // Route::group(['middleware' => 'role:' . config('access.users.fiacre_customer_role'),], function () {
 
-        Route::post('placeorder/fiacreCustomer', [FiacrePlaceOrderController::class, 'fiacreCustomerPlaceOrder'])->name('products.placeorder.fiacreCustomer');
+    Route::post('placeorder/fiacreCustomer', [FiacrePlaceOrderController::class, 'fiacreCustomerPlaceOrder'])->name('products.placeorder.fiacreCustomer');
 
     // });
 });
