@@ -113,13 +113,13 @@
               </button> -->
             </div>
             <p>
-              SKU: {{product.sku}}
+              <!-- SKU: {{product.sku}} -->
               <br />
               <!-- <span :class="product.atr_qty_label == 'Out of Stock' ? 'text-danger':
                     product.atr_qty_label == 'Low of Stock' ? 'text-warning': 'text-success'
                   ">{{product.atr_qty_label}}</span> -->
-              <br />Remaining Qty:
-              <b>{{product.atr_qty}} / {{product.unit}}</b>
+              <!-- <br />Remaining Qty:
+              <b>{{product.atr_qty}} / {{product.unit}}</b> -->
             </p>
           </div>
         </li>
