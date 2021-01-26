@@ -56,31 +56,30 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <p>No. of Subscription Products</p>
+                      <p>No. of Available Products</p>
                       <p>{{order.number_of_products}}</p>
                     </div>
-                    <!-- <div class="text-center">
+                    <div class="text-center">
                       <p>No. of SOLD OUT Products</p>
                       <p>{{order.sold_out_products}}</p>
-                    </div> -->
-                    <!-- <div class="text-center">
+                    </div>
+                    <div class="text-center">
                       <p>CashBack</p>
                       <p>
                         <b>$ {{displayNumberWithComma(order.cash_back)}}</b>
                       </p>
-                    </div> -->
+                    </div>
                     <div class="text-center">
                       <p>Total Amount</p>
                       <p>
-                        <b>$ {{order.atr_subscription_overall_total_amount_f}}</b>
+                        <b>$ {{order.atr_overall_total_f}}</b>
                       </p>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      Organization:
-                      <br>
-                      <b> {{order.organization.org_name}}</b>
+                      Expected Delivery Date:
+                      <b> {{order.atr_expected_delivery_date}}</b>
                       <br />
                       <br />
                       <a
@@ -89,9 +88,9 @@
                       >Details to see the Order Summary</a>
                     </div>
                     <div class="col-md-6">
-                      <!-- <div class="float-right" :style="'color:'+setStatusColor(order.status)">
+                      <div class="float-right" :style="'color:'+setStatusColor(order.status)">
                         <b>{{order.status_label}}</b>
-                      </div> -->
+                      </div>
                     </div>
                   </div>
                 </li>
