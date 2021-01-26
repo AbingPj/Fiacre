@@ -21,7 +21,7 @@ class PaceFuzePaymentApiService
         $this->PublicKey = config('pace.access.public_key');
         $this->PrivateKey = config('pace.access.private_key');
         $this->base_url = config('pace.access.url');
-        $this->InsightTag = config('pace.access.insight_tag');
+        $this->InsightTag = "T0250605-0010000-00000000";
     }
 
     public function CreateCCToken($data)
@@ -61,7 +61,7 @@ class PaceFuzePaymentApiService
             'Token' => $token,
             'Token_SF' => $tokenSf,
             'Amount' => $amount,
-            'InsightTag' => $tag,
+            'InsightTag' => $this->InsightTag,
             'PurchaseCardCustomerID' => '',
             'PurchaseCardTaxAmount' => 0,
             'PurchaseCardTaxExempt' => '',

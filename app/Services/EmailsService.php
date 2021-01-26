@@ -29,7 +29,8 @@ class EmailsService
         $this->storeName = $store->name;
         // $this->storeAddress = $store->street_address;
         $this->storeAddress = $store->full_address;
-        $this->storeLogo =  url('/' . $store->image_path);
+        // $this->storeLogo =  url('/' . $store->image_link);
+        $this->storeLogo =  $store->landing->img_link_logo;
         $this->storeEmail = $store->email;
     }
 
@@ -183,6 +184,59 @@ class EmailsService
                     ->to($user->email)
                     ->subject($storeName . ': Order #' . $order_number . ' Confirmation')
                     ->attachData($pdf->output(), "orderReceipt.pdf");
+            }
+        );
+    }
+
+    public function orderReceipt2(
+        $user,
+        $total_amount,
+        $overall_total_amount,
+        $products,
+        $order_date,
+        $order_number,
+        $billing_method_price,
+        $billing_type
+    ) {
+        // dd($order_date);
+        $date = new Carbon($order_date);
+        $date_label =  $date->format('F, d, Y');
+
+        $storeName = $this->storeName;
+        $storeEmail = $this->storeEmail;
+
+        $order = Order::findOrFail($order_number);
+
+        // dump($billing_method_price);
+
+        $data = [
+            'store_logo' => $this->storeLogo,
+            'online_store_name' => $storeName,
+            'online_store_address' =>  $this->storeAddress,
+            'online_store_email' =>  $this->storeEmail,
+
+            'total_amount' =>  number_format($total_amount, 2),
+            'overalltotal' =>  number_format($overall_total_amount, 2),
+
+            'products' =>  $products,
+            'order_number' =>  $order_number,
+            'order_date' =>  $date_label,
+            'customer_name' => $user->full_name,
+
+            'billing_method_price' => $billing_method_price,
+            'billing_type' => $billing_type,
+
+            'order' => $order
+        ];
+
+        $this->beautymail->send(
+            'frontend.mail.order_receipt2',
+            $data,
+            function ($message) use ($user, $storeName,  $storeEmail, $order_number) {
+                $message
+                    ->from($storeEmail)
+                    ->to($user->email)
+                    ->subject($storeName . ': Order #' . $order_number . ' Confirmation');
             }
         );
     }
