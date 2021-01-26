@@ -142,7 +142,7 @@
         </div>
       </div>
       <div class="col-lg-4 col-md-4">
-        <div class="p-5" style="height:400px">
+        <!-- <div class="p-5" style="height:400px">
           <h3>Quick Details</h3>
           <br />
           <br />
@@ -163,7 +163,7 @@
             1 orders
             <span class="text-secondary">On Ready</span>
           </h4>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

@@ -167,7 +167,7 @@ class FinishSignUpController2 extends Controller
                     $fc->save();
 
 
-                    $user->assignRole(config('access.users.fiacre_customer_role'));
+                    $user->syncRoles(config('access.users.fiacre_customer_role'));
                     $user->is_billing_updated = 1;
                     $user->is_fiacre_customer = 1;
                     $user->customer_role = 4;
@@ -222,7 +222,7 @@ class FinishSignUpController2 extends Controller
                     }
                     $fc->save();
 
-                    $user->assignRole(config('access.users.fiacre_customer_role'));
+                    $user->syncRoles(config('access.users.fiacre_customer_role'));
                     $user->is_billing_updated = 1;
                     $user->is_fiacre_customer = 1;
                     $user->customer_role = 4;
