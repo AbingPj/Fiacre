@@ -25,7 +25,7 @@ class OrganizationSeeder extends Seeder
                 'email' => $obj->org_email,
                 'password' => 'secret@123',
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
-                'confirmed' => false,
+                'confirmed' => true,
                 'is_billing_updated' => 1,
                 'customer_role' => 0,
                 'is_org' => 1,
