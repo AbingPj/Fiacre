@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\FrontEnd\BillingInfoRequest;
+// use App\Http\Requests\FrontEnd\BillingInfoRequest;
+use App\Http\Requests\Frontend\BillingInfoRequest2;
 use App\Models\Auth\User;
 use App\Models\BillingInfo;
 use App\Models\BillingInfoAchToken;
@@ -64,7 +65,7 @@ class FinishSignUpController2 extends Controller
         return view('frontend.auth.billing', compact('user', 'states', 'cities', 'sunclub_choices', 'wholesaler_discount', 'wholesaler_signup_is_hide'));
     }
 
-    public function finishSignUp(BillingInfoRequest $request)
+    public function finishSignUp(BillingInfoRequest2 $request)
     {
         // dd($request);
         \App\Services\TotalViewService::getView("fnsh SU");
