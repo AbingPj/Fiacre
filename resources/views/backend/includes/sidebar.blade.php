@@ -293,7 +293,7 @@
                                 </a>
                             </li> --}}
 
-
+                        {{--
                         <li class="nav-item">
                                 <a class="nav-link {{
                                     active_class(Route::is('admin.settings.pickup-zones.*'))
@@ -310,6 +310,7 @@
                                     Delivery Zones
                                 </a>
                             </li>
+                            --}}    
                         </ul>
             </li>
             @endif

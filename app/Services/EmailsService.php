@@ -51,7 +51,7 @@ class EmailsService
             $data,
             function ($message) use ($user, $storeName) {
                 $message
-                    ->from('support@sunfarmacy.com')
+                    ->from('publicrelations@optionc.com')
                     ->to($user->email)
                     ->subject($storeName . ' Email Confirmation');
             }
@@ -371,7 +371,7 @@ class EmailsService
             $data,
             function ($message) use ($email, $storeName, $subject) {
                 $message
-                    ->from('support@sunfarmacy.com')
+                    ->from('publicrelations@optionc.com')
                     ->to($email)
                     ->subject($storeName . ': ' . $subject);
             }
@@ -408,7 +408,7 @@ class EmailsService
             $data,
             function ($message) use ($email, $storeName) {
                 $message
-                    ->from('support@sunfarmacy.com')
+                    ->from('publicrelations@optionc.com')
                     ->to($email)
                     ->subject($storeName . ': Referral Email');
             }
@@ -442,7 +442,7 @@ class EmailsService
             $data,
             function ($message) use ($email, $subject) {
                 $message
-                    ->from('support@sunfarmacy.com')
+                    ->from('publicrelations@optionc.com')
                     ->to($email)
                     ->subject($subject);
             }
