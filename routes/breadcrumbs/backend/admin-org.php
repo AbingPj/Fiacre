@@ -5,6 +5,11 @@ Breadcrumbs::for('admin.org.profile', function ($trail) {
 });
 
 
+Breadcrumbs::for('admin.org.orders', function ($trail) {
+    $trail->push('Organization Orders', route('admin.org.orders'));
+});
+
+
 Breadcrumbs::for('admin.org.products', function ($trail) {
     $trail->push('Organization Products', route('admin.org.products'));
 });

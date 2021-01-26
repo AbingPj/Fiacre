@@ -205,8 +205,8 @@
 				axios
 					.post("/admin/org/products/saveSubscription", data)
 					.then((res) => {
-						// window.location.href = `/admin/org/products`;
-						alert("Success");
+						window.location.href = `/admin/org/products`;
+						// alert("Success");
 					})
 					.catch((err) => {
 						console.error(err);

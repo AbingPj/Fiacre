@@ -16,4 +16,12 @@
         Assigned Products
     </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link {{
+        active_class(Route::is('admin.org.orders'))
+    }}" href="{{ route('admin.org.orders') }}">
+        <i class="nav-icon fas fa-boxes"></i>
+        Orders
+    </a>
+</li>
 @endif
