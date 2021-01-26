@@ -62,6 +62,7 @@ class PlaceOrderController extends Controller
             }
             $userBilling =  BillingInfo::where('user_id', $user->id)->first();
         } else {
+            abort(404);
             $sunclub_user = 0;
             $user = [];
         };
