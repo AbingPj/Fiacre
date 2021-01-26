@@ -29,7 +29,7 @@ class OrdersController extends Controller
     public function index()
     {
 
-        $orders = Order::where('order_by', Auth::user()->id)->orderBy('id', 'DESC')->get();
+        $orders = Order::with('organization:id,org_name')->where('order_by', Auth::user()->id)->orderBy('id', 'DESC')->get();
 
         foreach ($orders as $key => $order) {
             $order_prododucts = OrderProduct::where('order_id', $order->id)->get();
@@ -105,6 +105,8 @@ class OrdersController extends Controller
 
 
         $order = Order::findOrFail($id);
+        $organization = $order->organization;
+        // $order = Order::findOrFail($id)->with('organization');
 
         if ($order->order_by != Auth::user()->id) {
             abort(404);

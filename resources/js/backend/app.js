@@ -328,6 +328,10 @@ const AdminOrgProductsSub =
     () => import(/* webpackChunkName: "js/b/adminOrgProductsSub" */ './admin-org-components/products/subcription.vue');
 
 
+Vue.component("admin-org-orders", require("./admin-org-components/orders/index.vue").default);
+
+
+
 const adminVueApp = new Vue({
     el: "#adminVueApp",
     components: {

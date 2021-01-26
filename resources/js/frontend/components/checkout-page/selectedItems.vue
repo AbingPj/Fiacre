@@ -114,7 +114,7 @@
                   <button type="button" class="plusminus" @click="addQty(item)">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                   </button> -->
-                  {{item.price}}  X  {{item.weeks}} weeks =
+                  $ {{item.price}}  X  {{item.weeks}} weeks =
                 </span>
               </p>
             </div>

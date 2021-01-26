@@ -56,11 +56,11 @@
                                 @endif
                             @endcan
 
-                            @if( Auth::user()->customer_role == 2 || Auth::user()->customer_role == 3)
+                            @if(  Auth::user()->customer_role != 1)
                                 <a href="{{ route('frontend.user.account') }}" class="dropdown-item {{ active_class(Route::is('frontend.user.account')) }}">@lang('navs.frontend.user.account')</a>
                             @endif
 
-                            @if( Auth::user()->customer_role == 2 || Auth::user()->customer_role == 3)
+                            @if( Auth::user()->customer_role == 4)
                                 <a href="/myprofile" class="dropdown-item">Billing Profile</a>
                             @elseif(Auth::user()->customer_role == 1)
                                 <a href="/register/success/confirmed" class="dropdown-item">Set Billing Info</a>

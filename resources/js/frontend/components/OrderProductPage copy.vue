@@ -125,17 +125,17 @@
         <div class="row">
           <div class="col">
             <h6>
-              <b>{{order.date_label}}</b>
-              <!-- <br />Expected Delivery Date:
-              <b>{{order.atr_expected_delivery_date}}</b> -->
+              {{order.date_label}}
+              <br />Expected Delivery Date:
+              <b>{{order.atr_expected_delivery_date}}</b>
             </h6>
           </div>
           <div class="col">
-            <!-- <div class="float-right" :style="'color:'+setStatusColor(order.status)">
+            <div class="float-right" :style="'color:'+setStatusColor(order.status)">
               <h5>
                 <b>{{order.status_label}}</b>
               </h5>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -167,21 +167,22 @@
                     <br />
                     <br />
                     <span class="qty-options">
-                          $ {{or_prod.price}}  X  {{or_prod.subscription_weeks}} weeks =
+                      <b>Qty:</b>
+                      <b>{{or_prod.updated_quantity}} / {{or_prod.product.unit}}</b>
                     </span>
                   </p>
                 </div>
                 <div class="cart-item-close-container ml-auto">
-                  <!-- <span
+                  <span
                     id="sold-out"
                     v-if="or_prod.updated_quantity == 0"
                     class="text-danger"
-                  >SOLD OUT</span> -->
+                  >SOLD OUT</span>
                   <!-- <button id="x" @click="removeItemInCart(item)">
                     <i class="fa fa-times" aria-hidden="true"></i>
                   </button>-->
                   <span id="sub-total">
-                    <b>$ {{displayNumberWithComma(or_prod.subscription_price)}}</b>
+                    <b>$ {{displayNumberWithComma(or_prod.price * or_prod.updated_quantity)}}</b>
                   </span>
                 </div>
               </li>
@@ -197,35 +198,62 @@
             </div>
 
             <div v-if="guest == 0">
-              <div>
+              <!-- SuncLub Order Summary -->
+              <div v-if="user.customer_role == 2">
                 <table class="table">
                   <tbody>
-                    <tr>
-                      <td colspan="2">Organization:
-                           <br>
-                            <b>{{order.organization.org_name}}</b>
-                          <br>
-                            <i>{{order.organization.atr_address}}</i>
-                          <br>
-                      </td>
-                    </tr>
                     <tr>
                       <td>Order Amount</td>
                       <td>
                         <div class="d-flex justify-content-between">
                           <div>$</div>
-                          <div class="text-right">{{order.atr_subscription_total_amount_f}}</div>
+                          <div class="text-right">{{displayNumberWithComma(totalAmount)}}</div>
                         </div>
                       </td>
                     </tr>
-
-
                     <tr>
-                      <td>{{order.billing_type}}</td>
+                      <td>
+                        Discount Amount ({{order.discount_percentage}}%)
+                        <span class="float-right">
+                          <b>-</b>
+                        </span>
+                        <br />
+                        <div v-if="user.customer_role == 2">(Sun Club Member)</div>
+                      </td>
                       <td>
                         <div class="d-flex justify-content-between">
                           <div>$</div>
-                          <div class="text-right">{{ order.atr_billing_amount_f }}</div>
+                          <div class="text-right">{{displayNumberWithComma(getDiscount)}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Coupon Discount
+                        <span class="float-right">
+                          <b>-</b>
+                        </span>
+                        <br />
+                        <div v-if="order.has_coupon">
+                          <div
+                            v-if="order.coupon_is_percentage"
+                          >( {{order.coupon_discount_amount}} % discount )</div>
+                          <div v-else>( ${{order.coupon_discount_amount}} discount )</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">{{order.atr_coupon_discount_f}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Delivery Fee</td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">{{displayNumberWithComma(order.delivery_fee)}}</div>
                         </div>
                       </td>
                     </tr>
@@ -238,7 +266,96 @@
                           <div class="font-weight-bold">$</div>
                           <div
                             class="text-right font-weight-bold"
-                          >{{order.atr_subscription_overall_total_amount_f}}</div>
+                          >{{displayNumberWithComma(OverAllTotal)}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="table-light">
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <!-- <tr class="text-danger">
+                      <td>
+                        <b>Additonal Charge</b>
+                      </td>
+                      <td>
+                        <b>$ {{order.additional_charge.toFixed(2)}}</b>
+                      </td>
+                    </tr>-->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Wholesaler Order Summary -->
+              <div v-else>
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td>Order Amount</td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">{{displayNumberWithComma(totalAmount)}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Discount Amount ({{order.discount_percentage}}%)
+                        <span class="float-right">
+                          <b>-</b>
+                        </span>
+                        <br />
+                        <div v-if="user.customer_role == 3">(Wholesaler)</div>
+                      </td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">{{displayNumberWithComma(getDiscount)}}</div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        Coupon Discount
+                        <span class="float-right">
+                          <b>-</b>
+                        </span>
+                        <br />
+                        <div v-if="order.has_coupon">
+                          <div
+                            v-if="order.coupon_is_percentage"
+                          >( {{order.coupon_discount_amount}} % discount )</div>
+                          <div v-else>( ${{order.coupon_discount_amount}} discount )</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">{{order.atr_coupon_discount_f}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Delivery Fee</td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">{{ displayNumberWithComma(order.delivery_fee)}}</div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Total</b>
+                      </td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div class="font-weight-bold">$</div>
+                          <div
+                            class="text-right font-weight-bold"
+                          >{{displayNumberWithComma(OverAllTotal)}}</div>
                         </div>
                         <!-- <b>$ {{displayNumberWithComma(OverAllTotal)}}</b> -->
                       </td>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\FiacrePlaceOrderController;
 use App\Http\Controllers\Frontend\ReferralPageController;
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
@@ -95,6 +96,13 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::post('referrals/submitReferralCode', [ReferralPageController::class, 'submitReferralCode'])->name('referrals.submitReferralCode');
     Route::get('referrals/getUserRewards', [ReferralPageController::class, 'getUserRewards'])->name('referrals.getUserRewards');
     Route::post('referrals/checkCouponCode', [ReferralPageController::class, 'checkCouponCode'])->name('referrals.checkCouponCode');
+
+
+    // Route::group(['middleware' => 'role:' . config('access.users.fiacre_customer_role'),], function () {
+
+        Route::post('placeorder/fiacreCustomer', [FiacrePlaceOrderController::class, 'fiacreCustomerPlaceOrder'])->name('products.placeorder.fiacreCustomer');
+
+    // });
 });
 
 /*
@@ -111,6 +119,19 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'admin.', '
      * These routes can not be hit if the password is expired
      */
     include_route_files(__DIR__ . '/backend/');
+});
+
+Route::group([
+    'prefix' => 'org',
+    'as' => 'org.',
+    'namespace' => 'Organization',
+    // 'middleware' => 'role:'.config('access.users.org_user'),
+], function () {
+    Route::get('profile', [OrgProfileController::class, 'index'])->name('profile');
+    Route::get('products', [OrgProductsController::class, 'index'])->name('products');
+    Route::get('getAssignedProducts', [OrgProductsController::class, 'getAssignedProducts'])->name('getAssignedProducts');
+    Route::get('products/subcription/{product_id}', [OrgProductsController::class, 'showProduct'])->name('showProduct');
+    Route::post('products/saveSubscription', [OrgProductsController::class, 'saveSubscription'])->name('saveSubscription');
 });
 
 
@@ -131,10 +152,8 @@ Route::group(['namespace' => 'Backend\API', 'prefix' => 'api/admin', 'middleware
 
 
     Route::get('/productsorganizations/{product_id}', 'ProductsController@productsorganizations');
-    Route::post('product/productSelectOrganizationSaveChanges','ProductsController@productSelectOrganizationSaveChanges');
+    Route::post('product/productSelectOrganizationSaveChanges', 'ProductsController@productSelectOrganizationSaveChanges');
 
 
     Route::get('/products2', 'ProductsController@getProducts2');
-
-
 });
