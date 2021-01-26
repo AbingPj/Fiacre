@@ -162,8 +162,8 @@
 <script>
 const SetStoreTab = () =>
   import(/* webpackChunkName: "js/b/StoreTab" */ "./tab1.vue");
-const SetMembershipTab = () =>
-  import(/* webpackChunkName: "js/b/SetMembershipTab" */ "./tab2.vue");
+// const SetMembershipTab = () =>
+  // import(/* webpackChunkName: "js/b/SetMembershipTab" */ "./tab2.vue");
 const tabAboutUs = () =>
   import(/* webpackChunkName: "js/b/tabAboutUs" */ "./tabAboutUs.vue");
 const tabFaqs = () =>
@@ -178,7 +178,7 @@ const tabLandingPage = () =>
 export default {
   components: {
     "admin-settings-store-tab": SetStoreTab,
-    "admin-settings-membership-tab": SetMembershipTab,
+    // "admin-settings-membership-tab": SetMembershipTab,
     "admin-settings-aboutus-tab": tabAboutUs,
     "admin-settings-faqs-tab": tabFaqs,
     "admin-settings-privacy-tab": tabPrivacy,
@@ -209,8 +209,8 @@ export default {
     //   this.$refs.store_tab.displayImage = this.prop_store.image_link;
     //   this.$refs.store_tab.cities = this.prop_cities;
     //   this.$refs.store_tab.states = this.prop_states;
-    } else if (this.tab == "membership") {
-      this.selected_tab = 1;
+    // } else if (this.tab == "membership") {
+    //  this.selected_tab = 1;
       //   console.log(this.prop_sunclub_choices);
       //   this.$refs.membership_tab.sunclub_choices = this.prop_sunclub_choices;
       //   this.$refs.membership_tab.store = this.prop_store;
