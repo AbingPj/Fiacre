@@ -16,13 +16,14 @@
               href="/admin/settings/main/storeprofile"
               :aria-selected="selected_tab == 0? 'true':'false' "
             >Store Profile</a>
+            <!--
             <a
               class="nav-item nav-link"
               :class="selected_tab == 1? 'active':'' "
               href="/admin/settings/main/membership"
               :aria-selected="selected_tab == 1? 'true':'false' "
             >Membership</a>
-
+            -->
             <a
               class="nav-item nav-link"
               :class="selected_tab == 2? 'active':'' "
