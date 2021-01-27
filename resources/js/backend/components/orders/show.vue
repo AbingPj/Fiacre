@@ -33,25 +33,8 @@
             <div class="d-flex">
               <div class="mr-auto w-50">
                 <div class="form-group row">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">Status:</label>
-                  <div class="col-sm-10">
-                    <!-- <select
-                      name="status"
-                      v-model="selectedStatus"
-                      class="form-control w-50"
-                      id="exampleFormControlSelect1"
-                      @change="selectedStatusChange"
-                      style="font-weight: 800;"
-                      :class="selectedStatus == 3 ? 'status-ready' :
-                        selectedStatus == 2 ? 'status-hold' : 'status-awaiting'
-                    "
-                    >
-
-                     <option value="1">Awaiting Process</option>
-                      <option value="2">On Hold</option>
-                      <option value="3">Ready</option>
-                    -->
-
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">:</label>
+                  <!-- <div class="col-sm-10">
                     <select
                       name="status"
                       v-model="selectedStatus"
@@ -65,7 +48,7 @@
                       <option value="1">Reserved</option>
                       <option value="2">Ready</option>
                     </select>
-                  </div>
+                  </div> -->
                 </div>
                 <!-- <h5>Status: {{order.status}}</h5> -->
               </div>
@@ -86,7 +69,7 @@
                 </h3>
               </div>
               <div class="text-right w-50">
-                <h3>Total: ${{displayNumberWithComma(OverAllTotal)}}</h3>
+                <h3>Total: ${{order.atr_subscription_overall_total_amount_f}}</h3>
               </div>
             </div>
           </div>
@@ -136,10 +119,14 @@
           </div>
           <div class="col-sm-12 mb-3">
             <div class="d-flex">
-              <div class="mr-auto w-25 border-bottom border-secondary pb-0">
-                <label class="mb-0">Expected Delivery Date</label>
+              <div class="mr-auto w-50 border-bottom border-secondary pb-0">
+                <label class="mb-0">Organization</label>
                 <!-- <u> -->
-                <h5 class="mb-0">{{order.atr_expected_delivery_date}}</h5>
+                <p class="mb-0">{{order.organization.org_name}}
+                <br>
+                {{order.organization.atr_address}}
+                </p>
+
                 <!-- </u> -->
               </div>
             </div>
@@ -164,22 +151,21 @@
                   <p>
                     <b>{{item.product.name}}</b>
                     <br />
-                    $ {{displayNumberWithComma(item.price)}} / {{item.product.unit}}
+                    $ {{displayNumberWithComma(item.price)}} / {{item.product.unit}} <span class="mr-3 ml-3">X</span> {{item.subscription_weeks}} weeks
                   </p>
                 </div>
                 <div class="ml-auto w-25">
                   <div class="d-flex justify-content-end align-items-end" style="height:57px;">
                     <div class="w-50 text-right">
                       <div>
-                        <!-- <p> -->
                         <b>
-                          $ {{displayNumberWithComma(item.price)}} x
-                          <!-- <span> {{item.quantity}} </span> -->
-                          <span
+                          $ {{displayNumberWithComma(item.subscription_price)}}
+                           <!-- $ {{displayNumberWithComma(item.price)}} x
+                         <span
                             :class="item.editing == false ? '' : 'd-none'"
-                          >{{item.updated_quantity}}</span>
+                          >{{item.updated_quantity}}</span> -->
                         </b>
-                        <span :class="item.editing == true ? '' : 'd-none'">
+                        <!-- <span :class="item.editing == true ? '' : 'd-none'">
                           <input
                             :name="'product['+item.id+']'"
                             @keypress="onlyNumber"
@@ -187,12 +173,11 @@
                             type="text"
                             v-model="item.updated_quantity"
                           />
-                        </span>
-                        <!-- </p> -->
+                        </span> -->
                       </div>
                     </div>
                     <div class="pl-3 text-right">
-                      <a
+                      <!-- <a
                         class="btn btn-sm btn-light"
                         :class="item.editing == false ? 'd-block' : 'd-none'"
                         @click="edit(item)"
@@ -205,7 +190,7 @@
                         @click="saved(item)"
                       >
                         <i class="far fa-save mr-1"></i>Save
-                      </a>
+                      </a> -->
                     </div>
                   </div>
                 </div>
@@ -216,10 +201,16 @@
             <div class="text-right w-100">
               <h4>
                 <span class="mr-5">Total:</span>
-                ${{displayNumberWithComma(totalAmount)}}
+                ${{order.atr_subscription_total_amount_f}}
               </h4>
             </div>
             <div class="text-right w-100">
+              <h4>
+                <span class="mr-5">{{order.billing_type}} ({{order.billing_type_percentage}} %)  +</span>
+                ${{order.atr_billing_amount_f}}
+              </h4>
+            </div>
+            <!-- <div class="text-right w-100">
               <h4>
                 <span class="mr-5">Discount:</span>
                 - ${{displayNumberWithComma(getDiscount)}}
@@ -243,19 +234,20 @@
                 <span class="mr-5">TAX:</span>
                 + ${{displayNumberWithComma(getTax)}}
               </h4>
-            </div>
+            </div> -->
+            <hr>
             <div class="text-right w-100">
               <h3>
-                <button
+                <!-- <button
                   class="rounded-0 mr-2 btn"
                   :class="edited == true? 'btn-success':'btn-success-1'"
                   :disabled="edited == false"
                   type="submit"
                 >
                   <i class="fas fa-save"></i> Save
-                </button>
-                Total:
-                <b>${{displayNumberWithComma(OverAllTotal)}}</b>
+                </button> -->
+                 <span class="mr-5">Total:</span>
+                <b>${{order.atr_subscription_overall_total_amount_f}}</b>
               </h3>
             </div>
           </div>

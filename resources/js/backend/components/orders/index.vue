@@ -114,7 +114,7 @@
                   <br />
                   <br />
                   <span style="font-size: 20px;">
-                    <b>$ {{order.atr_overall_total_f}}</b>
+                    <b>$ {{order.atr_subscription_overall_total_amount_f}}</b>
                   </span>
                 </p>
               </div>
