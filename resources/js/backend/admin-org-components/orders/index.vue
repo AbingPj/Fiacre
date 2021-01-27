@@ -37,10 +37,10 @@
 							<td>
 								<button
 									type="button"
-									@click="viewOrganization(item)"
+									@click="viewOrder(item)"
 									class="btn btn-sm btn-info"
 								>
-									<i class="fas fa-cog"></i> View more details
+									<i class="far fa-eye mr-2"></i> View Order Details
 								</button>
 							</td>
 							<!-- <td>
@@ -67,8 +67,8 @@
 			this.getOrders();
 		},
 		methods: {
-			viewOrganization(data) {
-				// window.location.href = `/admin/org/products/subcription/${data.id}`;
+			viewOrder(data) {
+				window.location.href = `/admin/org/orders/${data.id}`;
 			},
 			prepareDataTable() {
 				$(document).ready(function () {

@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<h2 class="card-title mb-0">
-					<i class="fas fa-boxes"></i> Organization Orders
+					<i class="fas fa-boxes"></i> Order #{{ order.id }}
 				</h2>
 			</div>
 			<div class="col-md-6"></div>
@@ -13,38 +13,54 @@
 			style="font-family: Source Sans Pro, sans-serif !important"
 		>
 			<div class="col-lg-12 col-md-12">
-				<table id="org-orders-table" class="table table-hover">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<!-- <th scope="col">#</th> -->
 							<th>Product</th>
-							<th>Order #</th>
-							<th>Order By</th>
-							<th>Amount</th>
-							<th>Actions</th>
+							<th></th>
+							<th>Subscription Price</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(item, index) in orders" :key="index">
-							<td>{{ item.id }}</td>
-							<td>{{ item.atr_date_label }}</td>
+						<tr v-for="(item, index) in products" :key="index">
+							<td>{{ item.product_details.name }}</td>
+							<td></td>
 							<td>
-								{{ item.user.full_name }}
+								$ {{ item.subscription_price.toFixed(2) }} /
+								{{ item.subscription_weeks }} weeks
 							</td>
 							<td>
-								$ {{ item.atr_subscription_overall_total_amount_f }}
-							</td>
-							<td>
-								<button
-									type="button"
-									@click="viewOrganization(item)"
-									class="btn btn-sm btn-info"
-								>
-									<i class="fas fa-cog"></i> View more details
+								<button type="button" class="btn btn-sm btn-info">
+									View Product Details
+								</button>
+								<button type="button" class="btn btn-sm btn-info">
+									Week Details
 								</button>
 							</td>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td>Total</td>
+							<td></td>
+							<td>$ {{ order.atr_subscription_total_amount_f }}</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>{{ order.billing_type }}</td>
+							<td></td>
+							<td>$ {{ order.atr_billing_amount_f }}</td>
+							<td></td>
+						</tr>
+						<tr>
+							<th>Total</th>
+							<th></th>
+							<th>$ {{ order.atr_subscription_total_amount_f }}</th>
+							<th></th>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</div>
@@ -53,65 +69,7 @@
 
 <script>
 	export default {
-		props: ["org"],
-		data() {
-			return {
-				orders: [],
-			};
-		},
-
-		created() {
-			this.getOrders();
-		},
-		methods: {
-			viewOrganization(data) {
-				window.location.href = `/admin/org/products/subcription/${data.id}`;
-			},
-			prepareDataTable() {
-				$(document).ready(function () {
-					$("#org-orders-table").DataTable({
-						order: [[0, "desc"]],
-						lengthMenu: [
-							[10, 25, 50, -1],
-							[10, 25, 50, "All"],
-						],
-						iDisplayLength: -1,
-					});
-				});
-			},
-			getOrders() {
-				LoadingOverlay();
-				axios
-					.get(`/admin/org/getOrganizationOrders`)
-					.then((res) => {
-						LoadingOverlayHide();
-						this.orders = res.data;
-						this.prepareDataTable();
-					})
-					.catch((err) => {
-						console.error(err);
-						LoadingOverlayHide();
-						alert("Something went wrong");
-					});
-			},
-		},
-		computed: {
-			loadlist() {
-				var pageList = [];
-				var begin = (this.currentPage - 1) * this.perPage;
-				var end = begin + this.perPage;
-				var allorders = this.searchedCustomers;
-				var pageList = allorders.slice(begin, end);
-				return pageList;
-			},
-
-			rows() {
-				return this.searchedCustomers.length;
-			},
-		},
-		// mounted() {
-		//     alert("PRODUCTS COMPONENT MOUNTED");
-		// },
+		props: ["org", "order", "products"],
 	};
 </script>
 

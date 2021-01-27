@@ -8,6 +8,14 @@ Breadcrumbs::for('admin.org.profile', function ($trail) {
 Breadcrumbs::for('admin.org.orders', function ($trail) {
     $trail->push('Organization Orders', route('admin.org.orders'));
 });
+Breadcrumbs::for('admin.org.ordersShow', function ($trail,$id) {
+    $trail->parent('admin.org.orders');
+    $trail->push('Id: '.$id, route('admin.org.ordersShow',$id));
+});
+
+
+
+
 
 
 Breadcrumbs::for('admin.org.products', function ($trail) {

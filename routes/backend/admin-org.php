@@ -14,6 +14,7 @@ Route::group([
     Route::get('profile', [OrgProfileController::class, 'index'])->name('profile');
     Route::get('products', [OrgProductsController::class, 'index'])->name('products');
     Route::get('orders', [OrgOrdersController::class, 'index'])->name('orders');
+    Route::get('orders/{order_id}', [OrgOrdersController::class, 'show'])->name('ordersShow');
     Route::get('getOrganizationOrders', [OrgOrdersController::class, 'getOrganizationOrders'])->name('getOrganizationOrders');
     Route::get('getAssignedProducts', [OrgProductsController::class, 'getAssignedProducts'])->name('getAssignedProducts');
     Route::get('products/subcription/{product_id}', [OrgProductsController::class, 'showProduct'])->name('showProduct');

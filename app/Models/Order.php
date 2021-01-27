@@ -16,6 +16,10 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Auth\User', 'order_by');
     }
+    public function orderby()
+    {
+        return $this->belongsTo('App\Models\Auth\User', 'order_by');
+    }
     public function organization()
     {
         return $this->belongsTo('App\Models\Organization', 'organization_id');
