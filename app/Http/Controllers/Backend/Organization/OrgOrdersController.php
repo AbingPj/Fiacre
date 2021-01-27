@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Organization;
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
 use App\Models\Order;
+use App\Models\OrderedProductWeek;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,31 @@ class OrgOrdersController extends Controller
                 'org' => $org,
                 'order' => $order,
                 'ordered_products' => $ordered_products,
+            ]
+        );
+    }
+
+    public function weeks($order_id, $ordered_prod_id)
+    {
+        $org = Organization::where('user_id', auth()->user()->id)->first();
+        $order = null;
+        $ordered_product = null;
+        $weeks = null;
+
+        $ordered_product = OrderProduct::findOrFail($ordered_prod_id);
+        $ordered_product->product_details  = json_decode($ordered_product->product_details);
+
+        $weeks = OrderedProductWeek::where('order_id', $order_id)
+            ->where('order_product_id', $ordered_product->id)
+            ->where('organization_id', $org->id)->get();
+
+
+        return view(
+            'backend.admin-org.org-orders-show-weeks',
+            [
+                'org' => $org,
+                'ordered_product' => $ordered_product,
+                'weeks' => $weeks,
             ]
         );
     }

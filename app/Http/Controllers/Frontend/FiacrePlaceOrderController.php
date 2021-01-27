@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductBundle;
 use App\Models\BillingInfo;
 use App\Models\FiacreCustomerPaymentRecord;
+use App\Models\OrderedProductWeek;
 use App\Services\EmailsService;
 use App\Services\PaceFuzePaymentApiService;
 use App\Services\TotalViewService;
@@ -26,6 +27,19 @@ class FiacrePlaceOrderController extends Controller
         // $this->middleware('auth');
         $this->PacePayment = new PaceFuzePaymentApiService;
         $this->EmailsService = new EmailsService;
+    }
+
+
+    public function testDate()
+    {
+        $sample = Carbon::now()
+            ->next(0);
+
+        for ($i = 0; $i < 10; $i++) {
+            dump($sample);
+            $sample->addDays(7);
+        }
+        dd($sample);
     }
 
     public function fiacreCustomerPlaceOrder(Request $request)
@@ -68,7 +82,7 @@ class FiacrePlaceOrderController extends Controller
                     if (!empty($product)) {
                         if ($product->is_bundle == 1) {
                             // $orderproduct->price = $product->getBundlePrice('retailer');
-                            $orderproduct->price = round($product->getBundlePrice('retailer'),2);
+                            $orderproduct->price = round($product->getBundlePrice('retailer'), 2);
                             $orderproduct->is_bundle = 1;
                             $orderproduct->bundle_percentage = $product->bundle_percentage;
                         } else {
@@ -81,6 +95,7 @@ class FiacrePlaceOrderController extends Controller
 
                         //subscription
                         $weeks = $product->getSubcriptionWeeks($org->id);
+                        $day = $product->getSubscriptionDay($org->id);
 
                         if ($weeks == '-') {
                             $orderproduct->subscription_weeks = 0;
@@ -90,12 +105,34 @@ class FiacrePlaceOrderController extends Controller
                             $orderproduct->subscription_weeks = $weeks;
                             $subscription_price = $orderproduct->price * $weeks;
                             $orderproduct->subscription_price = round($subscription_price, 2);
+                            $orderproduct->subscription_day = $day;
                         }
 
 
                         $orderproduct->product_details = json_encode($product);
 
                         $orderproduct->save();
+
+                        $firstDay = Carbon::now()->next($orderproduct->subscription_day);
+
+                        if ($orderproduct->is_subscription) {
+                            for ($i = 0; $i < $orderproduct->subscription_weeks; $i++) {
+                                $OPW = new OrderedProductWeek;
+                                $OPW->order_id = $order->id;
+                                $OPW->order_product_id = $orderproduct->id;
+                                $OPW->organization_id = $org->id;
+                                $OPW->order_by = Auth::user()->id;
+                                $num = $i;
+                                $OPW->weeknumber = $num + 1;
+                                $OPW->date = $firstDay;
+                                $OPW->save();
+                                $firstDay->addDays(7);
+                            }
+                        }
+
+
+
+
 
 
 

@@ -22,7 +22,7 @@
 							<th>Price</th>
 							<!-- <th>Total No. Weeks</th> -->
 							<th>Current No. Weeks</th>
-							<th>Subcription Price</th>
+							<th>Subscription Price</th>
 							<th>Visibility</th>
 							<th>Actions</th>
 						</tr>
@@ -52,7 +52,7 @@
 									@click="viewOrganization(item)"
 									class="btn btn-sm btn-info"
 								>
-									<i class="fas fa-cog"></i> Set Subcription
+									<i class="fas fa-cog"></i> Set Subscription
 								</button>
 							</td>
 							<!-- <td>

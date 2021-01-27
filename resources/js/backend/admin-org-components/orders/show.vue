@@ -32,10 +32,10 @@
 								{{ item.subscription_weeks }} weeks
 							</td>
 							<td>
-								<button type="button" class="btn btn-sm btn-info">
+								<!-- <button type="button" class="btn btn-sm btn-info">
 									View Product Details
-								</button>
-								<button type="button" class="btn btn-sm btn-info">
+								</button> -->
+								<button type="button" class="btn btn-sm btn-info" @click="ViewWeekDetails(item)">
 									Week Details
 								</button>
 							</td>
@@ -69,7 +69,12 @@
 
 <script>
 	export default {
-		props: ["org", "order", "products"],
+        props: ["org", "order", "products"],
+        methods: {
+            ViewWeekDetails(item){
+                window.location.href = `/admin/org/orders/${this.order.id}/weeks/${item.id}`;
+            }
+        },
 	};
 </script>
 

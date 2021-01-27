@@ -287,7 +287,7 @@ class Product extends Model
 
     public function getSubcriptionWeeks($org_id)
     {
-    // dd($org_id);
+        // dd($org_id);
         $weeks = null;
 
         $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
@@ -305,5 +305,17 @@ class Product extends Model
             $weeks = "-";
         }
         return $weeks;
+    }
+
+    public function getSubscriptionDay($org_id)
+    {
+        $day = null;
+        $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
+            ->where('prodsub_product_id', $this->id)
+            ->first();
+        if (!empty($prodSub)) {
+            $day = $prodSub->day;
+        }
+        return $day;
     }
 }
