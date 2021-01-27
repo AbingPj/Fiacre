@@ -16,7 +16,7 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Auth\User', 'order_by');
     }
-    public function orderby()
+    public function order_by()
     {
         return $this->belongsTo('App\Models\Auth\User', 'order_by');
     }

@@ -32,7 +32,7 @@ class OrgOrdersController extends Controller
     {
 
         $org = Organization::where('user_id', auth()->user()->id)->first();
-        $order = Order::with('orderby')
+        $order = Order::with('order_by')
             ->with('organization')
             ->where('organization_id', $org->id)
             ->where('id', $order_id)->first();
