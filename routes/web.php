@@ -55,6 +55,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     //// Orders Page
     Route::get('/orders', 'OrdersController@index')->name('orders');
     Route::get('/order/{id}', 'OrdersController@order')->name('orders.details');
+    Route::get('/order/{id}/week/{ordered_product_id}', 'OrdersController@orderedproduct')->name('orders.orderedproduct.details');
     Route::get('/order/{order_id}/print', 'OrdersController@print');
 
 

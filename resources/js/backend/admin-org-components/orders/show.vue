@@ -17,8 +17,9 @@
 					<thead>
 						<tr>
 							<!-- <th scope="col">#</th> -->
-							<th>Product</th>
-							<th></th>
+							<th style="width:270px;">Product</th>
+							<th>Price</th>
+							<th>No. of Weeks</th>
 							<th>Subscription Price</th>
 							<th></th>
 						</tr>
@@ -26,7 +27,8 @@
 					<tbody>
 						<tr v-for="(item, index) in products" :key="index">
 							<td>{{ item.product_details.name }}</td>
-							<td></td>
+							<td>{{ item.price }}/{{item.product_details.unit}}</td>
+							<td>{{ item.subscription_weeks }}</td>
 							<td>
 								$ {{ item.subscription_price.toFixed(2) }} /
 								{{ item.subscription_weeks }} weeks
@@ -42,20 +44,21 @@
 						</tr>
 					</tbody>
 					<tfoot>
-						<tr>
+						<!-- <tr>
 							<td>Total</td>
 							<td></td>
 							<td>$ {{ order.atr_subscription_total_amount_f }}</td>
 							<td></td>
-						</tr>
-						<tr>
+						</tr> -->
+						<!-- <tr>
 							<td>{{ order.billing_type }}</td>
 							<td></td>
 							<td>$ {{ order.atr_billing_amount_f }}</td>
 							<td></td>
-						</tr>
+						</tr> -->
 						<tr>
 							<th>Total</th>
+							<th></th>
 							<th></th>
 							<th>$ {{ order.atr_subscription_total_amount_f }}</th>
 							<th></th>

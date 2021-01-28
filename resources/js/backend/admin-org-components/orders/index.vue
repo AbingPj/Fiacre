@@ -20,6 +20,7 @@
 							<th>Date</th>
 							<th>Order #</th>
 							<th>Ordered By</th>
+							<th>Customer Phone #</th>
 							<th>Amount</th>
 							<th>Actions</th>
 						</tr>
@@ -31,8 +32,11 @@
 							<td>
 								{{ item.user.full_name }}
 							</td>
+                            <td>
+								{{ item.user.contact_number }}
+							</td>
 							<td>
-								$ {{ item.atr_subscription_overall_total_amount_f }}
+								$ {{ item.atr_subscription_total_amount_f }}
 							</td>
 							<td>
 								<button

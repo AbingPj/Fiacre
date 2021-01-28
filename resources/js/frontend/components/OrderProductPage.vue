@@ -169,6 +169,10 @@
                     <span class="qty-options">
                           $ {{or_prod.price}}  X  {{or_prod.subscription_weeks}} weeks =
                     </span>
+                    <br>
+                    <span>
+                        <a :href="'/order/'+order.id+'/week/'+or_prod.id">Week Details</a>
+                    </span>
                   </p>
                 </div>
                 <div class="cart-item-close-container ml-auto">

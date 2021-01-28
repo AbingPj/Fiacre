@@ -21,6 +21,8 @@
 							<th>week No.</th>
 							<th>Pick Up Date</th>
 							<th>Picked Up</th>
+							<th>Actual Pick Up Date</th>
+							<th>Picked Up By</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -36,12 +38,19 @@
 											: 'badge badge-danger'
 									"
 								>
-									{{ item.is_picked_up == 1? 'Done':'Not Yet' }}
+									{{ item.is_picked_up == 1 ? "Done" : "Not Yet" }}
 								</span>
 							</td>
-                            <td>
-                                <button class="btn btn-sm btn-info">Change Pick Up Status</button>
-                            </td>
+							<td>{{ item.actual_pickup_day }}</td>
+							<td>{{ item.pick_up_by }}</td>
+							<td>
+								<button
+									class="btn btn-sm btn-info"
+									@click="Inprogress()"
+								>
+									Change Pick Up Status
+								</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -53,6 +62,11 @@
 <script>
 	export default {
 		props: ["org", "orderd_product", "weeks"],
+		methods: {
+			Inprogress() {
+				alert("Work In Progress");
+			},
+		},
 	};
 </script>
 

@@ -101,7 +101,7 @@ const CheckoutPage = () => import(/* webpackChunkName: "js/f/CheckoutPage" */ '.
 
 // Orders Page
 // Vue.component("orders-page", require("./components/OrdersPage.vue").default);
-// Vue.component("order-products-page", require("./components/OrderProductPage.vue").default);
+Vue.component("order-products-page-weeks", require("./components/OrderProductPageWeeks.vue").default);
 
 const OrdersPage = () => import(/* webpackChunkName: "js/f/OrdersPage" */ './components/OrdersPage.vue');
 const OrderProductPage = () => import(/* webpackChunkName: "js/f/OrderProductPage" */ './components/OrderProductPage.vue');

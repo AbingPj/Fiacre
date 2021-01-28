@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
 use App\Models\City;
 use App\Models\Order;
+use App\Models\OrderedProductWeek;
 use App\Models\OrderProduct;
 use App\Models\Retailer;
 use App\Models\State;
@@ -148,6 +149,36 @@ class OrdersController extends Controller
                 'ordered_products' => $ordered_products,
                 'sunclub_user' => $sunclub_user,
                 'user' => $user
+            ]
+        );
+    }
+
+    public function orderedproduct($id, $ordered_product_id)
+    {
+
+        $order = Order::findOrFail($id);
+        $organization = $order->organization;
+        if ($order->order_by != Auth::user()->id) {
+            abort(404);
+        }
+
+        $ordered_product = OrderProduct::findOrFail($ordered_product_id);
+        $ordered_product->product_details  = json_decode($ordered_product->product_details);
+
+        $weeks = OrderedProductWeek::where('order_id', $order->id)
+            ->where('order_product_id', $ordered_product->id)
+            ->where('organization_id', $organization->id)
+            ->where('order_by', Auth::user()->id)
+            ->get();
+
+        return view(
+            'frontend.pages.orderproductweeks',
+            [
+                'page_title' => 'Orders',
+                'order' => $order,
+                'organization' => $organization,
+                'ordered_product' => $ordered_product,
+                'weeks' => $weeks,
             ]
         );
     }
