@@ -26,7 +26,7 @@ class UpdateOrderProductsTable4 extends Migration
     public function down()
     {
         Schema::table('order_products', function (Blueprint $table) {
-            $table->dropColumn('subscription_day');
+            // $table->dropColumn('subscription_day');
         });
     }
 }

@@ -25,8 +25,8 @@ class ChangeDayProdSubTable extends Migration
      */
     public function down()
     {
-        Schema::table('product_subscriptions', function (Blueprint $table) {
-            $table->dropColumn('day');
+        Schema::table('product_subcriptions', function (Blueprint $table) {
+            // $table->dropColumn('day');
         });
     }
 }
