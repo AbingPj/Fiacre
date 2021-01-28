@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateOrderProductsTable4 extends Migration
+class UpdateProductSubcriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class UpdateOrderProductsTable4 extends Migration
      */
     public function up()
     {
-        Schema::table('order_products', function (Blueprint $table) {
-            $table->integer('subscription_day')->default(1)->nullable()->change();
+        Schema::table('product_subcriptions', function (Blueprint $table) {
+            $table->boolean('prodsub_is_active')->default(true);
         });
     }
 
@@ -25,8 +25,8 @@ class UpdateOrderProductsTable4 extends Migration
      */
     public function down()
     {
-        Schema::table('order_products', function (Blueprint $table) {
-            $table->dropColumn('subscription_day');
+        Schema::table('product_subcriptions', function (Blueprint $table) {
+            $table->dropColumn('prodsub_is_active');
         });
     }
 }

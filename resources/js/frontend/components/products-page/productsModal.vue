@@ -26,14 +26,26 @@
                 <h6>
                   <b>$ {{updateProductPrice(product)}} / {{product.unit}}</b>
                 </h6>
-                <p>
+                <p class="mb-0">
                   {{product.description}}
                   <br />
                   <span v-if="category" class="minmax-color">{{category.name}}</span>
                   <span v-if="sub_category" class="minmax-color">, {{sub_category.name}}</span>
                   <br />
-                  <span class="mb-2 mr-2 mb-sm-0">
-                      <strong>Subscription</strong>
+                  <span class="mb-1 mr-2 mb-sm-0">
+                      <div v-if="guest == 1">
+                          <strong style="font-size:17px;" class="text-danger" v-if="product.is_no_subscrition_available">No Subscriptions avaiable</strong>
+                          <strong v-else>Subscription</strong>
+                      </div>
+                      <div v-else>
+                           <div v-if="product.is_already_subscribe" >
+                               <strong style="font-size:17px;" class="text-success">Subscribed</strong>
+                            </div>
+                           <div v-else>
+                              <strong style="font-size:17px;"  class="text-danger" v-if="product.is_no_subscrition_available">No Subscriptions avaiable</strong>
+                              <strong v-else>Subscription</strong>
+                            </div>
+                      </div>
                   </span>
                 </p>
 
@@ -64,7 +76,14 @@
                     </span>
                   </div> -->
                   <div class="ml-auto">
-                    <button type="button" class="btn btn-success" @click="addToCart()">Add to Cart</button>
+                    <button :disabled="product.is_already_subscribe || product.is_no_subscrition_available"
+                            type="button"
+                            class="btn btn-success"
+                            @click="addToCart()">Add to Cart</button>
+                             <!-- <button
+                            type="button"
+                            class="btn btn-success"
+                            @click="addToCart()">Add to Cart</button> -->
                   </div>
 
                 </div>
@@ -102,55 +121,55 @@
 </template>
 
 <style lang="scss" scoped>
-@import "resources/sass/mixins";
-.product-modaol-dialog {
-  max-width: 700px;
-}
-.product-modal-body {
-  padding: 40px 20px;
-}
-.product-container {
-  //   background-color: red;
-  position: relative;
-  padding: 0px;
-}
-.btn-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: 0px;
-  color: gray;
-  font-size: 20px;
-}
-.plusminus {
-  background: transparent;
-  border: 0px;
-  color: gray;
-  font-size: 20px;
-}
+	@import "resources/sass/mixins";
+	.product-modaol-dialog {
+		max-width: 700px;
+	}
+	.product-modal-body {
+		padding: 40px 20px;
+	}
+	.product-container {
+		//   background-color: red;
+		position: relative;
+		padding: 0px;
+	}
+	.btn-close {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		background: transparent;
+		border: 0px;
+		color: gray;
+		font-size: 20px;
+	}
+	.plusminus {
+		background: transparent;
+		border: 0px;
+		color: gray;
+		font-size: 20px;
+	}
 
-.product-image {
-  object-fit: cover;
-  width: 100%;
-  height: 200px;
-  border-radius: 8px 8px 8px 8px;
-}
-.p-image {
-  padding-right: 20px;
-  margin-right: 0px;
-}
-.p-content {
-  padding-left: 0px;
-  margin-left: 0px;
-  @include mobile {
-    padding: 10px 20px 10px 20px;
-  }
-}
+	.product-image {
+		object-fit: cover;
+		width: 100%;
+		height: 200px;
+		border-radius: 8px 8px 8px 8px;
+	}
+	.p-image {
+		padding-right: 20px;
+		margin-right: 0px;
+	}
+	.p-content {
+		padding-left: 0px;
+		margin-left: 0px;
+		@include mobile {
+			padding: 10px 20px 10px 20px;
+		}
+	}
 
-.minmax-color {
-  color: #007bff;
-}
+	.minmax-color {
+		color: #007bff;
+	}
 </style>
 
 <script>
@@ -159,6 +178,7 @@ export default {
     return {
       product: {},
       update_prodct: {},
+      guest: 1,
       customer_role: 0,
       category: {},
       sub_category: {},

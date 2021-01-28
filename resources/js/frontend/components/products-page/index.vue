@@ -570,6 +570,7 @@ export default {
 
     showAddToCartModal(data) {
       this.$refs.productmodal.product = data;
+      this.$refs.productmodal.guest = this.guest;
       this.$refs.productmodal.category = data.category;
       this.$refs.productmodal.sub_category = data.sub_category;
       this.$refs.productmodal.customer_role = this.user.customer_role;

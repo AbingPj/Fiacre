@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\ProductInStock;
 use App\Models\ProductSubcription;
+use App\Models\ProductSubscriptionOrdered;
 use App\Services\ImagePathService;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -299,12 +300,11 @@ class Product extends Model
             $now = Carbon::now();
             $end =  Carbon::parse($prodSub->prodsub_end_date);
             $nowIsEarlier = ($start > $now) ? true : false;
-            if($nowIsEarlier){
+            if ($nowIsEarlier) {
                 $weeks = $start->diffInWeeks($end);
-            }else{
+            } else {
                 $weeks = $now->diffInWeeks($end);
             }
-
         } else {
             $weeks = "-";
         }
@@ -321,5 +321,101 @@ class Product extends Model
             $day = $prodSub->day;
         }
         return $day;
+    }
+
+    public function getSubscriptionId($org_id)
+    {
+        $id = null;
+        $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
+            ->where('prodsub_product_id', $this->id)
+            ->first();
+        if (!empty($prodSub)) {
+            $id = $prodSub->prodsub_id;
+        }
+        return $id;
+    }
+
+    public function getSubscriptionFirstDay($org_id)
+    {
+        $firstDay = null;
+        $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
+            ->where('prodsub_product_id', $this->id)
+            ->first();
+        if (!empty($prodSub)) {
+            $start =  Carbon::parse($prodSub->prodsub_start_date);
+            $now = Carbon::now();
+            $nowIsEarlier = ($start > $now) ? true : false;
+            if ($nowIsEarlier) {
+                $firstDay = $start;
+            } else {
+                $firstDay = Carbon::now()->next($prodSub->day);
+            }
+        }
+        return $firstDay;
+    }
+
+    public function getSubscriptionNumber($org_id)
+    {
+        $prodSubCount = 0;
+
+        $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
+            ->where('prodsub_product_id', $this->id)
+            ->first();
+
+        if (!empty($prodSub)) {
+            $prodSubCount = ProductSubscriptionOrdered::where('product_subscription_id', $prodSub->prodsub_id)
+                ->where('organization_id', $org_id)
+                ->where('product_id', $this->id)
+                ->count();
+        }
+        return $prodSubCount;
+    }
+
+    public function getSubscriptionLimit($org_id)
+    {
+        $Limit = null;
+        $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
+            ->where('prodsub_product_id', $this->id)
+            ->first();
+        if (!empty($prodSub)) {
+            $Limit = $prodSub->limit_of_subscription;
+        }
+        return $Limit;
+    }
+
+    public function isNoSubscriptionAvailable($org_id)
+    {
+        $isNoSubscriptionAvailable = false;
+        $subscribers_total = $this->getSubscriptionNumber($org_id);
+        $subscribtion_limit = $this->getSubscriptionLimit($org_id);
+        if ($subscribtion_limit) {
+            if ($subscribers_total >= $subscribtion_limit) {
+                $isNoSubscriptionAvailable  = true;
+            }
+        }
+        return $isNoSubscriptionAvailable;
+    }
+
+    public function ifUserIsAlreadySubscribe($org_id, $user_id)
+    {
+        $alreadySubscribe = false;
+
+        $prodSub = ProductSubcription::where('prodsub_organization_id', $org_id)
+            ->where('prodsub_product_id', $this->id)
+            ->first();
+
+        if (!empty($prodSub)) {
+            $prodSubOrd = ProductSubscriptionOrdered::where('product_subscription_id', $prodSub->prodsub_id)
+                ->where('organization_id', $org_id)
+                ->where('order_by', $user_id)
+                ->where('product_id', $this->id)
+                ->first();
+            if (!empty($prodSubOrd)) {
+                $alreadySubscribe = true;
+            }
+        }
+
+
+        return $alreadySubscribe;
     }
 }

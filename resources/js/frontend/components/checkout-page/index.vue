@@ -350,9 +350,9 @@
 					.then((res) => {
 						// LoadingOverlayHide();
 						console.log(res);
-						// this.cart = [];
-						// localStorage.setItem("cart", JSON.stringify(this.cart));
-						// localStorage.setItem("cart_badge", this.cart.length);
+						this.cart = [];
+						localStorage.setItem("cart", JSON.stringify(this.cart));
+						localStorage.setItem("cart_badge", this.cart.length);
 
 						if (res.status == 200) {
 							window.location.href = "/placeorder/thankyou";
@@ -364,7 +364,8 @@
 						//   console.error(err.response.data.data_message);
 						this.errorMessage =
 							"Payment error: " + err.response.data.data_message;
-						this.placeorderButtonDisabled = false;
+                        this.placeorderButtonDisabled = false;
+                          window.scrollTo(0, 0);
 						LoadingOverlayHide();
 						//   console.error(err);
 					});

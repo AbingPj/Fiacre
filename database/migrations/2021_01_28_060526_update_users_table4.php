@@ -26,7 +26,7 @@ class UpdateUsersTable4 extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('selected_org_optionc_id');
         });
     }
 }

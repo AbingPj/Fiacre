@@ -12,6 +12,7 @@ use App\Models\ProductBundle;
 use App\Models\BillingInfo;
 use App\Models\FiacreCustomerPaymentRecord;
 use App\Models\OrderedProductWeek;
+use App\Models\ProductSubscriptionOrdered;
 use App\Services\EmailsService;
 use App\Services\PaceFuzePaymentApiService;
 use App\Services\TotalViewService;
@@ -28,7 +29,6 @@ class FiacrePlaceOrderController extends Controller
         $this->PacePayment = new PaceFuzePaymentApiService;
         $this->EmailsService = new EmailsService;
     }
-
 
     public function testDate()
     {
@@ -50,6 +50,28 @@ class FiacrePlaceOrderController extends Controller
         }
         dd($sample);
     }
+
+
+    // public function testDate()
+    // {
+    //     $sample = Carbon::now()
+    //         ->next(0);
+
+    //     $start =  Carbon::parse('2/22/21');
+    //     $now = Carbon::now();
+    //     $end =  Carbon::parse('2/14/22');
+    //     // dump($start);
+    //     // dump($end);
+    //     $weeks = $now->diffInWeeks($end);
+
+    //     dd($weeks);
+
+    //     for ($i = 0; $i < 10; $i++) {
+    //         dump($sample);
+    //         $sample->addDays(7);
+    //     }
+    //     dd($sample);
+    // }
 
     public function fiacreCustomerPlaceOrder(Request $request)
     {
@@ -89,6 +111,23 @@ class FiacrePlaceOrderController extends Controller
                     $orderproduct->organization_id = $org->id; // new
                     $product = Product::find($orderproduct->product_id);
                     if (!empty($product)) {
+
+                        if ($product->ifUserIsAlreadySubscribe($org->id, Auth::user()->id)) {
+                            DB::rollBack();
+                            $errmsg = "Product [ ".$product->name." ] Is Already Subscribed";
+                            return response()->json([
+                                "data_message" => $errmsg
+                            ], 422);
+                        }
+                        if ($product->isNoSubscriptionAvailable($org->id)) {
+                            DB::rollBack();
+                            $errmsg = "No Subscription Available for Product [ ".$product->name." ].";
+                            return response()->json([
+                                "data_message" => $errmsg
+                            ], 422);
+                        }
+
+
                         if ($product->is_bundle == 1) {
                             // $orderproduct->price = $product->getBundlePrice('retailer');
                             $orderproduct->price = round($product->getBundlePrice('retailer'), 2);
@@ -105,6 +144,8 @@ class FiacrePlaceOrderController extends Controller
                         //subscription
                         $weeks = $product->getSubcriptionWeeks($org->id);
                         $day = $product->getSubscriptionDay($org->id);
+                        $prodSub_id = $product->getSubscriptionId($org->id);
+
 
                         if ($weeks == '-') {
                             $orderproduct->subscription_weeks = 0;
@@ -122,10 +163,27 @@ class FiacrePlaceOrderController extends Controller
 
                         $orderproduct->save();
 
-                        $firstDay = Carbon::now()->next($orderproduct->subscription_day);
 
                         if ($orderproduct->is_subscription) {
+
+                            // $firstDay = Carbon::now()->next($orderproduct->subscription_day);
+                            $firstDay = $product->getSubscriptionFirstDay($org->id);
+
+                            $lastDay = null;
+                            $ProdSubOrdered = new ProductSubscriptionOrdered;
+                            $ProdSubOrdered->product_subscription_id = $prodSub_id;
+                            $ProdSubOrdered->order_by = Auth::user()->id;
+                            $ProdSubOrdered->ordered_product_id = $orderproduct->id;
+                            $ProdSubOrdered->organization_id = $org->id;
+                            $ProdSubOrdered->order_id = $order->id;
+                            $ProdSubOrdered->product_id = $product->id;
+                            $ProdSubOrdered->start_date = $firstDay;
+                            $ProdSubOrdered->number_of_weeks = $orderproduct->subscription_weeks;
+                            $ProdSubOrdered->day = $day;
+                            $ProdSubOrdered->save();
+
                             for ($i = 0; $i < $orderproduct->subscription_weeks; $i++) {
+                                $lastDay =  $firstDay;
                                 $OPW = new OrderedProductWeek;
                                 $OPW->order_id = $order->id;
                                 $OPW->order_product_id = $orderproduct->id;
@@ -134,10 +192,14 @@ class FiacrePlaceOrderController extends Controller
                                 $num = $i;
                                 $OPW->weeknumber = $num + 1;
                                 $OPW->date = $firstDay;
+                                $OPW->product_subscription_ordered_id = $ProdSubOrdered->id;
                                 $OPW->save();
                                 $firstDay->addDays(7);
                             }
+                            $ProdSubOrdered->end_date = $lastDay;
+                            $ProdSubOrdered->save();
                         }
+
 
 
 
@@ -167,6 +229,9 @@ class FiacrePlaceOrderController extends Controller
                 $totalAmount = $totalAmount + $billing_method_price;
 
                 // DB::rollBack();
+                // return response()->json([
+                //     "data_message" => "testing"
+                // ], 422);
                 // DB::commit();
                 // total amount + tax
                 // dd($totalAmount);

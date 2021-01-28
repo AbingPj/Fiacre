@@ -40,9 +40,9 @@ class ProductsController extends Controller
                 if (!empty($org)) {
                     $user->selected_org_id = $org->id;
                     $user->selected_org_optionc_id = $request->input('optionc_id');
-                }else{
+                } else {
                     return response()->json([
-                        "data_message" => 'Sorry, your school ID[ '. $request->input('optionc_id') .' ] is not yet registered.'
+                        "data_message" => 'Sorry, your school ID[ ' . $request->input('optionc_id') . ' ] is not yet registered.'
                     ], 400);
                 }
             }
@@ -123,11 +123,11 @@ class ProductsController extends Controller
         }
 
 
-        $products->getCollection()->transform(function ($value) use ($org_id) {
+        $products->getCollection()->transform(function ($value) use ($org_id, $request) {
             $value->selected = false;
             $value->qty = 1;
             if ($value->is_bundle == 1) {
-                $value->price = round($value->getBundlePrice('retailer'),2);
+                $value->price = round($value->getBundlePrice('retailer'), 2);
                 // $value->member_price = $value->getBundlePrice('member');
                 // $value->wholesale_price = $value->getBundlePrice('wholesale');
                 $selected = [];
@@ -143,13 +143,24 @@ class ProductsController extends Controller
                 }
                 $value->selected_products = $selected;
             }
-            $value->weeks = $value->getSubcriptionWeeks($org_id);
-            if ($value->weeks == '-') {
-                $value->subscription_price = 'no subscription yet';
-            } else {
-                $subscription_price = $value->price * $value->weeks;
-                $value->subscription_price = round($subscription_price, 2);
+
+            if ($request->has('org_id')) {
+                $value->weeks = $value->getSubcriptionWeeks($org_id);
+                if ($value->weeks == '-') {
+                    $value->subscription_price = 'no subscription yet';
+                } else {
+                    $subscription_price = $value->price * $value->weeks;
+                    $value->subscription_price = round($subscription_price, 2);
+                    $value->subscribers_total = $value->getSubscriptionNumber($org_id);
+                    $value->subscription_limit = $value->getSubscriptionLimit($org_id);
+                    $value->is_no_subscrition_available = $value->isNoSubscriptionAvailable($org_id);
+                    if (Auth::guest() == false) {
+                        $value->is_already_subscribe =
+                            $value->ifUserIsAlreadySubscribe($org_id, Auth::user()->id);
+                    }
+                }
             }
+
             return $value;
         });
 
