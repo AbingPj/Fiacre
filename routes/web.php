@@ -37,6 +37,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     Route::get('/api/OrganizationSelection', 'ProductsController@OrganizationSelection')->name('OrganizationSelection');
     Route::post('/api/UpdateSelectedOrganization', 'ProductsController@UpdateSelectedOrganization')->name('UpdateSelectedOrganization');
+    Route::post('/api/UpdateSelectedOrganization2', 'ProductsController@UpdateSelectedOrganization2')->name('UpdateSelectedOrganization2');
 
     Route::get('/data/products', 'ProductsController@getProducts')->name('data.products');
     ///Checkot and placeorder and thank you page

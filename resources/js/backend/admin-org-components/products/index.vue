@@ -36,14 +36,14 @@
 									style="width: 70px; height: 50px; object-fit: cover"
 								/>
 							</td>
-							<td>
+							<td style="width: 150px">
 								{{ item.name }}
 							</td>
-							<td>$ {{ item.price }}/{{ item.unit }}</td>
+							<td>$ {{ item.price }} /{{ item.unit }}</td>
 							<td>{{ getNumberOfWeeks(item) }}</td>
 							<td>{{ getSubPrice(item) }}</td>
 							<td>
-								{{ item.is_visible == 1 ? "show" : "hide" }}
+								{{ getVisibility(item) }}
 							</td>
 
 							<td>
@@ -95,6 +95,18 @@
 				}
 				return data;
 			},
+			getVisibility(item) {
+				var data = "Hide";
+				if (item.is_visible == 1) {
+					if (item.subscirption_price != "no subscription yet") {
+						data = "Show";
+					} else {
+						data = "Hide";
+					}
+                }
+                return data;
+			},
+
 			viewOrganization(data) {
 				window.location.href = `/admin/org/products/subcription/${data.id}`;
 			},

@@ -362,9 +362,9 @@
 						</b-row>
 					</b-col>
 					<!-- Formerly Membership Card -->
-			        <b-col md="4">
+					<b-col md="4">
 						<md-card class="mb-4 mt-4">
-							<md-card-content> Selected Organization
+							<!-- <md-card-content> Selected Organization
                                 <br>
                                 <span v-if="organization.org_name"> name: <b>{{ organization.org_name}}</b></span>
                                  <br>
@@ -372,9 +372,14 @@
                                 <br>
                                 <br>
                                  <button type="button" class="btn btn-info btn-sm p-2" @click="SelectOrganizationMOdalShow()">  Select Organization </button>
-                            </md-card-content>
-
-
+                            </md-card-content> -->
+							<md-card-content>
+								<div class="p-3">
+									Enter Your Organization(School/Parish) ID:
+									<br />
+									<input v-model="optionc_id" type="text" class="form-control" @keypress="onlyNumber" />
+								</div>
+							</md-card-content>
 						</md-card>
 					</b-col>
 				</b-row>
@@ -396,7 +401,6 @@
 					</b-col>
 				</b-row>
 			</b-container>
-
 		</div>
 		<vue-programmatic-invisible-google-recaptcha
 			ref="invisibleRecaptcha2"
@@ -407,7 +411,7 @@
 			:showBadgeDesktop="true"
 			@recaptcha-callback="recaptchaCallback"
 		></vue-programmatic-invisible-google-recaptcha>
-        <SelectOrganizationModal2></SelectOrganizationModal2>
+		<SelectOrganizationModal2></SelectOrganizationModal2>
 	</form>
 </template>
 
@@ -462,9 +466,10 @@
 				},
 				timer: null,
 				cities3: [],
-                states2: [],
-                organization: {},
+				states2: [],
+				organization: {},
                 org_id: null,
+                optionc_id: null,
 			};
 		},
 
@@ -510,9 +515,17 @@
 		},
 
 		methods: {
-            SelectOrganizationMOdalShow(){
-                $("#selectOrganizationModal3").modal("show");
-            },
+            onlyNumber($event) {
+				//console.log($event.keyCode); //keyCodes value
+				let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+				if (keyCode < 48 || keyCode > 57) {
+					// 46 is dot
+					$event.preventDefault();
+				}
+			},
+			SelectOrganizationMOdalShow() {
+				$("#selectOrganizationModal3").modal("show");
+			},
 			fetchOptions(search, loading) {
 				if (this.timer) {
 					clearTimeout(this.timer);
@@ -549,10 +562,14 @@
 				let formData = new FormData(myForm);
 				formData.append("g-recaptcha-response", recaptchaToken);
 				formData.append("city", this.address.city);
-                formData.append("state", this.address.state);
-                if(this.org_id){
-                    formData.append("org_id", this.org_id);
+				formData.append("state", this.address.state);
+				// if (this.org_id) {
+				// 	formData.append("org_id", this.org_id);
+                // }
+                if (this.optionc_id) {
+					formData.append("optionc_id", this.optionc_id);
                 }
+
 
 
 				axios
@@ -565,8 +582,8 @@
 					.then((res) => {
 						console.log(res);
 						window.scrollTo(0, 0);
-                        window.location.href = "/signup/complete";
-                        LoadingOverlayHide();
+						window.location.href = "/signup/complete";
+						LoadingOverlayHide();
 					})
 					.catch((err) => {
 						LoadingOverlayHide();

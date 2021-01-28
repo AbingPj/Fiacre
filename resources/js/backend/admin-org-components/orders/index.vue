@@ -19,15 +19,15 @@
 							<!-- <th scope="col">#</th> -->
 							<th>Date</th>
 							<th>Order #</th>
-							<th>Order By</th>
+							<th>Ordered By</th>
 							<th>Amount</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="(item, index) in orders" :key="index">
-							<td>{{ item.id }}</td>
 							<td>{{ item.atr_date_label }}</td>
+                            <td>{{ item.id }}</td>
 							<td>
 								{{ item.user.full_name }}
 							</td>

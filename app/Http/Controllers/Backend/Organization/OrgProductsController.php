@@ -85,7 +85,7 @@ class OrgProductsController extends Controller
         ]);
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return response()->json(['error' => $errors], 422);
+            return response()->json(['errors' => $errors], 422);
         }
 
         $org = Organization::where('user_id',auth()->user()->id)->first();

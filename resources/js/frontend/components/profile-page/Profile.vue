@@ -233,20 +233,63 @@
 					</b-col>
 					<b-col md="4">
 						<md-card class="mb-4 mt-4">
-							<md-card-content> Selected Organization
-                                <br>
-                                <span v-if="oraganization.org_name"> name: <b>{{ oraganization.org_name}}</b></span>
-                                 <br>
-                                 <span v-if="oraganization.org_optionc_id"> optionC id:<b>{{ oraganization.org_optionc_id}}</b></span>
-                                <br>
-                                <br>
-                                 <button type="button" class="btn btn-info btn-sm p-2" @click="SelectOrganizationMOdalShow()">  Select Organization </button>
-                            </md-card-content>
+							<md-card-content>
+								<div v-if="editOrganization" class="p-3">
+									Enter Your Organization(School/Parish) ID:
+									<br />
+									<input
+										v-model="optionc_id"
+										type="text"
+										class="form-control"
+										@keypress="onlyNumber"
+									/>
+									<br />
+                                    <button
+										type="button"
+										class="btn btn-danger btn-sm"
+										@click="editOrganization = false"
+									>
+										Cancel
+									</button>
+									<button
+										type="button"
+										class="btn btn-info btn-sm float-right"
+										@click="submitOptionCId()"
+									>
+										Save Changes
+									</button>
+									<br />
+								</div>
+								<div v-else class="p-3">
+									Selected Organization
+									<br />
+									<span v-if="oraganization.org_name">
+										name: <b>{{ oraganization.org_name }}</b></span
+									>
+									<br />
+									<span v-if="oraganization.org_optionc_id">
+										optionC id:<b>{{
+											oraganization.org_optionc_id
+										}}</b></span
+									>
+									<br />
+									<br />
+									<button
+										type="button"
+										class="btn btn-success btn-sm"
+										@click="editOrganization = true"
+									>
+										Change
+									</button>
+									<br />
+								</div>
 
+								<!-- <button type="button" class="btn btn-info btn-sm p-2" @click="SelectOrganizationMOdalShow()">  Select Organization </button> -->
+							</md-card-content>
 						</md-card>
 					</b-col>
 				</b-row>
-				<SelectOrganizationModal></SelectOrganizationModal>
+				<!-- <SelectOrganizationModal></SelectOrganizationModal> -->
 			</b-container>
 		</div>
 	</div>
@@ -308,8 +351,8 @@
 				selectedCity: "",
 				selectedState: "",
 
-                user: {},
-                oraganization: {},
+				user: {},
+				oraganization: {},
 
 				sunclub_choices: [],
 
@@ -333,15 +376,18 @@
 				defaultCountry: "US",
 				countriesList: ["US"],
 				contactNumberType: "Home",
+
+				editOrganization: false,
+				optionc_id: null,
 			};
 		},
 
 		created() {
 			this.getStates();
-            this.user = this.propsuser;
-            if(this.propsuser.organization){
-                 this.oraganization = this.propsuser.organization;
-            }
+			this.user = this.propsuser;
+			if (this.propsuser.organization) {
+				this.oraganization = this.propsuser.organization;
+			}
 
 			this.profileImage = this.user.image_path;
 			this.selectedCity = this.user.city;
@@ -396,9 +442,48 @@
 		},
 
 		methods: {
-            SelectOrganizationMOdalShow(){
-                $("#selectOrganizationModal2").modal("show");
-            },
+			submitOptionCId() {
+				LoadingOverlay();
+				let rawdata = {
+					optionc_id: this.optionc_id,
+				};
+				axios
+					.post(`/api/UpdateSelectedOrganization2`, rawdata)
+					.then((res) => {
+						window.location.href = "/myprofile";
+					})
+					.catch((err) => {
+						console.error(err);
+						console.log(err.response.data.data_message);
+						console.log(err.response);
+
+						if (err.response.status == 400) {
+							let arr = [];
+							arr.push(err.response.data.data_message);
+							this.showErrorMessage(arr);
+						} else {
+							this.errors.record(err.response.data.errors);
+							this.showErrorMessage(this.errors.getArrayOfMessages());
+						}
+						window.scrollTo(0, 0);
+						LoadingOverlayHide();
+					});
+			},
+			showErrorMessage(errors) {
+				//   console.log(shit);
+				this.$events.fire("showErrorMessage", errors);
+			},
+			onlyNumber($event) {
+				//console.log($event.keyCode); //keyCodes value
+				let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+				if (keyCode < 48 || keyCode > 57) {
+					// 46 is dot
+					$event.preventDefault();
+				}
+			},
+			SelectOrganizationMOdalShow() {
+				$("#selectOrganizationModal2").modal("show");
+			},
 			onUpdate(payload) {
 				this.results = payload;
 			},

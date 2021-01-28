@@ -29,6 +29,28 @@ class ProductsController extends Controller
             $user->save();
         }
     }
+    public function UpdateSelectedOrganization2(Request $request)
+    {
+        if (Auth::guest() == false) {
+            $user = User::find(Auth::user()->id);
+
+            if (!empty($request->input('optionc_id'))) {
+
+                $org = Organization::where('org_optionc_id', $request->input('optionc_id'))->first();
+                if (!empty($org)) {
+                    $user->selected_org_id = $org->id;
+                    $user->selected_org_optionc_id = $request->input('optionc_id');
+                }else{
+                    return response()->json([
+                        "data_message" => 'Sorry, your school ID[ '. $request->input('optionc_id') .' ] is not yet registered.'
+                    ], 400);
+                }
+            }
+            // $user->selected_org_id = $request->org_id;
+            $user->save();
+        }
+    }
+
     public function OrganizationSelection(Request $request)
     {
 

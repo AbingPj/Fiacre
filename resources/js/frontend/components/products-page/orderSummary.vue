@@ -107,10 +107,8 @@
 							<div @click="updateQtyModal(item)">
 								<img :src="item.image_link" class="cart-item-image" />
 							</div>
-							<div
-								class="cart-item-texts flex-grow-1"
-								@click="updateQtyModal(item)"
-							>
+							<!-- <div class="cart-item-texts flex-grow-1" @click="updateQtyModal(item)"> -->
+							<div class="cart-item-texts w-50" @click="updateQtyModal(item)">
 								<p>
 									<b>{{ item.name }}</b>
 									<br />

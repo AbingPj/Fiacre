@@ -186,6 +186,7 @@
 <script>
 	import DatePicker from "vue2-datepicker";
 	import "vue2-datepicker/index.css";
+	import Errors from "../../errorClass";
 	export default {
 		components: { VueTwoDatePicker: DatePicker, VueTwoDatePicker2: DatePicker },
 		props: ["prod", "propday", "propstart", "propend", "proplimit"],
@@ -204,6 +205,7 @@
 				day: 1,
 				limit: null,
 				startDayConfig: null,
+				errors: new Errors(),
 			};
 		},
 
@@ -228,8 +230,25 @@
 					})
 					.catch((err) => {
 						console.error(err);
-						alert(err);
+
+						if (err.response) {
+							if (err.response.status == 422) {
+								this.errors.record(err.response.data.errors);
+								this.showErrorMessage(this.errors.getArrayOfMessages());
+								window.scrollTo(0, 0);
+							} else {
+                                this.showErrorMessage(["Something Went Wrong."]);
+								window.scrollTo(0, 0);
+                            }
+						}else{
+                            this.showErrorMessage(["Something Went Wrong."]);
+							window.scrollTo(0, 0);
+                        }
 					});
+			},
+			showErrorMessage(errors) {
+				//   console.log(shit);
+				this.$events.fire("showErrorMessage", errors);
 			},
 			addDays(days) {
 				var result = new Date();

@@ -298,9 +298,13 @@ class Product extends Model
             $start =  Carbon::parse($prodSub->prodsub_start_date);
             $now = Carbon::now();
             $end =  Carbon::parse($prodSub->prodsub_end_date);
-            // dump($start);
-            // dump($end);
-            $weeks = $now->diffInWeeks($end);
+            $nowIsEarlier = ($start > $now) ? true : false;
+            if($nowIsEarlier){
+                $weeks = $start->diffInWeeks($end);
+            }else{
+                $weeks = $now->diffInWeeks($end);
+            }
+
         } else {
             $weeks = "-";
         }

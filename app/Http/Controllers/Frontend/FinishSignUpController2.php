@@ -12,6 +12,7 @@ use App\Models\BillingInfoAchToken;
 use App\Models\BillingInfoCcToken;
 use App\Models\City;
 use App\Models\FiacreCustomer;
+use App\Models\Organization;
 use App\Models\ReferralCode;
 use App\Models\State;
 use App\Models\Store;
@@ -97,8 +98,21 @@ class FinishSignUpController2 extends Controller
             if (!empty($request->input('contact_number'))) {
                 $user->contact_number = $request->input('contact_number');
             }
-            if (!empty($request->input('org_id'))) {
-                $user->selected_org_id = $request->input('org_id');
+            // if (!empty($request->input('org_id'))) {
+            //     $user->selected_org_id = $request->input('org_id');
+            // }
+
+            if (!empty($request->input('optionc_id'))) {
+
+                $org = Organization::where('org_optionc_id', $request->input('optionc_id'))->first();
+                if (!empty($org)) {
+                    $user->selected_org_id = $org->id;
+                    $user->selected_org_optionc_id = $request->input('optionc_id');
+                }else{
+                    return response()->json([
+                        "data_message" => 'Sorry, your school ID[ '. $request->input('optionc_id') .' ] is not yet registered. Just leave the field blank.'
+                    ], 400);
+                }
             }
 
 

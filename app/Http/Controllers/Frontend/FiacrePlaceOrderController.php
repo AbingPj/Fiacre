@@ -35,6 +35,15 @@ class FiacrePlaceOrderController extends Controller
         $sample = Carbon::now()
             ->next(0);
 
+        $start =  Carbon::parse('2/22/21');
+        $now = Carbon::now();
+        $end =  Carbon::parse('2/14/22');
+        // dump($start);
+        // dump($end);
+        $weeks = $now->diffInWeeks($end);
+
+        dd($weeks);
+
         for ($i = 0; $i < 10; $i++) {
             dump($sample);
             $sample->addDays(7);
