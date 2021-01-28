@@ -38,7 +38,7 @@
 							<tbody>
 								<tr v-for="(item, index) in weeks" :key="index">
 									<td>Week {{ item.weeknumber }}</td>
-									<td>{{ item.date }}</td>
+									<td>{{ item.atr_date_label }}</td>
 									<td>
 										<span
 											:class="
