@@ -1,12 +1,12 @@
 {
-    "/js/manifest.js": "/js/manifest.js?id=0d95ca8603951f80f228",
-    "/js/manifest.js.map": "/js/manifest.js.map?id=4e67ad6ed96d355ce8f9",
+    "/js/manifest.js": "/js/manifest.js?id=b3988c10dfa2fc15c2b3",
+    "/js/manifest.js.map": "/js/manifest.js.map?id=3b0277ec3af3dcf1a1a4",
     "/js/vendor.js": "/js/vendor.js?id=8d784d784dff56da29a1",
     "/js/vendor.js.map": "/js/vendor.js.map?id=a8c6f9bf3a2886621454",
-    "/js/backend.js": "/js/backend.js?id=2d3fc4a185bcd56984a2",
-    "/js/backend.js.map": "/js/backend.js.map?id=b6b816603e0a7a134406",
-    "/js/frontend.js": "/js/frontend.js?id=1785d751614bdd41645f",
-    "/js/frontend.js.map": "/js/frontend.js.map?id=682fc1f9f4a2b3c4db31",
+    "/js/backend.js": "/js/backend.js?id=3cf2a06839925ce4dc0c",
+    "/js/backend.js.map": "/js/backend.js.map?id=3aa7ace6e3e4b3af486c",
+    "/js/frontend.js": "/js/frontend.js?id=79c6f78b207c6c86f549",
+    "/js/frontend.js.map": "/js/frontend.js.map?id=d4170e1ba5b36d062fba",
     "/js/b/Categories.js": "/js/b/Categories.js?id=07801ce353582e658001",
     "/js/b/Categories.js.map": "/js/b/Categories.js.map?id=25343b9d4dc6499de6bb",
     "/js/b/CategoriesSub.js": "/js/b/CategoriesSub.js?id=900c6c843ba0f256f0d1",
@@ -174,7 +174,5 @@
     "/js/f/products.js": "/js/f/products.js?id=bdfdd60d0f143ad2a954",
     "/js/f/products.js.map": "/js/f/products.js.map?id=26b00455fad9b683fbe8",
     "/js/f/rewardsModal.js": "/js/f/rewardsModal.js?id=eca4e025345e2f2cde6e",
-    "/js/f/rewardsModal.js.map": "/js/f/rewardsModal.js.map?id=e84f127fe2448da88b9e",
-    "/vendors~js/b/adminOrgProductsSub.js": "/vendors~js/b/adminOrgProductsSub.js?id=7449b951a93dc6f2d2b8",
-    "/vendors~js/b/adminOrgProductsSub.js.map": "/vendors~js/b/adminOrgProductsSub.js.map?id=29e3c755bcf3fa0f6777"
+    "/js/f/rewardsModal.js.map": "/js/f/rewardsModal.js.map?id=e84f127fe2448da88b9e"
 }
