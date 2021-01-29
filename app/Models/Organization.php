@@ -12,8 +12,15 @@ class Organization extends Model
         'atr_type_label',
         'atr_active_label',
         'atr_contact_person',
-        'atr_address'
+        'atr_address',
+        'atr_name_with_optionc'
     ];
+
+    public function getAtrNameWithOptioncAttribute()
+    {
+        $nameAndOptionC = $this->org_name. ' ('. $this->org_optionc_id . ')';
+        return $nameAndOptionC;
+    }
 
     public function getAtrAddressAttribute()
     {

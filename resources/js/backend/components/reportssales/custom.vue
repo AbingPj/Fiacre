@@ -22,7 +22,7 @@
 
   <div class="row mt-5">
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text">From</span>
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text">To</span>
@@ -49,6 +49,25 @@
         </div>
       </div>
     </div>
+
+     <!-- <div class="col-md-4">
+           <v-select
+						label="atr_name_with_optionc"
+						v-model="selectedOrganizationId"
+                        :reduce="(state) => state.id"
+						:options="organization"
+						:multiple="false"
+						:disabled="false"
+						:clearable="true"
+						:searchable="true"
+						:filterable="true"
+						:taggable="true"
+						:no-drop="false"
+						:push-tags="true"
+						:select-on-tab="true"
+                        placeholder="Select Organization"
+					></v-select>
+    </div> -->
 
     <div class="col-md-2">
       <button @click="filter()" class="btn btn-primary">
@@ -103,6 +122,7 @@
 export default {
   created() {
     this.getData();
+    this.getOrganization();
   },
   data() {
     return {
@@ -144,9 +164,21 @@ export default {
           }
         },
       },
+       organization:[],
+      selectedOrganizationId:null,
     };
   },
   methods: {
+       getOrganization(){
+        // atr_name_with_optionc
+        axios.get('/admin/api/data/getOrganization')
+        .then(res => {
+            this.organization = res.data;
+        })
+        .catch(err => {
+            console.error(err);
+        })
+    },
     onStartChange(e) {
       //   this.$set(this.configs.end, "minDate", e.date.add(1, "day") || null);
       this.$set(this.configs.end, "minDate", e.date || null);

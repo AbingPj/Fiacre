@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="row mt-3">
-    <div class="col-md-6">
+    <div class="col-md-3">
       <div class="input-group">
         <date-picker v-model="date" id="date-time-input" :wrap="true" :config="options"></date-picker>
         <div class="input-group-append">
@@ -29,6 +29,24 @@
         </div>
       </div>
     </div>
+    <!-- <div class="col-md-5">
+           <v-select
+						label="atr_name_with_optionc"
+						v-model="selectedOrganizationId"
+                        :reduce="(state) => state.id"
+						:options="organization"
+						:multiple="false"
+						:disabled="false"
+						:clearable="true"
+						:searchable="true"
+						:filterable="true"
+						:taggable="true"
+						:no-drop="false"
+						:push-tags="true"
+						:select-on-tab="true"
+                        placeholder="Select Organization"
+					></v-select>
+    </div> -->
     <div class="col-md-2">
       <button type="button" @click="filter()" class="btn btn-primary">
         <i class="fas fa-filter"></i> Filter
@@ -97,6 +115,7 @@ import FileSaver from "file-saver";
 export default {
   created() {
     this.getData();
+    this.getOrganization();
     // this.date = this.momento();
   },
   data() {
@@ -128,12 +147,24 @@ export default {
           }
         },
       },
+      organization:[],
+      selectedOrganizationId:null,
     };
   },
   methods: {
     momento() {
       return moment().format("MMMM");
       //   return moment().format("MMMM Do YYYY, h:mm:ss a");
+    },
+    getOrganization(){
+        // atr_name_with_optionc
+        axios.get('/admin/api/data/getOrganization')
+        .then(res => {
+            this.organization = res.data;
+        })
+        .catch(err => {
+            console.error(err);
+        })
     },
     getData() {
       axios

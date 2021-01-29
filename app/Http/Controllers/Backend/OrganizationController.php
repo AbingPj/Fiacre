@@ -55,6 +55,11 @@ class OrganizationController extends Controller
         return response()->json($organization, 200);
     }
 
+    public function getOrganization2(){
+        $organization = Organization::where('org_is_deleted',0)->get();
+        return response()->json($organization, 200);
+    }
+
     public function addOrganization(AddOrgRequest $request)
     {
         if (User::where('email', $request->email)->exists()) {
@@ -69,7 +74,7 @@ class OrganizationController extends Controller
                 'first_name' => $request->name,
                 'last_name' => '*',
                 'email' => $request->email,
-                'password' => 'secret-'.$request->email,
+                'password' => 'secret@123',
                 'confirmation_code' => md5(uniqid(mt_rand(), true)),
                 'confirmed' => false,
                 'is_billing_updated' => 1,
