@@ -14,14 +14,14 @@
 		>
 			<div class="col-md-7">
 				<h4>
-					OptionC ID: <b>{{ propsorg.org_optionc_id }}</b>
+					Fiacre ID: <b>{{ propsorg.org_optionc_id }}</b>
 				</h4>
 				<h5>email: {{ propsorg.org_email }}</h5>
 				<h5>type: {{ propsorg.atr_type_label }}</h5>
 				<h6>Contact Person: {{ propsorg.atr_contact_person }}</h6>
 				<h6>Address: {{ propsorg.atr_address }}</h6>
-				<h6>Diocese: {{ propsorg.org_diocese }}</h6>
-				<h6>Website: {{ propsorg.org_website }}</h6>
+				<!-- <h6>Diocese: {{ propsorg.org_diocese }}</h6> -->
+				<!-- <h6>Website: {{ propsorg.org_website }}</h6> -->
 
 				<div class="mt-5 mb-1">
 					<h4>Address</h4>
