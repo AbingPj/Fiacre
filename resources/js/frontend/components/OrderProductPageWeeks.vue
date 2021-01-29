@@ -52,7 +52,7 @@
 											}}
 										</span>
 									</td>
-									<td>{{ item.actual_pickup_day }}</td>
+									<td>{{ item.atr_actual_date_label }}</td>
 									<td>{{ item.pick_up_by }}</td>
 								</tr>
 							</tbody>

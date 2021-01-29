@@ -11,6 +11,7 @@ class OrderedProductWeek extends Model
 
     protected $appends = [
         'atr_date_label',
+        'atr_actual_date_label',
     ];
 
 
@@ -18,5 +19,16 @@ class OrderedProductWeek extends Model
     {
         $date = new Carbon($this->date);
         return $date->format('m/d/Y');
+    }
+
+    public function getAtrActualDateLabelAttribute()
+    {
+        if($this->actual_pickup_day){
+            $date = new Carbon($this->actual_pickup_day);
+            return $date->format('m/d/Y');
+        }else{
+            return "";
+        }
+
     }
 }

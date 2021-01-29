@@ -19,6 +19,7 @@ Route::group([
     Route::get('orders', [OrgOrdersController::class, 'index'])->name('orders');
     Route::get('orders/{order_id}', [OrgOrdersController::class, 'show'])->name('ordersShow');
     Route::get('orders/{order_id}/weeks/{ordered_prod_id}', [OrgOrdersController::class, 'weeks'])->name('ordersShow.weeks');
+    Route::post('ordersweeks/change', [OrgOrdersController::class, 'weeksChangeStatus'])->name('ordersShow.weeksChangeStatus');
 
     Route::get('getOrganizationOrders', [OrgOrdersController::class, 'getOrganizationOrders'])->name('getOrganizationOrders');
     Route::get('getAssignedProducts', [OrgProductsController::class, 'getAssignedProducts'])->name('getAssignedProducts');

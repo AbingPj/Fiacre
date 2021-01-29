@@ -75,4 +75,18 @@ class OrgOrdersController extends Controller
             ]
         );
     }
+
+    public function weeksChangeStatus(Request $request)
+    {
+        $week = OrderedProductWeek::find($request->id);
+        if(!empty($week)){
+            $week->actual_pickup_day = $request->date;
+            $week->pick_up_by = $request->pickupby;
+            $week->is_picked_up = $request->status;
+            $week->save();
+            return response()->json('Success', 200);
+        }else{
+            return response()->json('Cant Find OrderedProductWeek', 404);
+        }
+    }
 }

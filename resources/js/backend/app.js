@@ -331,6 +331,7 @@ const AdminOrgProductsSub =
 Vue.component("admin-org-orders", require("./admin-org-components/orders/index.vue").default);
 Vue.component("admin-org-orders-show", require("./admin-org-components/orders/show.vue").default);
 Vue.component("admin-org-orders-show-weeks", require("./admin-org-components/orders/weeks.vue").default);
+Vue.component("admin-org-orders-show-weeks-status-modal", require("./admin-org-components/orders/weeksStatusModal.vue").default);
 
 
 

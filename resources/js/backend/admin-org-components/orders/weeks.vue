@@ -41,14 +41,22 @@
 									{{ item.is_picked_up == 1 ? "Done" : "Not Yet" }}
 								</span>
 							</td>
-							<td>{{ item.actual_pickup_day }}</td>
+							<td>{{ item.atr_actual_date_label }}</td>
 							<td>{{ item.pick_up_by }}</td>
 							<td>
 								<button
+                                    v-if="item.is_picked_up == 0"
 									class="btn btn-sm btn-info"
-									@click="Inprogress()"
+									@click="WeeksModalShow(item)"
 								>
 									Change Pick Up Status
+								</button>
+                                <button
+                                    v-else
+									class="btn btn-sm btn-danger"
+									@click="BackToNotYet(item)"
+								>
+									Change to "Not Yet"
 								</button>
 							</td>
 						</tr>
@@ -56,6 +64,7 @@
 				</table>
 			</div>
 		</div>
+        <admin-org-orders-show-weeks-status-modal ref="WeekModalRef"></admin-org-orders-show-weeks-status-modal>
 	</div>
 </template>
 
@@ -65,7 +74,32 @@
 		methods: {
 			Inprogress() {
 				alert("Work In Progress");
+            },
+            WeeksModalShow(data) {
+                this.$refs.WeekModalRef.data.id = data.id;
+                $("#weeksModal").modal("show");
+            },
+            BackToNotYet(data) {
+                LoadingOverlay();
+                var data = {
+                    id: data.id,
+					date: null,
+                    pickupby: null,
+                    status: 0,
+                }
+				axios.post('/admin/org/ordersweeks/change',data)
+                .then(res => {
+                    $("#weeksModal").modal("hide");
+                    // location.reload();
+                    document.location.reload(true)
+                })
+                .catch(err => {
+                    console.error(err);
+                    LoadingOverlayHide();
+                    alert("Something went wrong");
+                })
 			},
+
 		},
 	};
 </script>
