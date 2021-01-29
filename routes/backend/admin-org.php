@@ -12,6 +12,8 @@ Route::group([
     // 'middleware' => 'role:'.config('access.users.org_user'),
 ], function () {
     Route::get('profile', [OrgProfileController::class, 'index'])->name('profile');
+    Route::post('api/updateOrganization', [OrgProfileController::class, 'updateOrganization'])->name('updateOrganization');
+
     Route::get('products', [OrgProductsController::class, 'index'])->name('products');
 
     Route::get('orders', [OrgOrdersController::class, 'index'])->name('orders');

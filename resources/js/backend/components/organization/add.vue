@@ -127,7 +127,7 @@
 						:options="states"
 						:clearable="false"
 					></v-select> -->
-					<region-select
+					<!-- <region-select
 						v-model="org.state"
 						country="United States"
 						className="form-control rounded-0"
@@ -135,7 +135,22 @@
 						:regionName="true"
 						:region="org.state"
 						placeholder="Select State"
-					/>
+					/> -->
+                    <v-select
+						label="name"
+						v-model="org.org_state"
+                        :reduce="(state) => state.iso2"
+						:options="states"
+						:multiple="false"
+						:disabled="false"
+						:clearable="true"
+						:searchable="true"
+						:filterable="true"
+						:taggable="true"
+						:no-drop="false"
+						:push-tags="true"
+						:select-on-tab="true"
+					></v-select>
 				</div>
 				<div class="form-group">
 					<label for="name"
@@ -318,7 +333,7 @@
 			<div class="col-md-7">
 				<hr />
 				<button
-					class="mr-2 btn btn-success-1 rounded-0 float-right"
+					class="mr-2 btn btn-success-1 rounded-0"
 					@click="addOrganization()"
 				>
 					<i class="fas fa-save mr-3"></i> Save

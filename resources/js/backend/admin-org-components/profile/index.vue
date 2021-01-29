@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h2 class="card-title mb-0">
-					<i class="fas fa-sitemap mr-3"></i> {{org.org_name}}
+					<i class="fas fa-sitemap mr-3"></i> {{ org.org_name }}
 				</h2>
 			</div>
 			<div class="col-md-6"></div>
@@ -13,14 +13,15 @@
 			style="font-family: Source Sans Pro, sans-serif !important"
 		>
 			<div class="col-md-7">
-                <h4>OptionC ID: <b>{{org.org_optionc_id}}</b></h4>
-                <h5>email: {{org.org_email}}</h5>
-                <h5>type: {{org.atr_type_label}}</h5>
-                <h6>Contact Person: {{org.atr_contact_person}}</h6>
-                <h6>Address: {{org.atr_address}}</h6>
-                <h6>Diocese: {{org.org_diocese}}</h6>
-                <h6>Website: {{org.org_website}}</h6>
-
+				<h4>
+					OptionC ID: <b>{{ propsorg.org_optionc_id }}</b>
+				</h4>
+				<h5>email: {{ propsorg.org_email }}</h5>
+				<h5>type: {{ propsorg.atr_type_label }}</h5>
+				<h6>Contact Person: {{ propsorg.atr_contact_person }}</h6>
+				<h6>Address: {{ propsorg.atr_address }}</h6>
+				<h6>Diocese: {{ propsorg.org_diocese }}</h6>
+				<h6>Website: {{ propsorg.org_website }}</h6>
 
 				<div class="mt-5 mb-1">
 					<h4>Address</h4>
@@ -33,7 +34,7 @@
 						name="type"
 						class="form-control rounded-0"
 						type="text"
-                        readonly
+						readonly
 					/>
 				</div>
 				<div class="form-group">
@@ -51,7 +52,6 @@
 						:no-drop="false"
 						:push-tags="true"
 						:select-on-tab="true"
-
 					></v-select>
 				</div>
 				<div class="form-group">
@@ -63,7 +63,7 @@
 						:options="states"
 						:clearable="false"
 					></v-select> -->
-					<region-select
+					<!-- <region-select
 						v-model="org.org_state"
 						country="United States"
 						className="form-control rounded-0"
@@ -71,7 +71,22 @@
 						:regionName="true"
 						:region="org.org_state"
 						placeholder="Select State"
-					/>
+					/> -->
+					<v-select
+						label="name"
+						v-model="org.org_state"
+                        :reduce="(state) => state.iso2"
+						:options="states"
+						:multiple="false"
+						:disabled="false"
+						:clearable="true"
+						:searchable="true"
+						:filterable="true"
+						:taggable="true"
+						:no-drop="false"
+						:push-tags="true"
+						:select-on-tab="true"
+					></v-select>
 				</div>
 				<div class="form-group">
 					<label for="name">Zipcode</label>
@@ -167,7 +182,17 @@
 				</div>
 			</div>
 		</div>
-
+        <div class="row">
+			<div class="col-md-7">
+				<hr />
+				<button
+					class="mr-2 btn btn-info rounded-0"
+					@click="updateOrganization()"
+				>
+					<i class="fas fa-save mr-3"></i> Save Changes
+				</button>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -278,24 +303,32 @@
 			},
 
 			updateOrganization() {
+                LoadingOverlay();
 				var formBody = new FormData();
-				for (var key in this.org) {
-					if (this.org[key] !== null) {
-						formBody.append(key, this.org[key]);
-					}
-				}
-				if (this.image_file) {
-					formBody.append("image_file", this.image_file);
-				}
+				// for (var key in this.org) {
+				// 	if (this.org[key] !== null) {
+				// 		formBody.append(key, this.org[key]);
+				// 	}
+				// }
+				// if (this.image_file) {
+				// 	formBody.append("image_file", this.image_file);
+                // }
+                formBody.append("org_street", this.org.org_street);
+                formBody.append("org_cityprov", this.org.org_cityprov);
+                formBody.append("org_state", this.org.org_state);
+                formBody.append("org_zipcode", this.org.org_zipcode);
+                formBody.append("org_contact_land", this.org.org_contact_land);
+                formBody.append("org_contact_mobile", this.org.org_contact_mobile);
 
 				axios
-					.post(`/admin/api/updateOrganization`, formBody, {
+					.post(`/admin/org/api/updateOrganization`, formBody, {
 						headers: { "Content-Type": "multipart/form-data" },
 					})
 					.then((res) => {
-						window.location.href = "/admin/organization";
+						window.location.href = "/admin/org/profile";
 					})
 					.catch((err) => {
+                        LoadingOverlayHider();
 						console.error(err);
 						if (err.response) {
 							this.errors.record(err.response.data.errors);
