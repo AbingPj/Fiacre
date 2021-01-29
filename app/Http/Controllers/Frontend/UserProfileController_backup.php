@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\FrontEnd\UpdateBillingProfileRequest;
+use App\Http\Requests\Frontend\UpdateBillingProfileRequest;
 use App\Models\Auth\User;
 use App\Models\BillingInfo;
 use App\Models\City;
