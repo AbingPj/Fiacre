@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Auth\User;
 use App\Models\City;
 use App\Models\OrderProduct;
+use App\Models\Organization;
 use App\Models\State;
 use Illuminate\Http\Request;
 use App\Models\SubscriptionSunclubMember;
@@ -54,36 +55,9 @@ class MembersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        if ($user->customer_role == 2 || $user->customer_role == 3) {
+        // dd($user);
+        if ($user->customer_role == 4) {
             $user->image_path = $user->getPicture();
-
-            // if customer is sunfarm member
-            if ($user->customer_role == 2) {
-                $sunclub = SubscriptionSunclubMember::where('user_id', $user->id)->first();
-                if (!empty($sunclub)) {
-                    $user->sunclub_choice_id = $sunclub->subscription_sunclub_choice_id;
-                }
-            } else {
-                $user->sunclub_choice_id = null;
-                $business = SubscriptionWholesaleMember::where('user_id', $user->id)->first();
-                if (!empty($business->business_image_path)) {
-                    $photo = url('storage/' . ImagePathService::setPath($business->business_image_path));
-                    $business->business_image_path = "$photo";
-                } else {
-                    $business->image_path = "/img/no-user.jpg";
-                }
-
-                $city = City::find($user->city);
-                if (!empty($city)) {
-                    $user->city = $city->name;
-                }
-
-
-                $state = State::find($business->state)->name;
-                $business->state = $state;
-                $user->business = $business;
-
-            }
 
             $city = City::find($user->city);
             if (!empty($city)) {
@@ -95,9 +69,15 @@ class MembersController extends Controller
 
 
             $customer = $user;
+            $organization = null;
+            $org = Organization::find($user->selected_org_id);
+
+            if(!empty($org)){
+                $organization = $org;
+            }
 
 
-            return view('backend.customers.show', compact('customer'));
+            return view('backend.customers.show', compact('customer', 'organization'));
         } else {
             return abort(404);
         }

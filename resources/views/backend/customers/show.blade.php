@@ -9,6 +9,7 @@
     <div class="card-body">
         <admin-customers-show-page
             :propscustomer="{{json_encode($customer)}}"
+            :organization="{{json_encode($organization)}}"
         ></admin-customers-show-page>
 
     </div><!--card-body-->

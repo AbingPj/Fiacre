@@ -170,6 +170,34 @@
         </md-card>
       </b-col>
       -->
+      <b-col>
+        <md-card class="mb-4">
+            <md-card-content>
+                <div class="p-3">
+						Selected Organization
+
+						<br />
+                        <div v-if="org.org_name">
+                             <br />
+                                <span>
+                                    name: <b>{{ org.org_name }}</b></span
+                                >
+                                <br />
+                                <span>
+                                    optionC id:<b>{{
+                                        org.org_optionc_id
+                                    }}</b></span>
+                         </div>
+                        <div v-else>
+                            <br />
+                             <b>The customer did not select an organization yet.</b>
+                        </div>
+						<br />
+
+				</div>
+            </md-card-content>
+        </md-card>
+      </b-col>
     </b-row>
   </b-container>
 </div>
@@ -177,11 +205,12 @@
 
 <script>
 export default {
-  props: ["propscustomer"],
+  props: ["propscustomer", "organization"],
   data() {
     return {
       //   selectedAmount: this.propscustomer.sunclub_choice_id,
       //   userType: this.propscustomer.customer_role
+      org:{},
       selectedAmount: 1,
       userType: 2,
       business_image: "",
@@ -195,6 +224,10 @@ export default {
   },
 
   created() {
+    if(this.organization){
+            this.org = this.organization;
+    }
+
     this.selectedAmount = "" + this.propscustomer.sunclub_choice_id;
     this.userType = "" + this.propscustomer.customer_role;
     if (this.propscustomer.customer_role == 3) {

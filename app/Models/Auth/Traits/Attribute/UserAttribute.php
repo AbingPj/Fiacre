@@ -149,12 +149,19 @@ trait UserAttribute
 
     public function getAtrCustomerRoleAttribute()
     {
+        // if($this->customer_role == 1){
+        //     return "Non-registered";
+        // }else if($this->customer_role == 2){
+        //     return "Sunclub Member";
+        // }else if ($this->customer_role == 3){
+        //     return "Wholesaler";
+        // } else {
+        //     return "";
+        // }
         if($this->customer_role == 1){
             return "Non-registered";
-        }else if($this->customer_role == 2){
-            return "Sunclub Member";
-        }else if ($this->customer_role == 3){
-            return "Wholesaler";
+        }else if($this->customer_role == 4){
+            return "Fiacre Customer";
         } else {
             return "";
         }

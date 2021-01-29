@@ -40,10 +40,9 @@
             <!-- <th scope="col">#</th> -->
             <th>Customer Name</th>
             <th>Member Type</th>
-            <!-- <th style="width:120px;">Sunclub Prepaid Balance</th> -->
+            <th style="width:120px;">Sunclub Prepaid Balance</th>
             <!-- <th>Email</th> -->
             <th style="width:50px;">Email Confirmed</th>
-            <th>Organization Id</th>
             <th>Sign-Up Since</th>
             <th>Actions</th>
           </tr>
@@ -55,22 +54,23 @@
               <span style="font-size:10px;">({{item.email}})</span>
             </td>
             <td>
-              <span :class="item.is_fiacre_customer == 1? 'badge badge-success' : 'badge badge-secondary' ">
+              <span :class="item.customer_role == 2? 'badge badge-success'
+                    : item.customer_role == 3? 'badge badge-primary' : 'badge badge-secondary' ">
+
                 {{item.atr_customer_role}}
               </span>
             </td>
-            <!-- <td>
+            <td>
               <div v-if='item.customer_role == 2'>
                 <b class="text-success text-right">$ {{displayNumberWithComma(item.balance)}}</b>
               </div>
-            </td> -->
+            </td>
             <!-- <td>{{item.email}}</td> -->
             <td>
               <span :class="item.confirmed? 'badge badge-success': 'badge badge-secondary'">
                 {{isConfirmed(item.confirmed)}}
               </span>
             </td>
-            <td>{{item.selected_org_optionc_id}}</td>
             <td>{{item.created_at_label}}</td>
             <td>
 
