@@ -375,7 +375,7 @@
                             </md-card-content> -->
 							<md-card-content>
 								<div class="p-3">
-									Enter Your Organization(School/Parish) ID:
+									<b>Enter Your Organization(School/Parish) ID:</b>
 									<br />
 									<input v-model="optionc_id" type="text" class="form-control" @keypress="onlyNumber" />
 								</div>
