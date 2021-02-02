@@ -245,7 +245,13 @@ class ProductsController extends Controller
         } else {
             $products = Product::where('is_visible', 1)->where('status', '!=', 3)->get()->random(4);
         }
-        // $products = Product::all()->take(4);
+
+        foreach ($products as $key => $prod) {
+            if ($prod->is_bundle == 1) {
+                // $prod->price = $prod->getBundlePrice('retailer');
+                $prod->price = round($prod->getBundlePrice('retailer'),2);
+            }
+        }
 
         return response()->json($products, 200);
     }
