@@ -23,7 +23,7 @@
 							<!-- <th>Total No. Weeks</th> -->
 							<th>Current No. Weeks</th>
 							<th>Subscription Price</th>
-							<th>Visibility</th>
+							<!-- <th>Visibility</th> -->
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -42,9 +42,9 @@
 							<td>$ {{ item.price }} /{{ item.unit }}</td>
 							<td>{{ getNumberOfWeeks(item) }}</td>
 							<td>{{ getSubPrice(item) }}</td>
-							<td>
+							<!-- <td>
 								{{ getVisibility(item) }}
-							</td>
+							</td> -->
 
 							<td>
 								<button
