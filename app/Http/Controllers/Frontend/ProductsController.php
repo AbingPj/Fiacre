@@ -90,7 +90,8 @@ class ProductsController extends Controller
         $org_id = (int) $request->org_id;
 
         if ($request->has('name') && $request->has('category')) {
-            $products = Product::productOrgWithSubscription($org_id)->with('category:id,name', 'sub_category:id,name')
+            $products = Product::productOrg($org_id)
+                ->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.name', 'LIKE', "%$request->name%")
                 ->where('products.category_id', $request->category)
@@ -98,7 +99,7 @@ class ProductsController extends Controller
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('name')) {
-            $products = Product::productOrgWithSubscription($org_id)
+            $products = Product::productOrg($org_id)
                 ->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.name', 'LIKE', "%$request->name%")
@@ -106,7 +107,7 @@ class ProductsController extends Controller
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('category')) {
-            $products = Product::productOrgWithSubscription($org_id)
+            $products = Product::productOrg($org_id)
                 ->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.category_id', $request->category)
@@ -114,7 +115,7 @@ class ProductsController extends Controller
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else {
-            $products = Product::productOrgWithSubscription($org_id)
+            $products = Product::productOrg($org_id)
                 ->with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.status', '!=', 3)
@@ -148,7 +149,9 @@ class ProductsController extends Controller
                 $value->weeks = $value->getSubcriptionWeeks($org_id);
                 if ($value->weeks == '-') {
                     $value->subscription_price = 'no subscription yet';
+                    $value->is_subscription = 0;
                 } else {
+                    $value->is_subscription = 1;
                     $subscription_price = $value->price * $value->weeks;
                     $value->subscription_price = round($subscription_price, 2);
                     $value->subscribers_total = $value->getSubscriptionNumber($org_id);
@@ -249,7 +252,7 @@ class ProductsController extends Controller
         foreach ($products as $key => $prod) {
             if ($prod->is_bundle == 1) {
                 // $prod->price = $prod->getBundlePrice('retailer');
-                $prod->price = round($prod->getBundlePrice('retailer'),2);
+                $prod->price = round($prod->getBundlePrice('retailer'), 2);
             }
         }
 

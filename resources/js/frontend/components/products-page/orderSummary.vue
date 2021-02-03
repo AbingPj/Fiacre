@@ -108,7 +108,10 @@
 								<img :src="item.image_link" class="cart-item-image" />
 							</div>
 							<!-- <div class="cart-item-texts flex-grow-1" @click="updateQtyModal(item)"> -->
-							<div class="cart-item-texts w-50" @click="updateQtyModal(item)">
+							<div
+								class="cart-item-texts w-50"
+								@click="updateQtyModal(item)"
+							>
 								<p>
 									<b>{{ item.name }}</b>
 									<br />
@@ -130,10 +133,15 @@
 										}}</span
 									>
 									<br />
-									<!-- <span style="color: #339f25; padding: 0px"
+									<span
+										v-if="item.is_subscription == 0"
+										style="color: #339f25; padding: 0px"
 										>Qty: {{ item.qty }} {{ item.unit }}</span
-									> -->
-									<span style="color: #339f25; padding: 0px">
+									>
+									<span
+										v-if="item.is_subscription == 1"
+										style="color: #339f25; padding: 0px"
+									>
 										{{ displayNumberWithComma(item.price) }} *
 										{{ item.weeks }} weeks =
 									</span>
@@ -144,8 +152,10 @@
 									<i class="fa fa-times" aria-hidden="true"></i>
 								</button>
 								<span id="sub-total">
-									<!-- <b>$ {{ displayNumberWithComma(subTotal(item)) }}</b> -->
-									<b
+									<b v-if="item.is_subscription == 0"
+										>$ {{ displayNumberWithComma(subTotal(item)) }}</b
+									>
+									<b v-if="item.is_subscription == 1"
 										>$
 										{{
 											displayNumberWithComma(item.subscription_price)
@@ -173,13 +183,13 @@
 					if (this.guest == "1") {
 						$("#modalLogin").modal("show");
 					} else {
-                        if (this.customer_role == 1) {
-                            LoadingOverlay();
-						    window.location.href = "/register/success/confirmed";
-                        }else{
-                            LoadingOverlay();
-						    window.location.href = "/products/checkout";
-                        }
+						if (this.customer_role == 1) {
+							LoadingOverlay();
+							window.location.href = "/register/success/confirmed";
+						} else {
+							LoadingOverlay();
+							window.location.href = "/products/checkout";
+						}
 					}
 					// if (this.customer_role == 3) {
 					//   if (this.totalAmount < this.minimum) {
@@ -230,14 +240,17 @@
 				} else {
 					let total = 0;
 					this.cart.forEach((cart) => {
-						// if (this.customer_role == 2) {
-						// 	total = total + cart.member_price * cart.qty;
-						// } else if (this.customer_role == 3) {
-						// 	total = total + cart.wholesale_price * cart.qty;
-						// } else {
-						// 	total = total + cart.price * cart.qty;
-                        // }
-                        total = total + cart.subscription_price;
+						if (cart.is_subscription == 1) {
+							total = total + cart.subscription_price;
+						} else {
+							if (this.customer_role == 2) {
+								total = total + cart.member_price * cart.qty;
+							} else if (this.customer_role == 3) {
+								total = total + cart.wholesale_price * cart.qty;
+							} else {
+								total = total + cart.price * cart.qty;
+							}
+						}
 					});
 					return total;
 				}
