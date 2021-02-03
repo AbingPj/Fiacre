@@ -355,7 +355,7 @@
 <script>
 const prodOrderSummary = () =>
   import(
-    /* webpackChunkName: "js/f/prodOrderSummary" */ "./orderSummary.vue"
+    /* webpackChunkName: "js/f/prodOrderSummaryNew" */ "./orderSummary.vue"
   );
 const prodModal = () =>
   import(

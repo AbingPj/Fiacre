@@ -1,6 +1,6 @@
 {
-    "/js/manifest.js": "/js/manifest.js?id=77ab53b723f5f1030871",
-    "/js/manifest.js.map": "/js/manifest.js.map?id=434f56bbb97bf584d98a",
+    "/js/manifest.js": "/js/manifest.js?id=fac116142266a8d3b102",
+    "/js/manifest.js.map": "/js/manifest.js.map?id=9a16645febef40bdef44",
     "/js/vendor.js": "/js/vendor.js?id=8d784d784dff56da29a1",
     "/js/vendor.js.map": "/js/vendor.js.map?id=a8c6f9bf3a2886621454",
     "/js/backend.js": "/js/backend.js?id=3cf2a06839925ce4dc0c",
@@ -159,8 +159,8 @@
     "/js/f/prodGrid.js.map": "/js/f/prodGrid.js.map?id=3d99f558386c7371f86e",
     "/js/f/prodModalNew.js": "/js/f/prodModalNew.js?id=bac98dba975a8bfc73b9",
     "/js/f/prodModalNew.js.map": "/js/f/prodModalNew.js.map?id=4c56a57e039ed28aa2a4",
-    "/js/f/prodOrderSummary.js": "/js/f/prodOrderSummary.js?id=60995a036afd818be720",
-    "/js/f/prodOrderSummary.js.map": "/js/f/prodOrderSummary.js.map?id=757a7d4f3ae3b2b4e6de",
+    "/js/f/prodOrderSummaryNew.js": "/js/f/prodOrderSummaryNew.js?id=03fe7333a63ff8f375c7",
+    "/js/f/prodOrderSummaryNew.js.map": "/js/f/prodOrderSummaryNew.js.map?id=ac920d8ad5a9dbc77c87",
     "/js/f/prodUserBalance.js": "/js/f/prodUserBalance.js?id=e969f06464dfef2ce32a",
     "/js/f/prodUserBalance.js.map": "/js/f/prodUserBalance.js.map?id=95107501998954905c8e",
     "/js/f/prodUserBalanceMobile.js": "/js/f/prodUserBalanceMobile.js?id=139fea3dc44bcee4194d",
@@ -171,8 +171,8 @@
     "/js/f/prodlist.js.map": "/js/f/prodlist.js.map?id=8a4ee672d45fc04de86e",
     "/js/f/productCart.js": "/js/f/productCart.js?id=306e0fd503c9cde3ef53",
     "/js/f/productCart.js.map": "/js/f/productCart.js.map?id=1522328c768b6c16c352",
-    "/js/f/products.js": "/js/f/products.js?id=fbfc061d3801a48c2301",
-    "/js/f/products.js.map": "/js/f/products.js.map?id=054e3f8335e8fb2ae445",
+    "/js/f/products.js": "/js/f/products.js?id=bea7dd41c8c980863057",
+    "/js/f/products.js.map": "/js/f/products.js.map?id=86307ffc5bbd4c14a18b",
     "/js/f/rewardsModal.js": "/js/f/rewardsModal.js?id=eca4e025345e2f2cde6e",
     "/js/f/rewardsModal.js.map": "/js/f/rewardsModal.js.map?id=e84f127fe2448da88b9e"
 }
