@@ -251,7 +251,19 @@
 				} else {
 					let total = 0;
 					this.cart.forEach((cart) => {
-						total = total + cart.subscription_price;
+                        if(cart.is_subscription){
+                            	total = total + cart.subscription_price;
+                        }else{
+
+                               if (this.user.customer_role == 2) {
+                                    total = total + cart.member_price * cart.qty;
+                                } else if (this.user.customer_role == 3) {
+                                    total = total + cart.wholesale_price * cart.qty;
+                                } else {
+                                    total = total + cart.price * cart.qty;
+                                }
+                         }
+
 					});
 					return total;
 				}
@@ -425,7 +437,21 @@
 				localStorage.setItem("cart_badge", this.cart.length);
 				this.$events.fire("updateCartBadge", "update cart");
 				this.setCartExpiry(86400000);
-			},
+            },
+             addQty(product) {
+                    if (product.qty < product.maxorder + 50) {
+                        product.qty++;
+                        localStorage.setItem("cart", JSON.stringify(this.cart));
+                        this.setCartExpiry(86400000);
+                    }
+            },
+            subQty(product) {
+                    if (product.qty > 1) {
+                        product.qty--;
+                        localStorage.setItem("cart", JSON.stringify(this.cart));
+                        this.setCartExpiry(86400000);
+                    }
+            },
 		},
 	};
 </script>
