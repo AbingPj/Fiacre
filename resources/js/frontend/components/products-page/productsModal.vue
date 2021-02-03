@@ -86,7 +86,7 @@
 									</span>
 								</p>
 								<div
-									v-if="product.is_subscription"
+									v-if="product.is_subscription == 1"
 									class="d-flex align-items-center"
 								>
 									<div>
@@ -112,7 +112,7 @@
 									</div>
 								</div>
 
-								<div v-else class="d-flex align-items-center">
+								<div v-if="product.is_subscription == 0" class="d-flex align-items-center">
 									<div>
 										<label class="mr-2">
 											<strong>Qty:</strong>
