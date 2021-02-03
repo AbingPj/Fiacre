@@ -341,16 +341,17 @@
 				this.errorMessage = "";
 			},
 			placeOrder() {
-				LoadingOverlay();
-				this.placeorderButtonDisabled = true;
-				if (this.cart.length > 0) {
-					this.fiacreCustomerOrder();
-				} else {
-					this.errorMessage = "You Dont Have Selected Products.";
-					window.scrollTo(0, 0);
-					LoadingOverlayHide();
-					this.placeorderButtonDisabled = false;
-				}
+                LoadingOverlay();
+                alert("Work In-progress");
+				// this.placeorderButtonDisabled = true;
+				// if (this.cart.length > 0) {
+				// 	this.fiacreCustomerOrder();
+				// } else {
+				// 	this.errorMessage = "You Dont Have Selected Products.";
+				// 	window.scrollTo(0, 0);
+				// 	LoadingOverlayHide();
+				// 	this.placeorderButtonDisabled = false;
+				// }
 			},
 
 			fiacreCustomerOrder() {
