@@ -116,7 +116,7 @@
 							expires: expiryTime,
 						});
 
-						console.log(res);
+						// console.log(res);
 						LoadingOverlayHide();
 						$("#enterOptionCIdModal").modal("hide");
 					})

@@ -359,7 +359,7 @@ const prodOrderSummary = () =>
   );
 const prodModal = () =>
   import(
-    /* webpackChunkName: "js/f/prodModal" */ "./productsModal.vue"
+    /* webpackChunkName: "js/f/prodModalNew" */ "./productsModal.vue"
   );
 const prodWarningModal = () =>
   import(
@@ -514,7 +514,7 @@ export default {
         //   product.qty = 1;
         // });
 
-        console.log();
+        // console.log();
         // this.products = products;
         this.getCart(products);
         LoadingOverlayHide();
