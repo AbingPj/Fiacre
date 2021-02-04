@@ -136,10 +136,12 @@ class FiacrePlaceOrderController extends Controller
                         } else {
                             $orderproduct->price = $product->price;
                         }
-
+                        $orderproduct->fundraise_percentage = $product->fundraise_percentage;
                         $orderproduct->quantity = $value['qty'];
                         $orderproduct->order_by = Auth::user()->id;
                         $orderproduct->updated_quantity = $value['qty'];
+
+
 
                         //subscription
                         $weeks = $product->getSubcriptionWeeks($org->id);
@@ -148,8 +150,9 @@ class FiacrePlaceOrderController extends Controller
 
 
                         if ($weeks == '-') {
+                            $orderproduct->is_subscription = 0;
                             $orderproduct->subscription_weeks = 0;
-                            $orderproduct->subscription_price = 'no subscription yet';
+                            $orderproduct->subscription_price = 0;
                         } else {
                             $orderproduct->is_subscription = 1;
                             $orderproduct->subscription_weeks = $weeks;
@@ -209,6 +212,7 @@ class FiacrePlaceOrderController extends Controller
 
                         if ($product->is_bundle == 1) {
                             $bundle_products = ProductBundle::where('bundle_id', $product->id)->get();
+                            // $orderproduct->product_bundle_details
                             foreach ($bundle_products as $key2 => $value2) {
                                 $orderProdBundle = new OrderProductBundle;
                                 $orderProdBundle->ordered_bundle_id = $orderproduct->id;

@@ -102,12 +102,12 @@
           </div>
           <div class="ml-auto text-right">
             <div>
-            <button class="btn btn-sm btn-warning" @click="organization(product)">
+            <a class="btn btn-sm btn-warning" :href="organization(product)">
                 <i class="fas fa-sitemap mr-2"></i>Select Org.
-              </button>
-              <button class="btn btn-sm btn-success" @click="preview(product)">
+              </a>
+              <a class="btn btn-sm btn-success" :href="preview(product)">
                 <i class="far fa-eye mr-2"></i>View
-              </button>
+              </a>
               <!-- <button class="btn btn-sm btn-info" @click="stocks(product.id)">
                 <i class="fas fa-plus-square mr-2"></i>Quantities
               </button> -->
@@ -248,14 +248,16 @@ export default {
 
     organization(product){
       var link = "/admin/product/productSelectOrganization/" + product.id;
-      window.location.href = link;
+    //   window.location.href = link;
+     return link;
     },
     preview(product) {
       var link =
         product.is_bundle == 1 ?
         "/admin/products/bundle/" + product.id + "/edit" :
         "/admin/products/" + product.id + "/edit";
-      window.location.href = link;
+    //   window.location.href = link;
+        return link;
     },
     stocks(id) {
       var link = "/admin/products/" + id + "/instocks";

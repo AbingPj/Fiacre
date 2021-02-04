@@ -69,6 +69,7 @@ class ProductsController extends Controller
         $product->created_by = Auth::user()->id;
         $product->season = $request->season;   // Winter, Spring, Summer, Fall
         // $product->status = $request->status;   // 1 - available, 2 - out, 3 - archived;
+        $product->fundraise_percentage = $request->fundraise_percentage;
 
         // upload image
         if ($request->hasFile('image_file')) {
@@ -140,6 +141,7 @@ class ProductsController extends Controller
             $product->created_by = Auth::user()->id;
             $product->season = $request->season;   // Winter, Spring, Summer, Fall
             // $product->status = $request->status;   // 1 - available, 2 - out, 3 - archived;
+            $product->fundraise_percentage = $request->fundraise_percentage;
 
             // upload image
             if ($request->hasFile('image_file')) {

@@ -171,6 +171,26 @@
               </div>-->
             </div>
             <div class="col-md-5">
+             <div class="form-group">
+                <label for="price">Fundraise Percentage</label>
+                <div class="input-group rounded-0">
+                  <!-- <div class="input-group-prepend">
+                    <span class="input-group-text rounded-0">$</span>
+                  </div> -->
+                  <input
+                    v-model="product.fundraise_percentage"
+                    id="fundraise_percentage"
+                    name="fundraise_percentage"
+                    class="form-control rounded-0"
+                    type="text"
+                    placeholder=''
+                    @keypress="onlyForCurrency"
+                  />
+                   <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+              </div>
               <div class="form-group">
                 <label for="price">Regular Price</label>
                 <div class="input-group rounded-0">
@@ -314,6 +334,7 @@ export default {
         unit: null,
         minorder: null,
         maxorder: null,
+        fundraise_percentage: 0
       },
       selectedCategory: null,
       subcategories: [],
@@ -330,7 +351,30 @@ export default {
   created() {
     // this.products = this.propsproducts;
   },
+  mounted() {
+    //   $('#fundraise_percentage').keyup(function(e) {
+    //         var regex = /^\d+(\.\d{0,2})?$/g;
+    //         if (!regex.test(this.value)) {
+    //             this.value = '';
+    //         }
+    //     });
+  },
   methods: {
+
+    onlyForCurrency ($event) {
+     // console.log($event.keyCode); //keyCodes value
+     let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+
+     // only allow number and one dot
+     if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46 || this.product.fundraise_percentage.indexOf('.') != -1)) { // 46 is dot
+      $event.preventDefault();
+     }
+
+     // restrict to 2 decimal places
+     if(this.product.fundraise_percentage!=null && this.product.fundraise_percentage.indexOf(".")>-1 && (this.product.fundraise_percentage.split('.')[1].length > 1)){
+     $event.preventDefault();
+     }
+   },
     save() {
       LoadingOverlay();
       //   let url = "admin/products/store/bundle";

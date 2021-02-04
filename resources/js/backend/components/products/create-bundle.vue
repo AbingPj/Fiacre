@@ -352,6 +352,26 @@
                 </div>
               </div>
               <div class="col-md-5">
+                  <div class="form-group">
+                <label for="price">Fundraise Percentage</label>
+                <div class="input-group rounded-0">
+                  <!-- <div class="input-group-prepend">
+                    <span class="input-group-text rounded-0">$</span>
+                  </div> -->
+                  <input
+                    v-model="product.fundraise_percentage"
+                    id="fundraise_percentage"
+                    name="fundraise_percentage"
+                    class="form-control rounded-0"
+                    type="text"
+                    placeholder=''
+                    @keypress="onlyForCurrency"
+                  />
+                   <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+              </div>
                 <div class="form-group">
                   <label for="minorder">Minimum Order</label>
                   <input
@@ -439,6 +459,7 @@ export default {
         member_price: 0,
         wholesale_price: 0,
         bundle_percentage: 0,
+        fundraise_percentage: 0,
         selected_products: [],
         image_file: null,
       },
@@ -461,6 +482,18 @@ export default {
   },
 
   methods: {
+    onlyForCurrency ($event) {
+            // console.log($event.keyCode); //keyCodes value
+            let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+            // only allow number and one dot
+            if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46 || this.product.fundraise_percentage.indexOf('.') != -1)) { // 46 is dot
+            $event.preventDefault();
+            }
+            // restrict to 2 decimal places
+            if(this.product.fundraise_percentage!=null && this.product.fundraise_percentage.indexOf(".")>-1 && (this.product.fundraise_percentage.split('.')[1].length > 1)){
+            $event.preventDefault();
+            }
+   },
     categorySelectionChange() {
       axios
         .get("/api/admin/subcategory/" + this.selectedCategory)

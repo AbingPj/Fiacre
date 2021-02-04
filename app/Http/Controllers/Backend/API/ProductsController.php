@@ -123,7 +123,7 @@ class ProductsController extends Controller
         $product->season = $request->season;   // Winter, Spring, Summer, Fall
         $product->minorder = $request->minorder;
         $product->maxorder = $request->maxorder;
-
+        $product->fundraise_percentage = $request->fundraise_percentage;
         // $product->price = $request->price;
         // $product->member_price = $request->member_price;
         // $product->wholesale_price = $request->wholesale_price;
@@ -184,6 +184,7 @@ class ProductsController extends Controller
             $product->season = $request->season;   // Winter, Spring, Summer, Fall
             $product->minorder = $request->minorder;
             $product->maxorder = $request->maxorder;
+            $product->fundraise_percentage = $request->fundraise_percentage;
 
 
             // upload image

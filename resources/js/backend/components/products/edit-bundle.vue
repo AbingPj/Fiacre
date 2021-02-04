@@ -341,6 +341,26 @@
                 </div>
               </div>
               <div class="col-md-5">
+                    <div class="form-group">
+                <label for="price">Fundraise Percentage</label>
+                <div class="input-group rounded-0">
+                  <!-- <div class="input-group-prepend">
+                    <span class="input-group-text rounded-0">$</span>
+                  </div> -->
+                  <input
+                    v-model="product.fundraise_percentage"
+                    id="fundraise_percentage"
+                    name="fundraise_percentage"
+                    class="form-control rounded-0"
+                    type="text"
+                    placeholder=''
+                    @keypress="onlyForCurrency"
+                  />
+                   <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+              </div>
                 <div class="form-group">
                   <label for="minorder">Minimum Order</label>
                   <input
@@ -444,6 +464,15 @@ export default {
   },
 
   methods: {
+      onlyForCurrency ($event) {
+            let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+            if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46 || this.product.fundraise_percentage.indexOf('.') != -1)) { // 46 is dot
+            $event.preventDefault();
+            }
+            if(this.product.fundraise_percentage!=null && this.product.fundraise_percentage.indexOf(".")>-1 && (this.product.fundraise_percentage.split('.')[1].length > 1)){
+            $event.preventDefault();
+            }
+    },
     categorySelectionChange(created = false) {
       axios
         .get("/api/admin/subcategory/" + this.selectedCategory)
