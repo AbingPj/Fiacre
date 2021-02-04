@@ -157,7 +157,22 @@
                 <div>
                   <img :src="or_prod.product.image_link" class="cart-item-image" />
                 </div>
-                <div class="cart-item-texts flex-grow-1">
+                 <div v-if="or_prod.is_subscription == 0" class="cart-item-texts flex-grow-1">
+                  <p>
+                    <span class="item-name">
+                      <b>{{or_prod.product.name}}</b>
+                    </span>
+                    <br />
+                    $ {{displayNumberWithComma(or_prod.price)}}/{{or_prod.product.unit}}
+                    <br />
+                    <br />
+                    <span class="qty-options">
+                      <b>Qty:</b>
+                      <b>{{or_prod.updated_quantity}} / {{or_prod.product.unit}}</b>
+                    </span>
+                  </p>
+                </div>
+                <div v-if="or_prod.is_subscription == 1" class="cart-item-texts flex-grow-1">
                   <p>
                     <span class="item-name">
                       <b>{{or_prod.product.name}}</b>
@@ -184,7 +199,10 @@
                   <!-- <button id="x" @click="removeItemInCart(item)">
                     <i class="fa fa-times" aria-hidden="true"></i>
                   </button>-->
-                  <span id="sub-total">
+                  <span v-if="or_prod.is_subscription == 0" id="sub-total">
+                    <b>$ {{displayNumberWithComma(or_prod.price * or_prod.updated_quantity)}}</b>
+                  </span>
+                  <span v-if="or_prod.is_subscription == 1" id="sub-total">
                     <b>$ {{displayNumberWithComma(or_prod.subscription_price)}}</b>
                   </span>
                 </div>

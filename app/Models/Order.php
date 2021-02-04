@@ -91,7 +91,13 @@ class Order extends Model
         $overAlltotal = 0;
         $billing_type_price = 0;
         foreach ($order_prododucts as $key => $order_product) {
-            $total = $total + $order_product->subscription_price;
+            if($order_product->is_subscription == 1){
+                $total = $total + $order_product->subscription_price;
+            }else{
+                // $total = $total + $order_product->price;
+                $total = $total + ($order_product->updated_quantity * $order_product->price);
+            }
+
         }
         $billing_type_price = $total * ($this->billing_type_percentage / 100);
         $overAlltotal = $total + $billing_type_price;

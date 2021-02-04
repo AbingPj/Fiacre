@@ -16,6 +16,11 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a href="{{route('frontend.index')}}" class="nav-link {{ active_class(Route::is('frontend.index')) }}">@lang('Home')</a></li>
                 <li class="nav-item"><a href="{{route('frontend.about-us')}}" class="nav-link {{ active_class(Route::is('frontend.about-us')) }}">@lang('About Us')</a></li>
+                @auth
+                    @if( Auth::user()->customer_role == 4)
+                        <li class="nav-item"><a href="{{url('/orders')}}" class="nav-link {{ active_class(Route::is('frontend.orders*'))}}">Orders</a></li>
+                    @endif
+                @endauth
                 <li class="nav-item"><a href="{{url('/products')}}" class="nav-link">Products</a></li>
                 <li class="nav-item"><a href="{{route('frontend.faq')}}" class="nav-link {{ active_class(Route::is('frontend.faq')) }}">@lang('FAQ')</a></li>
 
