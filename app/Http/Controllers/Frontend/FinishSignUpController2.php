@@ -231,7 +231,8 @@ class FinishSignUpController2 extends Controller
                     $billing->save();
 
                     $fc = new FiacreCustomer;
-                    $fc->fc_user_id;
+                    $fc->fc_user_id = $user->id;
+                    //$fc->fc_user_id;
                     if (!empty($request->input('selected_organization'))) {
                         $fc->fc_selected_organization = $request->input('selected_organization');
                     }
