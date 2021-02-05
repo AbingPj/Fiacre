@@ -35,3 +35,13 @@ Breadcrumbs::for('admin.org.showProduct', function ($trail, $id) {
     $trail->parent('admin.org.products');
     $trail->push('Product: ' . $id, route('admin.org.showProduct', $id));
 });
+
+
+
+Breadcrumbs::for('admin.org.fundraise', function ($trail) {
+    $trail->push('Organization Fundraise', route('admin.org.fundraise'));
+});
+// Breadcrumbs::for('admin.org.fundraiseShow', function ($trail, $id) {
+//     $trail->parent('admin.org.fundraise');
+//     $trail->push('Id: ' . $id, route('admin.org.fundraiseShow', $id));
+// });

@@ -24,4 +24,16 @@
         Orders
     </a>
 </li>
+
+<li class="nav-item">
+    <a class="nav-link {{
+        active_class(Route::is('admin.org.fundraise'))
+    }}" href="{{ route('admin.org.fundraise') }}">
+        <i class="nav-icon fas fa-donate"></i>
+        Fundraise
+    </a>
+</li>
+
+
+
 @endif

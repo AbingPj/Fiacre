@@ -102,5 +102,6 @@ require __DIR__ . '/customers.php';
 require __DIR__ . '/sales-report.php';
 require __DIR__ . '/reports-order-by-customer.php';
 require __DIR__ . '/reports-order-by-zipcode.php';
+require __DIR__ . '/reports-order-by-organization.php';
 require __DIR__ . '/reports-product-orders.php';
 require __DIR__ . '/settings.php';

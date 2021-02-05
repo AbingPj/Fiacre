@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Organization\OrgFundraiseController;
 use App\Http\Controllers\Backend\Organization\OrgOrdersController;
 use App\Http\Controllers\Backend\Organization\OrgProductsController;
 use App\Http\Controllers\Backend\Organization\OrgProfileController;
@@ -26,5 +27,10 @@ Route::group([
 
     Route::get('products/subcription/{product_id}', [OrgProductsController::class, 'showProduct'])->name('showProduct');
     Route::post('products/saveSubscription', [OrgProductsController::class, 'saveSubscription'])->name('saveSubscription');
+
+
+    Route::get('fundraise', [OrgFundraiseController::class, 'index'])->name('fundraise');
+    Route::get('getOrganizationFundraise', [OrgFundraiseController::class, 'getOrganizationFundraise'])->name('getOrganizationFundraise');
+
 
 });

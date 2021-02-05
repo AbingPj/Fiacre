@@ -230,6 +230,19 @@ const RepOZShow =
     () => import(/* webpackChunkName: "js/b/RepOZShow" */ './components/reports/order-by-zipcode/show.vue');
 
 
+const RepOOrg =
+    () => import(/* webpackChunkName: "js/b/RepOOrg" */ './components/reports/order-by-organization/index.vue');
+const RepOOrgShow =
+    () => import(/* webpackChunkName: "js/b/RepOOrgShow" */ './components/reports/order-by-organization/show.vue');
+
+
+const RepFund =
+    () => import(/* webpackChunkName: "js/b/RepFund" */ './components/reports/fundraise/index.vue');
+const RepFundShow =
+    () => import(/* webpackChunkName: "js/b/RepFundShow" */ './components/reports/fundraise/show.vue');
+
+
+
 // Products Reports
 // Vue.component("admin-reports-products", require("./components/reports/product-orders/index.vue").default);
 // Vue.component("admin-reports-products-daily", require("./components/reports/product-orders/daily.vue").default);
@@ -333,7 +346,7 @@ Vue.component("admin-org-orders-show", require("./admin-org-components/orders/sh
 Vue.component("admin-org-orders-show-weeks", require("./admin-org-components/orders/weeks.vue").default);
 Vue.component("admin-org-orders-show-weeks-status-modal", require("./admin-org-components/orders/weeksStatusModal.vue").default);
 
-
+Vue.component("admin-org-fundraise", require("./admin-org-components/fundraise/index.vue").default);
 
 const adminVueApp = new Vue({
     el: "#adminVueApp",
@@ -370,6 +383,10 @@ const adminVueApp = new Vue({
         'admin-reports-orders-by-customer-show-order': RepOCShowOrder,
         'admin-reports-orders-by-zipcode': RepOZ,
         'admin-reports-orders-by-zipcode-show': RepOZShow,
+        'admin-reports-orders-by-organization': RepOOrg,
+        'admin-reports-orders-by-organization-show': RepOOrgShow,
+        'admin-reports-fundraise': RepFund,
+        'admin-reports-fundraise-show': RepFundShow,
         'admin-reports-products': RepProd,
         // 'admin-reports-products-daily': RepProdDaily,
         // 'admin-reports-products-weekly': RepProdWeekly,

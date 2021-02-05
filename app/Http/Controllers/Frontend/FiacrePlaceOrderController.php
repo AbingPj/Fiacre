@@ -82,7 +82,6 @@ class FiacrePlaceOrderController extends Controller
                 $ordered_products = $request->cart;
 
                 $org = Organization::find($request->org_id);
-
                 $order = new Order;
                 $order->store_id = 1;
                 $order->order_by = Auth::user()->id;
@@ -164,6 +163,10 @@ class FiacrePlaceOrderController extends Controller
 
                         $orderproduct->product_details = json_encode($product);
 
+                            //  // tax
+                            //  $orderproduct->tax_percentage = $product->atr_tax_percentage;
+                            //  $orderproduct->tax_amount = $product->atr_tax_amount_sc;
+
                         $orderproduct->save();
 
 
@@ -224,10 +227,17 @@ class FiacrePlaceOrderController extends Controller
                             }
                         }
 
+                        if($orderproduct->is_subscription){
+                            $totalAmount =  $totalAmount + $orderproduct->subscription_price;
+                        }else{
+                            $totalAmount =  $totalAmount + ($orderproduct->price  * $orderproduct->updated_quantity);
+                        }
 
-                        $totalAmount =  $totalAmount + $orderproduct->subscription_price;
+                        // $tax =  $tax + ($orderproduct->tax_amount  * $value['qty']);
+
                     }
                 }
+                // dump($totalAmount);
                 $totalAmountForEmail = $totalAmount;
                 $billing_method_price  = $totalAmount * ($order->billing_type_percentage / 100);
                 $totalAmount = $totalAmount + $billing_method_price;
@@ -238,6 +248,8 @@ class FiacrePlaceOrderController extends Controller
                 // ], 422);
                 // DB::commit();
                 // total amount + tax
+                // dd($totalAmount);
+
                 // dd($totalAmount);
 
 

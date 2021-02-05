@@ -16,9 +16,8 @@ use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\DeliveryPickUpZoneController;
 use App\Http\Controllers\Backend\PromotionsController;
 use App\Http\Controllers\Backend\OrganizationController;
-
-
-
+use App\Http\Controllers\Backend\ReportsFundRaiseCrtlr;
+use App\Http\Controllers\Backend\ReportsOrderByOrganizationCrtlr;
 
 // All route names are prefixed with 'admin.'.
 // Route::redirect('/', '/admin/dashboard', 301);
@@ -126,6 +125,20 @@ Route::group([
     Route::get('reports/orders-by-zipcode/{zipcode}', [ReportsOrderByZipCodeCrtlr::class, 'show'])->name('reports.orders.by.zipcode.show');
     Route::get('reports/getZipcodes', [ReportsOrderByZipCodeCrtlr::class, 'getZipcodes'])->name('reports.orders.by.zipcode.getZipcodes');
     Route::get('reports/getAZipcodes/{zipcode}', [ReportsOrderByZipCodeCrtlr::class, 'getAZipcodes'])->name('reports.orders.by.zipcode.getAZipcodes');
+
+
+    Route::get('reports/orders-by-organization', [ReportsOrderByOrganizationCrtlr::class, 'index'])->name('reports.orders.by.organization.index');
+    Route::get('reports/orders-by-organization/{optioncid}', [ReportsOrderByOrganizationCrtlr::class, 'show'])->name('reports.orders.by.organization.show');
+    Route::get('reports/getOrdersByOrganizationList', [ReportsOrderByOrganizationCrtlr::class, 'getOrdersByOrganizationList'])->name('reports.orders.by.organization.getOrdersByOrganizationList');
+    Route::get('reports/getOrdersByOrganization/{optioncid}', [ReportsOrderByOrganizationCrtlr::class, 'getOrdersByOrganization'])->name('reports.orders.by.organization.getOrdersByOrganization');
+
+
+
+    Route::get('reports/fundraise', [ReportsFundRaiseCrtlr::class, 'index'])->name('reports.fundraise.index');
+    Route::get('reports/fundraise/{optioncid}', [ReportsFundRaiseCrtlr::class, 'show'])->name('reports.fundraise.show');
+    Route::get('reports/getOrganizationFundraiseList', [ReportsFundRaiseCrtlr::class, 'getOrganizationFundraiseList'])->name('reports.fundraise.getOrganizationFundraiseList');
+    Route::get('reports/getOrganizationFundraise/{optioncid}', [ReportsFundRaiseCrtlr::class, 'getOrganizationFundraise'])->name('reports.fundraise.getOrganizationFundraise');
+
 
 
 

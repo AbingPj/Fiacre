@@ -362,7 +362,7 @@
 					})
 					.then((res) => {
 						// LoadingOverlayHide();
-						console.log(res);
+						// console.log(res);
 						this.cart = [];
 						localStorage.setItem("cart", JSON.stringify(this.cart));
 						localStorage.setItem("cart_badge", this.cart.length);
@@ -370,7 +370,6 @@
 						if (res.status == 200) {
 							window.location.href = "/placeorder/thankyou";
 						}
-                        // this.placeorder = false;
                         this.placeorderButtonDisabled = false;
 					})
 					.catch((err) => {

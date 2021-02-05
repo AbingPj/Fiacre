@@ -38,6 +38,7 @@ class Order extends Model
         'atr_subscription_overall_total_amount_f',
         'atr_subscription_total_amount',
         'atr_subscription_total_amount_f',
+        'atr_fundraise_f',
         'atr_billing_amount_f',
         'atr_date_label',
         'atr_date_label2',
@@ -79,6 +80,12 @@ class Order extends Model
         return number_format($billing_type_price, 2);
     }
 
+    public function getAtrFundraiseFAttribute()
+    {
+        $fundraise = $this->getSubscriptionTotalPrice('fundraise');
+        return number_format($fundraise, 2);
+    }
+
 
 
 
@@ -90,12 +97,16 @@ class Order extends Model
         $total = 0;
         $overAlltotal = 0;
         $billing_type_price = 0;
-        foreach ($order_prododucts as $key => $order_product) {
-            if($order_product->is_subscription == 1){
-                $total = $total + $order_product->subscription_price;
+        $fundraise = 0;
+        foreach ($order_prododucts as $key => $item) {
+            if($item->is_subscription == 1){
+                $total = $total + $item->subscription_price;
+                $fundraise = $fundraise + ($item->subscription_price * ($item->fundraise_percentage/100));
             }else{
-                // $total = $total + $order_product->price;
-                $total = $total + ($order_product->updated_quantity * $order_product->price);
+                // $total = $total + $item->price;
+                $subtotal = $item->price * $item->quantity;
+                $total = $total + $subtotal;
+                $fundraise = $fundraise + ($subtotal * ($item->fundraise_percentage/100));
             }
 
         }
@@ -109,6 +120,9 @@ class Order extends Model
         }
         if($var == 'total'){
             return $total;
+        }
+        if($var == 'fundraise'){
+            return $fundraise;
         }
     }
 

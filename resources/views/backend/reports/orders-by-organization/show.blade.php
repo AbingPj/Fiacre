@@ -1,15 +1,15 @@
 @extends('backend.layouts.app')
 
 {{-- @section('title', app_name() . ' | ' . __('strings.backend.dashboard.title')) --}}
-@section('title', app_name() . ' | Order Reports | by Zipcode')
+@section('title', app_name() . ' | Order Reports | by Organization')
 
 @section('content')
 <div class="card">
     @include('backend.reports.nav')
     <div class="card-body">
-        <admin-reports-orders-by-zipcode-show
-            :zipcode="{{$zipcode}}"
-        ></admin-reports-orders-by-zipcode-show>
+        <admin-reports-orders-by-organization-show
+            :optioncid="{{$optioncid}}"
+        ></admin-reports-orders-by-organization-show>
     </div><!--card-body-->
 </div><!--card-->
 @endsection
