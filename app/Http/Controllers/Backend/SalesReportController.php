@@ -75,13 +75,16 @@ class SalesReportController extends Controller
             $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
             // $total_earnings = 0;
             $total_products = 0;
-            $total_subscription_price = 0;
+            $total_price = 0;
             // $tax = 0;
             foreach ($ordererdProducts as $key2 => $orderedprod) {
-                // $total_earnings = $total_earnings + ($orderedprod->updated_quantity * $orderedprod->price);
-                // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
+                if($orderedprod->is_subscription){
+                    $total_price = $total_price + $orderedprod->subscription_price;
+                }else{
+                    $total_price = $total_price + ($orderedprod->updated_quantity * $orderedprod->price);
+                }
+                 // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
                 $total_products = $total_products + $orderedprod->updated_quantity;
-                $total_subscription_price = $total_subscription_price + $orderedprod->subscription_price;
             }
 
             // // get discount
@@ -113,10 +116,10 @@ class SalesReportController extends Controller
 
 
             // // get Billing Percentage
-            $CCorACHFee = $total_subscription_price * ($order->billing_type_percentage /  100);
+            $CCorACHFee = $total_price * ($order->billing_type_percentage /  100);
 
             // // total + billing percentage
-            $overallTotalOrderEarn = $total_subscription_price + $CCorACHFee;
+            $overallTotalOrderEarn = $total_price + $CCorACHFee;
 
             $class = new stdClass;
             $class->order_id = $order->id;
@@ -182,19 +185,20 @@ class SalesReportController extends Controller
             $total_products = 0;
             $total_orders = 0;
             $overallTotalOrderEarn = 0;
-            $total_subscription_price = 0;
             $orders = Order::whereDate('date', $date)->get();
             foreach ($orders as $key => $order) {
                 $order_amount = 0;
                 $overall_order_amount  = 0;
                 $tax = 0;
-                $total_subscription_price = 0;
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
+                    if($orderedprod->is_subscription){
+                        $order_amount = $order_amount + $orderedprod->subscription_price;
+                    }else{
+                        $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
+                    }
+                     // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
                     $total_products = $total_products + $orderedprod->updated_quantity;
-                    // $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
-                    // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
-                    $total_subscription_price = $total_subscription_price + $orderedprod->subscription_price;
                 }
 
                 // // get discount
@@ -226,10 +230,10 @@ class SalesReportController extends Controller
                 // $overall_order_amount = $overall_order_amount + $tax;
 
                 // // get Billing Percentage
-                $CCorACHFee = $total_subscription_price * ($order->billing_type_percentage /  100);
+                $CCorACHFee = $order_amount * ($order->billing_type_percentage /  100);
 
                 // // total + billing percentage
-                $overall_order_amount = $total_subscription_price + $CCorACHFee;
+                $overall_order_amount = $order_amount + $CCorACHFee;
 
                 // //get total earnings in a day
                 $total_earnings = $total_earnings + $overall_order_amount;
@@ -309,14 +313,16 @@ class SalesReportController extends Controller
                 $order_amount = 0;
                 $overall_order_amount  = 0;
                 $tax = 0;
-                $total_subscription_price = 0;
 
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
+                    if($orderedprod->is_subscription){
+                        $order_amount = $order_amount + $orderedprod->subscription_price;
+                    }else{
+                        $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
+                    }
                     $total_products = $total_products + $orderedprod->updated_quantity;
-                    // $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
                     // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
-                    $total_subscription_price = $total_subscription_price + $orderedprod->subscription_price;
                 }
 
                 // // get discount
@@ -349,10 +355,10 @@ class SalesReportController extends Controller
                 // $overall_order_amount = $overall_order_amount + $tax;
 
                 // // get Billing Percentage
-                $CCorACHFee = $total_subscription_price * ($order->billing_type_percentage /  100);
+                $CCorACHFee = $order_amount * ($order->billing_type_percentage /  100);
 
                 // // total + billing percentage
-                $overall_order_amount = $total_subscription_price + $CCorACHFee;
+                $overall_order_amount = $order_amount + $CCorACHFee;
 
                 // //get total earnings in a day
                 $total_earnings = $total_earnings + $overall_order_amount;
@@ -434,13 +440,15 @@ class SalesReportController extends Controller
                 $order_amount = 0;
                 $overall_order_amount  = 0;
                 $tax = 0;
-                $total_subscription_price = 0;
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
+                    if($orderedprod->is_subscription){
+                        $order_amount = $order_amount + $orderedprod->subscription_price;
+                    }else{
+                        $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
+                    }
                     $total_products = $total_products + $orderedprod->updated_quantity;
-                    // $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
                     // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
-                    $total_subscription_price = $total_subscription_price + $orderedprod->subscription_price;
                 }
                 // // get discount
                 // $discount = $order_amount * ($order->discount_percentage /  100);
@@ -471,10 +479,10 @@ class SalesReportController extends Controller
 
 
                 // // get Billing Percentage
-                $CCorACHFee = $total_subscription_price * ($order->billing_type_percentage /  100);
+                $CCorACHFee = $order_amount * ($order->billing_type_percentage /  100);
 
                 // // total + billing percentage
-                $overall_order_amount = $total_subscription_price + $CCorACHFee;
+                $overall_order_amount = $order_amount + $CCorACHFee;
 
 
                 // //get total earnings in a day
@@ -561,13 +569,15 @@ class SalesReportController extends Controller
                 $order_amount = 0;
                 $overall_order_amount  = 0;
                 $tax = 0;
-                $total_subscription_price = 0;
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
+                    if($orderedprod->is_subscription){
+                        $order_amount = $order_amount + $orderedprod->subscription_price;
+                    }else{
+                        $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
+                    }
                     $total_products = $total_products + $orderedprod->updated_quantity;
-                    // $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
                     // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
-                    $total_subscription_price = $total_subscription_price + $orderedprod->subscription_price;
                 }
                 // // get discount
                 // $discount = $order_amount * ($order->discount_percentage /  100);
@@ -599,10 +609,10 @@ class SalesReportController extends Controller
                 // $overall_order_amount = $overall_order_amount + $tax;
 
                 // // get Billing Percentage
-                $CCorACHFee = $total_subscription_price * ($order->billing_type_percentage /  100);
+                $CCorACHFee = $order_amount * ($order->billing_type_percentage /  100);
 
                 // // total + billing percentage
-                $overall_order_amount = $total_subscription_price + $CCorACHFee;
+                $overall_order_amount = $order_amount + $CCorACHFee;
 
                 // //get total earnings in a day
                 $total_earnings = $total_earnings + $overall_order_amount;
