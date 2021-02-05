@@ -151,19 +151,27 @@
                   <p>
                     <b>{{item.product.name}}</b>
                     <br />
-                    $ {{displayNumberWithComma(item.price)}} / {{item.product.unit}} <span class="mr-3 ml-3">X</span> {{item.subscription_weeks}} weeks
+                    <span  v-if="item.is_subscription == 1">
+                        $ {{displayNumberWithComma(item.price)}} / {{item.product.unit}} <span class="mr-3 ml-3">X</span> {{item.subscription_weeks}} weeks
+                    </span>
+                    <span  v-if="item.is_subscription == 0">
+                        $ {{displayNumberWithComma(item.price)}} / {{item.product.unit}} <span class="mr-3 ml-3">X</span> {{item.updated_quantity}}
+                    </span>
                   </p>
                 </div>
                 <div class="ml-auto w-25">
                   <div class="d-flex justify-content-end align-items-end" style="height:57px;">
-                    <div class="w-50 text-right">
+                    <div v-if="item.is_subscription == 1" class="w-50 text-right">
                       <div>
                         <b>
                           $ {{displayNumberWithComma(item.subscription_price)}}
-                           <!-- $ {{displayNumberWithComma(item.price)}} x
-                         <span
-                            :class="item.editing == false ? '' : 'd-none'"
-                          >{{item.updated_quantity}}</span> -->
+                        </b>
+                      </div>
+                    </div>
+                    <div v-if="item.is_subscription == 0" class="w-50 text-right">
+                      <div>
+                        <b>
+                           $ {{displayNumberWithComma((item.price * item.updated_quantity))}}
                         </b>
                         <!-- <span :class="item.editing == true ? '' : 'd-none'">
                           <input

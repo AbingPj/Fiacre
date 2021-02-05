@@ -97,7 +97,8 @@
         </div>
         <div v-else>
           <ul class="list-group rounded-0">
-            <li v-for="(order, index) in orders" :key="index" class="list-group-item d-flex">
+            <li v-for="(order, index) in orders" :key="index" class="list-group-item ">
+                <div class="d-flex">
               <div class>
                 <img
                   :src="order.order_by != 0? order.user.atr_image_link : order.retailer.atr_image_link"
@@ -126,8 +127,11 @@
                   <br />
 
                   <a :href="'/admin/orders/'+order.id" class="text-success">View Order</a>
+
                 </p>
               </div>
+              </div>
+              <div class="float-right"><b>{{order.organization.atr_name_with_optionc}}</b></div>
             </li>
           </ul>
           <div class="mt-5">

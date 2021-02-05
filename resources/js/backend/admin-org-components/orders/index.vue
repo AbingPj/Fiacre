@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<h2 class="card-title mb-0">
-					<i class="fas fa-boxes"></i> Organization Orders
+					<i class="fas fa-file-invoice"></i> Organization Orders
 				</h2>
 			</div>
 			<div class="col-md-6"></div>

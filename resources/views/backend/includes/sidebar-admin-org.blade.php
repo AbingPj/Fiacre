@@ -20,7 +20,7 @@
     <a class="nav-link {{
         active_class(Route::is('admin.org.orders'))
     }}" href="{{ route('admin.org.orders') }}">
-        <i class="nav-icon fas fa-boxes"></i>
+        <i class="nav-icon fas fa-file-invoice"></i>
         Orders
     </a>
 </li>

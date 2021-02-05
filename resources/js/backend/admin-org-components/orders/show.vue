@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<h2 class="card-title mb-0">
-					<i class="fas fa-boxes"></i> Order #{{ order.id }}
+					<i class="fas fa-file-invoice"></i> Order #{{ order.id }}
 				</h2>
 			</div>
 			<div class="col-md-6"></div>
@@ -19,25 +19,35 @@
 							<!-- <th scope="col">#</th> -->
 							<th style="width:270px;">Product</th>
 							<th>Price</th>
+							<th>Qty</th>
 							<th>No. of Weeks</th>
 							<th>Subscription Price</th>
+							<th>Sub-Total</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="(item, index) in products" :key="index">
-							<td>{{ item.product_details.name }}</td>
-							<td>{{ item.price }}/{{item.product_details.unit}}</td>
-							<td>{{ item.subscription_weeks }}</td>
+							<td>$ {{ item.product_details.name }}</td>
+							<td>$ {{ item.atr_price_f }}/{{item.product_details.unit}}</td>
+							<td><span v-if="!item.is_subscription">{{ item.updated_quantity }}</span></td>
+							<td><span v-if="item.is_subscription">{{ item.subscription_weeks }}</span></td>
 							<td>
-								$ {{ item.subscription_price.toFixed(2) }} /
+								<span v-if="item.is_subscription">$ {{ item.atr_subscription_price_f }} /
 								{{ item.subscription_weeks }} weeks
+                                </span>
+							</td>
+                            <td>
+								<span v-if="item.is_subscription">$ {{ item.atr_subscription_price_f }}
+                                </span>
+                                <span v-if="!item.is_subscription">$ {{ item.atr_sub_total_f }}
+                                </span>
 							</td>
 							<td>
 								<!-- <button type="button" class="btn btn-sm btn-info">
 									View Product Details
 								</button> -->
-								<button type="button" class="btn btn-sm btn-info" @click="ViewWeekDetails(item)">
+								<button v-if="item.is_subscription" type="button" class="btn btn-sm btn-info" @click="ViewWeekDetails(item)">
 									Week Details
 								</button>
 							</td>
@@ -58,6 +68,8 @@
 						</tr> -->
 						<tr>
 							<th>Total</th>
+							<th></th>
+							<th></th>
 							<th></th>
 							<th></th>
 							<th>$ {{ order.atr_subscription_total_amount_f }}</th>
