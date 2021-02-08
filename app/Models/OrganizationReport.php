@@ -41,6 +41,11 @@ class OrganizationReport extends Model
         return $total;
     }
 
+    // public function scopeReportOrganizationOrdersWithFundraise(){
+    //     $data = Organization::where('org_optionc_id',$this->org_optionc_id)->first();
+    //     return $total;
+    // }
+
     public function scopeReportOrgList($query)
     // public function scopeProductOrgWithSubscription($query, $org_id)
     {

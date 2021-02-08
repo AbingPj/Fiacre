@@ -39,6 +39,7 @@ class Order extends Model
         'atr_subscription_total_amount',
         'atr_subscription_total_amount_f',
         'atr_fundraise_f',
+        'atr_fundraise',
         'atr_billing_amount_f',
         'atr_date_label',
         'atr_date_label2',
@@ -86,6 +87,12 @@ class Order extends Model
         return number_format($fundraise, 2);
     }
 
+    public function getAtrFundraiseAttribute()
+    {
+        $fundraise = $this->getSubscriptionTotalPrice('fundraise');
+        return $fundraise;
+    }
+
 
 
 
@@ -125,19 +132,6 @@ class Order extends Model
             return $fundraise;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -297,6 +291,28 @@ class Order extends Model
         // return floatval(number_format($discount, 2));
         return floatval($discount);
     }
+    // public function getAtrFundraiseFAttribute(){
+    //     $fundraise = 0;
+    //     $products = OrderProduct::where('order_id',$this->id)->get();
+    //     if(!empty($products)){
+    //         foreach ($products as $key => $item) {
+    //             $fundraise =  $fundraise + $item->atr_fundraise;
+    //         }
+    //     }
+    //     return number_format($fundraise, 2);
+    // }
+
+    // public function getAtrFundraiseAttribute(){
+    //     $fundraise = 0;
+    //     $products = OrderProduct::where('order_id',$this->id)->get();
+    //     if(!empty($products)){
+    //         foreach ($products as $key => $item) {
+    //             $fundraise =  $fundraise + $item->atr_fundraise;
+    //         }
+    //     }
+    //     return $fundraise;
+    // }
+
 
 
     // public function getAtrExpectedDeliveryDateAttribute()

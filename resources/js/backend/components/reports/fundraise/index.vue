@@ -10,7 +10,7 @@
     <br />
     <div class="row">
       <div class="col-lg-10 col-md-8">
-        <table class="table table-hover">
+        <table id="fundraise" class="table table-hover">
           <thead>
             <tr>
             <th>OptionC id</th>
@@ -50,17 +50,30 @@ export default {
   created() {
     this.getData();
   },
+
   methods: {
     getData() {
       axios
         .get("/admin/reports/getOrganizationFundraiseList")
         .then((res) => {
           this.data = res.data;
+          this.jqDT();
         })
         .catch((err) => {
           console.error(err);
         });
     },
+    jqDT() {
+				$(document).ready(function () {
+					$("#fundraise").DataTable({
+						lengthMenu: [
+							[10, 25, 50, -1],
+							[10, 25, 50, "All"],
+						],
+						iDisplayLength: -1,
+					});
+				});
+			},
   },
 };
 </script>

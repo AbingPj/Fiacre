@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Organization;
+use App\Models\Order;
 use App\Models\OrganizationReport;
 use Illuminate\Http\Request;
+use stdClass;
 
 class ReportsFundRaiseCrtlr extends Controller
 {
@@ -15,6 +18,27 @@ class ReportsFundRaiseCrtlr extends Controller
 
     public function getOrganizationFundraiseList(){
         $data = OrganizationReport::reportOrgList()->get();
+        return response()->json($data, 200);
+    }
+
+    public function getOrganizationFundraise($optionc_id)
+    {
+        $org = OrganizationReport::where('org_optionc_id', $optionc_id)->first();
+        $orders = [];
+        if(!empty($org)){
+            $orders = Order::with('user','order_products')->where('organization_id', $org->id)->OrderBy('date', 'DESC')->get();
+            foreach ($orders as $key => $item) {
+                foreach ($item->order_products as $key => $value) {
+                    $value->product_details  = json_decode($value->product_details);
+                }
+            }
+
+        }else{
+            abort(404);
+        }
+        $data = new stdClass;
+        $data->orders = $orders;
+        $data->organization = $org;
         return response()->json($data, 200);
     }
 

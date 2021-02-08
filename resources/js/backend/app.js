@@ -233,13 +233,18 @@ const RepOZShow =
 const RepOOrg =
     () => import(/* webpackChunkName: "js/b/RepOOrg" */ './components/reports/order-by-organization/index.vue');
 const RepOOrgShow =
-    () => import(/* webpackChunkName: "js/b/RepOOrgShow" */ './components/reports/order-by-organization/show.vue');
+    // () => import(/* webpackChunkName: "js/b/RepOOrgShow" */ './components/reports/order-by-organization/show.vue');
+
+Vue.component("admin-reports-orders-by-organization-show", require("./components/reports/order-by-organization/show.vue").default);
 
 
 const RepFund =
     () => import(/* webpackChunkName: "js/b/RepFund" */ './components/reports/fundraise/index.vue');
 const RepFundShow =
     () => import(/* webpackChunkName: "js/b/RepFundShow" */ './components/reports/fundraise/show.vue');
+
+Vue.component("admin-reports-fundraise-details-modal", require("./components/reports/fundraise/DetailsModal.vue").default);
+
 
 
 
@@ -384,7 +389,7 @@ const adminVueApp = new Vue({
         'admin-reports-orders-by-zipcode': RepOZ,
         'admin-reports-orders-by-zipcode-show': RepOZShow,
         'admin-reports-orders-by-organization': RepOOrg,
-        'admin-reports-orders-by-organization-show': RepOOrgShow,
+        // 'admin-reports-orders-by-organization-show': RepOOrgShow,
         'admin-reports-fundraise': RepFund,
         'admin-reports-fundraise-show': RepFundShow,
         'admin-reports-products': RepProd,

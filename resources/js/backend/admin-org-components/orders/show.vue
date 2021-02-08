@@ -28,7 +28,7 @@
 					</thead>
 					<tbody>
 						<tr v-for="(item, index) in products" :key="index">
-							<td>$ {{ item.product_details.name }}</td>
+							<td>{{ item.product_details.name }}</td>
 							<td>$ {{ item.atr_price_f }}/{{item.product_details.unit}}</td>
 							<td><span v-if="!item.is_subscription">{{ item.updated_quantity }}</span></td>
 							<td><span v-if="item.is_subscription">{{ item.subscription_weeks }}</span></td>
