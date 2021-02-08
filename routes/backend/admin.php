@@ -129,6 +129,11 @@ Route::group([
 
     Route::get('reports/orders-by-organization', [ReportsOrderByOrganizationCrtlr::class, 'index'])->name('reports.orders.by.organization.index');
     Route::get('reports/orders-by-organization/{optioncid}', [ReportsOrderByOrganizationCrtlr::class, 'show'])->name('reports.orders.by.organization.show');
+    Route::get('reports/orders-by-organization/{optionc_id}/daily', [ReportsOrderByOrganizationCrtlr::class, 'daily'])->name('reports.orders.by.organization.daily');
+    Route::get('reports/orders-by-organization/{optionc_id}/weekly', [ReportsOrderByOrganizationCrtlr::class, 'weekly'])->name('reports.orders.by.organization.weekly');
+    Route::get('reports/orders-by-organization/{optionc_id}/monthly', [ReportsOrderByOrganizationCrtlr::class, 'monthly'])->name('reports.orders.by.organization.monthly');
+    Route::get('reports/orders-by-organization/{optionc_id}/yearly', [ReportsOrderByOrganizationCrtlr::class, 'yearly'])->name('reports.orders.by.organization.yearly');
+    // Route::get('reports/orders-by-organization/{optionc_id}/custom', [ReportsOrderByOrganizationCrtlr::class, 'custom'])->name('reports.orders.by.organization.custom');
     Route::get('reports/getOrdersByOrganizationList', [ReportsOrderByOrganizationCrtlr::class, 'getOrdersByOrganizationList'])->name('reports.orders.by.organization.getOrdersByOrganizationList');
     Route::get('reports/getOrdersByOrganization/{optioncid}', [ReportsOrderByOrganizationCrtlr::class, 'getOrdersByOrganization'])->name('reports.orders.by.organization.getOrdersByOrganization');
 
@@ -138,6 +143,11 @@ Route::group([
     Route::get('reports/fundraise/{optioncid}', [ReportsFundRaiseCrtlr::class, 'show'])->name('reports.fundraise.show');
     Route::get('reports/getOrganizationFundraiseList', [ReportsFundRaiseCrtlr::class, 'getOrganizationFundraiseList'])->name('reports.fundraise.getOrganizationFundraiseList');
     Route::get('reports/getOrganizationFundraise/{optioncid}', [ReportsFundRaiseCrtlr::class, 'getOrganizationFundraise'])->name('reports.fundraise.getOrganizationFundraise');
+    Route::get('reports/fundraise/{optionc_id}/daily', [ReportsFundRaiseCrtlr::class, 'daily'])->name('reports.fundraise.daily');
+    Route::get('reports/fundraise/{optionc_id}/weekly', [ReportsFundRaiseCrtlr::class, 'weekly'])->name('reports.fundraise.weekly');
+    Route::get('reports/fundraise/{optionc_id}/monthly', [ReportsFundRaiseCrtlr::class, 'monthly'])->name('reports.fundraise.monthly');
+    Route::get('reports/fundraise/{optionc_id}/yearly', [ReportsFundRaiseCrtlr::class, 'yearly'])->name('reports.fundraise.yearly');
+    Route::get('reports/fundraise/{optionc_id}/custom', [ReportsFundRaiseCrtlr::class, 'custom'])->name('reports.fundraise.custom');
 
 
 

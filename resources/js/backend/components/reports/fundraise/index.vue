@@ -28,7 +28,7 @@
               <td>$ {{item.fundraise_f}}</td>
               <td>
                 <a
-                  :href="'/admin/reports/getOrganizationFundraise/'+item.org_optionc_id"
+                  :href="'/admin/reports/fundraise/'+item.org_optionc_id"
                   class="btn btn-sm btn-success"
                 >Details</a>
               </td>

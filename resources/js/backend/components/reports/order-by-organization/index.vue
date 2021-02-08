@@ -26,7 +26,7 @@
               <td>{{item.total_orders}}</td>
               <td>
                 <a
-                  :href="'/admin/reports/orders-by-organization/'+item.org_optionc_id"
+                  :href="'/admin/reports/orders-by-organization/'+item.org_optionc_id+'/daily'"
                   class="btn btn-sm btn-success"
                 >Details</a>
               </td>

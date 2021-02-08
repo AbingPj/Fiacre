@@ -7,8 +7,11 @@
 <div class="card">
     @include('backend.reports.nav')
     <div class="card-body">
+        {{-- <h1>{{$reporttype}}</h1> --}}
         <admin-reports-orders-by-organization-show
             :optioncid="{{$optioncid}}"
+            :organization="{{$organization}}"
+            reporttype="{{$reporttype}}"
         ></admin-reports-orders-by-organization-show>
     </div><!--card-body-->
 </div><!--card-->
