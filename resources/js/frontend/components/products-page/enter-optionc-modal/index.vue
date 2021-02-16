@@ -16,6 +16,17 @@
 							<div class="col" style="padding: 0px !important">
 								<h5>
 									<i class="fas fa-sitemap"></i> Selecting Organization
+                                    <button
+										type="button"
+										class="btn-close float-right"
+										data-dismiss="modal"
+										aria-label="Close"
+									>
+										<i
+											class="fa fa-times-circle"
+											aria-hidden="true"
+										></i>
+									</button>
 								</h5>
 
 								<div class="my-5 mx-5">
