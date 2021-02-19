@@ -138,7 +138,7 @@
 					/> -->
                     <v-select
 						label="name"
-						v-model="org.org_state"
+						v-model="org.state"
                         :reduce="(state) => state.iso2"
 						:options="states"
 						:multiple="false"
