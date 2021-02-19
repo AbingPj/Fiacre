@@ -81,6 +81,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     Route::get('/cities', 'SelectionsController@allcities');
     Route::get('/data/searchcities', 'SelectionsController@searchcities');
+    Route::get('/data/searchOrganization', 'SelectionsController@searchOrganization');
     Route::get('/cities2', 'SelectionsController@getAllCities2');
 
 

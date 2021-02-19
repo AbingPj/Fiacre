@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Organization;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -75,6 +76,27 @@ class SelectionsController extends Controller
         }
 
         return response()->json($cities);
+    }
+
+
+    public function searchOrganization(Request $request)
+    {
+        $search = $request->search;
+        $data = Organization::select('id','org_name','org_optionc_id')
+            ->where('org_name', 'LIKE', "%$search%")
+            ->orWhere('org_optionc_id', 'LIKE', "%$search%")
+            ->orderBy('org_name')
+            ->skip(0)
+            ->take(10)
+            ->get();
+
+        // $orgs = [];
+        // foreach ($data as $key => $value) {
+        //     $name = $value->org_name . ' ( ' . $value->org_optionc_id. ' ) ';
+        //     array_push($orgs,$name);
+        // }
+
+        return response()->json($data);
     }
 
 

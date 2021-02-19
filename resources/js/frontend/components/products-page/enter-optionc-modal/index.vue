@@ -33,11 +33,28 @@
 									<h6>Enter Your OptionC School ID</h6>
 									<div class="row mb-2">
 										<div class="col-12">
-											<input
+											<!-- <input
 												v-model="optionc_id"
 												class="form-control form-control-sm"
 												type="text"
-											/>
+											/> -->
+											<v-select
+                                       v-model="optionc_id"
+                                       label="atr_name_with_optionc"
+                                       @search="fetchOptions"
+                                       :reduce="org => org.org_optionc_id"
+                                       :options="orgs"
+                                       :multiple="false"
+                                       :disabled="false"
+                                       :clearable="true"
+                                       :searchable="true"
+                                       :filterable="true"
+                                       :taggable="true"
+                                       :no-drop="false"
+                                       :push-tags="true"
+                                       :select-on-tab="true"
+                                       placeholder="Search Organization"
+                                 ></v-select>
 											<div v-if="error_message" class="text-danger">
 												{{ error_message }}
 											</div>
@@ -53,7 +70,21 @@
 											</div>
 										</div>
 									</div>
-								</div>
+
+
+
+
+                                          <!-- <v-select
+                                            label="name"
+                                            v-model="address.state"
+                                            :reduce="state => state.id"
+                                            :options="states2"
+                                            :clearable="false"
+                                        ></v-select> -->
+
+
+
+                                    </div>
 							</div>
 						</div>
 					</div>
@@ -78,6 +109,7 @@
 		},
 		created() {
 			// console.log("created");
+            this.getCities('');
 			if (this.guest == 0) {
 				if (this.user.organization) {
                     this.optionc_id = this.user.organization.org_optionc_id;
@@ -91,9 +123,35 @@
 			return {
 				optionc_id: null,
 				error_message: null,
+                 timer:null,
+                 orgs:[],
 			};
 		},
 		methods: {
+            fetchOptions(search, loading) {
+				if (this.timer) {
+					clearTimeout(this.timer);
+					this.timer = null;
+				}
+
+				this.timer = setTimeout(() => {
+					this.getCities(search);
+				}, 300);
+			},
+
+			async getCities(searching = null) {
+				let param;
+				param = {
+					search: searching,
+				};
+				await axios({
+					method: "get",
+					url: "/data/searchOrganization",
+					params: param,
+				}).then((res) => {
+					this.orgs = res.data;
+				});
+			},
 			proceed() {
 				this.error_message = null;
 				LoadingOverlay();
