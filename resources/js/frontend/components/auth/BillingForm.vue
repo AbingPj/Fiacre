@@ -373,13 +373,43 @@
                                 <br>
                                  <button type="button" class="btn btn-info btn-sm p-2" @click="SelectOrganizationMOdalShow()">  Select Organization </button>
                             </md-card-content> -->
-							<md-card-content>
+							<!-- <md-card-content>
 								<div class="p-3">
 									<b>Enter Your Organization(School/Parish) ID:</b>
 									<br />
 									<input v-model="optionc_id" type="text" class="form-control" @keypress="onlyNumber" />
 								</div>
+							</md-card-content> -->
+
+                             <md-card-content>
+								<div class="p-3 org-select">
+									<b>Enter Your Organization(School/Parish) ID:</b>
+									<br />
+                                     <v-select
+                                       v-model="optionc_id"
+                                       	@input="optionc_id2 = $event.value"
+                                       ref="orgsRef"
+                                       label="atr_name_with_optionc"
+                                       @search="searchOrgs"
+                                       :reduce="org => org.org_optionc_id"
+                                        :create-option="org => ({ atr_name_with_optionc: org, org_name:org, org_optionc_id:org  })"
+                                       :options="orgs"
+                                       :multiple="false"
+                                       :disabled="false"
+                                       :clearable="true"
+                                       :searchable="true"
+                                       :filterable="true"
+                                       :taggable="true"
+                                       :no-drop="false"
+                                       :push-tags="true"
+                                       :select-on-tab="true"
+                                       placeholder="Search Organization"
+                                 ></v-select>
+								</div>
 							</md-card-content>
+
+
+
 						</md-card>
 					</b-col>
 				</b-row>
@@ -391,6 +421,10 @@
 							By clicking Submit, I confirm that the given information is
 							true, complete and accurate.
 						</p>
+                        <div class="float-left">
+                            Powered By: <br>
+                            <img src="/img/MattMoneyLogo.png" alt="" style="height:25px; width:auto;">
+                        </div>
 						<b-button
 							@click="submitButtonClicked()"
 							class="float-right"
@@ -470,6 +504,8 @@
 				organization: {},
                 org_id: null,
                 optionc_id: null,
+                optionc_id2: null,
+                orgs:[],
 			};
 		},
 
@@ -486,8 +522,10 @@
 		created() {
 			this.selectedAmount = 1;
 			this.getStates();
+            this.getCities3("");
 			this.user = this.propsuser;
 			this.sunclub_choices = this.propssunclub_choices;
+            this.getOrgs();
 			// this.getCities();
 		},
 
@@ -515,6 +553,30 @@
 		},
 
 		methods: {
+            searchOrgs(search, loading) {
+				if (this.timer2) {
+					clearTimeout(this.timer2);
+					this.timer2 = null;
+				}
+
+				this.timer2 = setTimeout(() => {
+					this.getOrgs(search);
+				}, 300);
+			},
+
+			async getOrgs(searching = null) {
+				let param;
+				param = {
+					search: searching,
+				};
+				await axios({
+					method: "get",
+					url: "/data/searchOrganization",
+					params: param,
+				}).then((res) => {
+					this.orgs = res.data;
+				});
+			},
             onlyNumber($event) {
 				//console.log($event.keyCode); //keyCodes value
 				let keyCode = $event.keyCode ? $event.keyCode : $event.which;

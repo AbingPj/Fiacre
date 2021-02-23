@@ -237,12 +237,30 @@
 								<div v-if="editOrganization" class="p-3">
 									Enter Your Organization(School/Parish) ID:
 									<br />
-									<input
+									<!-- <input
 										v-model="optionc_id"
 										type="text"
 										class="form-control"
 										@keypress="onlyNumber"
-									/>
+									/> -->
+                                    	<v-select
+                                       v-model="optionc_id"
+                                       label="atr_name_with_optionc"
+                                       @search="searchOrgs"
+                                       :create-option="org => ({ atr_name_with_optionc: org, org_name:org, org_optionc_id:org  })"
+                                       :reduce="org => org.org_optionc_id"
+                                       :options="orgs"
+                                       :multiple="false"
+                                       :disabled="false"
+                                       :clearable="true"
+                                       :searchable="true"
+                                       :filterable="true"
+                                       :taggable="true"
+                                       :no-drop="false"
+                                       :push-tags="true"
+                                       :select-on-tab="true"
+                                       placeholder="Search Organization"
+                                 ></v-select>
 									<br />
                                     <button
 										type="button"
@@ -261,10 +279,22 @@
 									<br />
 								</div>
 								<div v-else class="p-3">
-									Selected Organization
+                                    <div>
+                                          <span v-if="oraganization.org_name">
+                                            Selected Organization
+                                          </span>
+                                          <span class="text-danger" v-else>
+                                              No Selected Organization Yet
+                                          </span>
+                                    </div>
+
+
 									<br />
 									<span v-if="oraganization.org_name">
 										name: <b>{{ oraganization.org_name }}</b></span
+									>
+                                    <span v-if="!oraganization.org_name">
+										<b>{{ oraganization.org_name }}</b></span
 									>
 									<br />
 									<span v-if="oraganization.org_optionc_id">
@@ -279,7 +309,13 @@
 										class="btn btn-success btn-sm"
 										@click="editOrganization = true"
 									>
-										Change
+                                          <span v-if="oraganization.org_name">
+                                             Change
+                                          </span>
+                                          <span v-else>
+                                             Select
+                                          </span>
+
 									</button>
 									<br />
 								</div>
@@ -379,11 +415,14 @@
 
 				editOrganization: false,
 				optionc_id: null,
+                 timer2:null,
+                 orgs:[],
 			};
 		},
 
 		created() {
 			this.getStates();
+            this.getOrgs("");
 			this.user = this.propsuser;
 			if (this.propsuser.organization) {
 				this.oraganization = this.propsuser.organization;
@@ -442,6 +481,30 @@
 		},
 
 		methods: {
+             searchOrgs(search, loading) {
+				if (this.timer2) {
+					clearTimeout(this.timer2);
+					this.timer2 = null;
+				}
+
+				this.timer2 = setTimeout(() => {
+					this.getOrgs(search);
+				}, 300);
+			},
+
+			async getOrgs(searching = null) {
+				let param;
+				param = {
+					search: searching,
+				};
+				await axios({
+					method: "get",
+					url: "/data/searchOrganization",
+					params: param,
+				}).then((res) => {
+					this.orgs = res.data;
+				});
+			},
 			submitOptionCId() {
 				LoadingOverlay();
 				let rawdata = {

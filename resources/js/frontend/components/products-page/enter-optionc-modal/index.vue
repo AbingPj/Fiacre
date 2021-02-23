@@ -41,7 +41,8 @@
 											<v-select
                                        v-model="optionc_id"
                                        label="atr_name_with_optionc"
-                                       @search="fetchOptions"
+                                       @search="searchOrgs"
+                                        :create-option="org => ({ atr_name_with_optionc: org, org_name:org, org_optionc_id:org  })"
                                        :reduce="org => org.org_optionc_id"
                                        :options="orgs"
                                        :multiple="false"
@@ -109,7 +110,7 @@
 		},
 		created() {
 			// console.log("created");
-            this.getCities('');
+            this.getOrgs('');
 			if (this.guest == 0) {
 				if (this.user.organization) {
                     this.optionc_id = this.user.organization.org_optionc_id;
@@ -124,22 +125,23 @@
 				optionc_id: null,
 				error_message: null,
                  timer:null,
+                 timer2:null,
                  orgs:[],
 			};
 		},
 		methods: {
-            fetchOptions(search, loading) {
-				if (this.timer) {
-					clearTimeout(this.timer);
-					this.timer = null;
+            searchOrgs(search, loading) {
+				if (this.timer2) {
+					clearTimeout(this.timer2);
+					this.timer2 = null;
 				}
 
-				this.timer = setTimeout(() => {
-					this.getCities(search);
+				this.timer2 = setTimeout(() => {
+					this.getOrgs(search);
 				}, 300);
 			},
 
-			async getCities(searching = null) {
+			async getOrgs(searching = null) {
 				let param;
 				param = {
 					search: searching,
