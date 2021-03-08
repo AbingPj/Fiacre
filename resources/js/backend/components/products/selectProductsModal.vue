@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     select(data) {
-      data.selected = true;
+    //   data.selected = true;
       this.$parent.addSelectedProduct(data);
       $("#selectProductsModal").modal("hide");
     },
@@ -140,7 +140,7 @@ export default {
       data.forEach((product) => {
         selectedProducts.forEach((sel) => {
           if (product.id == sel.id) {
-            product.selected = true;
+            // product.selected = true;
           }
         });
       });

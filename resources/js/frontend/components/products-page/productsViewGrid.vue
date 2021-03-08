@@ -9,8 +9,15 @@
     @include mobile {
       padding: 5px;
     }
+    .prod-container:hover{
+      border: #339f25 solid 2px;
+    }
+    .prod-selected{
+        cursor: not-allowed;
+    }
     .prod-container {
-      position: relative;
+       position: relative;
+       border: white solid 2px;
       .prod-image {
         object-fit: cover;
         width: 185px;
@@ -165,7 +172,7 @@
       <div class="col">
         <div class="d-flex flex-wrap justify-content-center">
           <div class="prod" v-for="(prod, index) in products" :key="index">
-            <div class="prod-container">
+            <div class="prod-container" @[canClick(prod.selected)]="showAddToCartModal(prod)"  :class="prod.selected == true? 'prod-selected':''">
               <img
                 :src="prod.image_link"
                 :class="prod.selected == true? 'prod-image-selected': ''"
@@ -182,7 +189,6 @@
                 class="btn btn-sm btn-outline-success prod-btn"
                 :class="prod.selected == true? 'prod-btn-selected': ''"
                 :disabled="prod.selected == true? true:false"
-                @click="showAddToCartModal(prod)"
               >
                 <i class="fa fa-check" aria-hidden="true"></i>
               </button>
@@ -209,6 +215,9 @@ export default {
   //   },
 
   methods: {
+    canClick(data){
+       return data == true ? null:'click';
+    },
     showAddToCartModal(data) {
       this.$parent.showAddToCartModal(data);
     },
