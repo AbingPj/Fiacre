@@ -58,3 +58,4 @@ require("gasparesganga-jquery-loading-overlay/dist/loadingoverlay");
 window.moment = require('moment');
 
 
+console.log('updated march 8,2021');
