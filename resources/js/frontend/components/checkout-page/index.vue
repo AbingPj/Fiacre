@@ -325,7 +325,11 @@
 			},
 		},
 		created() {
-			this.getCart();
+            if(this.guest == 1){
+			    this.getCart();
+            }else{
+                this.getCart2();
+            }
 		},
 
 		methods: {
@@ -407,6 +411,20 @@
 				}
 			},
 
+            async getCart2() {
+				LoadingOverlay();
+                 axios.get(`/cart/getUserCartDetails/${this.user.id}/${this.org_id}`)
+                    .then(res => {
+                        let lastcart = res.data;
+                        this.cart = [];
+                        lastcart.forEach(cart => {
+                            cart.atr_details.qty = cart.qty;
+                            this.cart.push(cart.atr_details);
+                        });
+                        LoadingOverlayHide();
+                    })
+			},
+
 			ifCartExpired() {
 				const itemStr = localStorage.getItem("cart_expiry");
 				if (!itemStr) {
@@ -427,6 +445,7 @@
 			},
 
 			removeItemInCart(data) {
+                if(this.guest == 1){
 				this.cart.splice(
 					this.cart.findIndex(function (i) {
 						return i.id === data.id;
@@ -437,19 +456,77 @@
 				localStorage.setItem("cart_badge", this.cart.length);
 				this.$events.fire("updateCartBadge", "update cart");
 				this.setCartExpiry(86400000);
+                }else{
+                     LoadingOverlay();
+                    axios.post(`/cart/removeProductOfUserCart/${this.user.id}/${this.org_id}/${data.id}`)
+                        .then(res => {
+                            this.$events.fire("updateCartBadge3", res.data);
+                            LoadingOverlayHide();
+                               this.cart.splice(
+                                    this.cart.findIndex(function (i) {
+                                        return i.id === data.id;
+                                    }),
+                                    1
+                                );
+                        })
+                        .catch(err => {
+                            LoadingOverlayHide();
+                            console.error(err);
+                        })
+                }
             },
              addQty(product) {
                     if (product.qty < product.maxorder + 50) {
                         product.qty++;
-                        localStorage.setItem("cart", JSON.stringify(this.cart));
-                        this.setCartExpiry(86400000);
+                        if(this.guest == 1){
+                           localStorage.setItem("cart", JSON.stringify(this.cart));
+                           this.setCartExpiry(86400000);
+                        }else{
+                             LoadingOverlay();
+                             var rawData = {
+                                 product_details: product,
+                                 user_id: this.user.id,
+                                 org_id: this.org_id
+                             }
+                                axios.post('/cart/updateQuantity',rawData)
+                                .then(res => {
+                                    console.log(res);
+                                    LoadingOverlayHide();
+                                })
+                                .catch(err => {
+                                      product.qty--;
+                                    console.error(err);
+                                    LoadingOverlayHide();
+                                    alert('Something went wrong! Please Contat Support. '+err);
+                                })
+                        }
                     }
             },
             subQty(product) {
                     if (product.qty > 1) {
                         product.qty--;
+                         if(this.guest == 1){
                         localStorage.setItem("cart", JSON.stringify(this.cart));
                         this.setCartExpiry(86400000);
+                         }else{
+                             LoadingOverlay();
+                             var rawData = {
+                                 product_details: product,
+                                 user_id: this.user.id,
+                                 org_id: this.org_id
+                             }
+                                axios.post('/cart/updateQuantity',rawData)
+                                .then(res => {
+                                    console.log(res);
+                                    LoadingOverlayHide();
+                                })
+                                .catch(err => {
+                                    product.qty++;
+                                    console.error(err);
+                                    LoadingOverlayHide();
+                                    alert('Something went wrong! Please Contat Support. '+err);
+                                })
+                        }
                     }
             },
 		},

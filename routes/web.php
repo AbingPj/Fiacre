@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FiacrePlaceOrderController;
 use App\Http\Controllers\Frontend\ReferralPageController;
 use App\Http\Controllers\LanguageController;
@@ -108,6 +109,11 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     Route::post('placeorder/fiacreCustomer', [FiacrePlaceOrderController::class, 'fiacreCustomerPlaceOrder'])->name('products.placeorder.fiacreCustomer');
 
+    Route::get('cart/getUserCartDetails/{user_id}/{org_id}', [CartController::class, 'getUserCartDetails'])->name('cart.getUserCartDetails');
+    Route::get('cart/getUserCartCount/{user_id}/{org_id}', [CartController::class, 'getUserCartCount'])->name('cart.getUserCartCount');
+    Route::post('cart/removeProductOfUserCart/{user_id}/{org_id}/{product_id}', [CartController::class, 'removeProductOfUserCart'])->name('cart.removeProductOfUserCart');
+    Route::post('cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+    Route::post('cart/addToCart', [CartController::class, 'addToCart'])->name('cart.details');
     // });
 });
 

@@ -168,10 +168,14 @@
 						this.$parent.getResults();
 						var ff_org_id = cookies.get("ff-org-id");
 						if (ff_org_id != res.data.id) {
-							var cart = [];
-							localStorage.setItem("cart", JSON.stringify(cart));
-							localStorage.setItem("cart_badge", cart.length);
-							this.$events.fire("updateCartBadge", "update cart");
+                            if (this.guest == 0) {
+                                 this.$events.fire("updateCartBadge2", res.data.id);
+                            }else{
+                                var cart = [];
+							    localStorage.setItem("cart", JSON.stringify(cart));
+							    localStorage.setItem("cart_badge", cart.length);
+							    this.$events.fire("updateCartBadge", "update cart");
+                            }
 						}
 						cookies.remove("ff-org-id");
 						cookies.remove("ff-org-name");

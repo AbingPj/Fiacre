@@ -83,6 +83,7 @@
                     clear_cart="{{Session::get('clear_cart')}}"
                     :wholesaler_minimum_order_amount="{{$store_settings->wholesaler_minimum_order_amount}}"
                     guest_status="{{  $guest_status ?? 'not-exist' }}"
+                    user_id={{  Auth::guest() ? null: Auth::user()->id}}
                 ></product-cart>
 
             </ul>

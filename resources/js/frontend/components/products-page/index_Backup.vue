@@ -516,13 +516,7 @@ export default {
 
         // console.log();
         // this.products = products;
-        if(this.guest == 1){
-             this.getCart(products);
-        }else{
-            console.log('oyee');
-             this.getCart2(products);
-        }
-
+        this.getCart(products);
         LoadingOverlayHide();
       });
     },
@@ -552,43 +546,6 @@ export default {
         this.products = data;
       }
     },
-
-    getCart2(data) {
-        // let lastcart = JSON.parse(localStorage.getItem("cart") || "null") || [];
-        // this.cart = lastcart;
-        // localStorage.setItem("cart_badge", this.cart.length);
-        // data.forEach((product) => {
-        //   this.cart.forEach((cart) => {
-        //     if (product.id == cart.id) {
-        //       product.selected = true;
-        //     }
-        //   });
-        // });
-        // this.products = data;
-        axios.get(`/cart/getUserCartDetails/${this.user.id}/${this.org_id}`)
-        .then(res => {
-            let lastcart = res.data;
-            this.cart = [];
-            lastcart.forEach(cart => {
-                cart.atr_details.qty = cart.qty;
-                this.cart.push(cart.atr_details);
-            });
-            data.forEach((product) => {
-                this.cart.forEach((cart) => {
-                    if (product.id == cart.id) {
-                    product.selected = true;
-                    }
-                });
-            });
-            this.products = data;
-        })
-        .catch(err => {
-            console.error(err);
-            this.products = data;
-        })
-
-    },
-
 
     updateProductPrice(product) {
       let customer_role = this.user.customer_role;
@@ -625,96 +582,43 @@ export default {
     },
 
     removeItemInCart(data) {
-
-      if(this.guest == 1){
-          this.products.forEach((product) => {
-            if (product.id == data.id) {
-            product.selected = false;
-            product.qty = 1;
-            }
-        });
-        this.cart.splice(
-            this.cart.findIndex(function (i) {
-            return i.id === data.id;
-            }),
-            1
-        );
-            localStorage.setItem("cart", JSON.stringify(this.cart));
-            localStorage.setItem("cart_badge", this.cart.length);
-            this.$events.fire("updateCartBadge", "update cart");
-            this.setCartExpiry(86400000); // 1 day miliseconds
-      }else{
-          LoadingOverlay();
-            axios.post(`/cart/removeProductOfUserCart/${this.user.id}/${this.org_id}/${data.id}`)
-                .then(res => {
-                    this.$events.fire("updateCartBadge3", res.data);
-                    LoadingOverlayHide();
-                     this.products.forEach((product) => {
-                            if (product.id == data.id) {
-                            product.selected = false;
-                            product.qty = 1;
-                            }
-                        });
-                        this.cart.splice(
-                            this.cart.findIndex(function (i) {
-                            return i.id === data.id;
-                            }),
-                            1
-                        );
-                })
-                .catch(err => {
-                    LoadingOverlayHide();
-                    console.error(err);
-                })
-      }
-
+      this.products.forEach((product) => {
+        if (product.id == data.id) {
+          product.selected = false;
+          product.qty = 1;
+        }
+      });
+      this.cart.splice(
+        this.cart.findIndex(function (i) {
+          return i.id === data.id;
+        }),
+        1
+      );
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+      localStorage.setItem("cart_badge", this.cart.length);
+      this.$events.fire("updateCartBadge", "update cart");
+      this.setCartExpiry(86400000); // 1 day miliseconds
     },
 
     addtoCart(data) {
       data.selected = true;
-      if(this.guest == 1){
-          if (data.selected == true) {
+      if (data.selected == true) {
         this.cart.push(data);
         localStorage.setItem("cart", JSON.stringify(this.cart));
-        } else {
-            this.cart.splice(
-            this.cart.findIndex(function (i) {
-                return i.id === data.id;
-            }),
-            1
-            );
-            localStorage.setItem("cart", JSON.stringify(this.cart));
-        }
-
-        localStorage.setItem("cart_badge", this.cart.length);
-        this.setCartExpiry(86400000); // 1 day miliseconds
-        //   this.setCartExpiry(40000);
-        this.$events.fire("updateCartBadge", "update cart");
-      }else{
-          var rawData = {
-              user_id: this.user.id,
-              org_id: this.org_id,
-              product_id: data.id,
-              qty: data.qty,
-              price: data.price,
-              product_details: data,
-          }
-          LoadingOverlay();
-
-          axios.post('/cart/addToCart',rawData)
-          .then(res => {
-             console.log(res);
-             this.$events.fire("updateCartBadge3", res.data);
-             this.cart.push(data);
-             LoadingOverlayHide();
-          })
-          .catch(err => {
-              console.error(err);
-              LoadingOverlayHide();
-              alert('Something went wrong! Please Contat Support. '+err);
-          })
+      } else {
+        this.cart.splice(
+          this.cart.findIndex(function (i) {
+            return i.id === data.id;
+          }),
+          1
+        );
+        localStorage.setItem("cart", JSON.stringify(this.cart));
       }
 
+      localStorage.setItem("cart_badge", this.cart.length);
+      this.setCartExpiry(86400000); // 1 day miliseconds
+      //   this.setCartExpiry(40000);
+      this.$events.fire("updateCartBadge", "update cart");
       return data;
     },
 

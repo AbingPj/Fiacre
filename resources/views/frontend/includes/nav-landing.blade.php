@@ -79,6 +79,7 @@
                     guest={{ Auth::guest() ? 1: 0 }}
                     :wholesaler_minimum_order_amount="{{$store_settings->wholesaler_minimum_order_amount}}"
                     guest_status="not-exist"
+                    user_id={{ Auth::guest() ? null: Auth::user()->id}}
                 ></product-cart>
             </ul>
         </div>
