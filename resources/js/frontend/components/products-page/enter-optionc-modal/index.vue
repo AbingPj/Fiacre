@@ -169,7 +169,7 @@
 						var ff_org_id = cookies.get("ff-org-id");
 						if (ff_org_id != res.data.id) {
                             if (this.guest == 0) {
-                                 this.$events.fire("updateCartBadge2", res.data.id);
+                                 this.$events.fire("updateCartBadge4", res.data.id);
                             }else{
                                 var cart = [];
 							    localStorage.setItem("cart", JSON.stringify(cart));

@@ -173,7 +173,7 @@
 								type="button"
 								class="btn btn-lg btn-primary w-100"
 								:disabled="placeorderButtonDisabled"
-                                @click="placeOrder()"
+								@click="placeOrder()"
 							>
 								PLACE ORDER
 							</button>
@@ -251,19 +251,17 @@
 				} else {
 					let total = 0;
 					this.cart.forEach((cart) => {
-                        if(cart.is_subscription){
-                            	total = total + cart.subscription_price;
-                        }else{
-
-                               if (this.user.customer_role == 2) {
-                                    total = total + cart.member_price * cart.qty;
-                                } else if (this.user.customer_role == 3) {
-                                    total = total + cart.wholesale_price * cart.qty;
-                                } else {
-                                    total = total + cart.price * cart.qty;
-                                }
-                         }
-
+						if (cart.is_subscription) {
+							total = total + cart.subscription_price;
+						} else {
+							if (this.user.customer_role == 2) {
+								total = total + cart.member_price * cart.qty;
+							} else if (this.user.customer_role == 3) {
+								total = total + cart.wholesale_price * cart.qty;
+							} else {
+								total = total + cart.price * cart.qty;
+							}
+						}
 					});
 					return total;
 				}
@@ -325,11 +323,16 @@
 			},
 		},
 		created() {
-            if(this.guest == 1){
-			    this.getCart();
-            }else{
-                this.getCart2();
-            }
+			if (this.guest == 1) {
+				this.getCart();
+			} else {
+				setTimeout(() => {
+					this.org_id = cookies.get("ff-org-id");
+					this.org_name = cookies.get("ff-org-name");
+					this.org_address = cookies.get("ff-org-address");
+					this.getCart2();
+				}, 500);
+			}
 		},
 
 		methods: {
@@ -345,17 +348,22 @@
 				this.errorMessage = "";
 			},
 			placeOrder() {
-                LoadingOverlay();
-                // alert("Work In-progress");
-				this.placeorderButtonDisabled = true;
-				if (this.cart.length > 0) {
-					this.fiacreCustomerOrder();
-				} else {
-					this.errorMessage = "You Dont Have Selected Products.";
-					window.scrollTo(0, 0);
-					LoadingOverlayHide();
-					this.placeorderButtonDisabled = false;
-				}
+				LoadingOverlay();
+
+                // In-progress
+				alert("Under Construction!");
+                LoadingOverlayHide();
+                //
+
+				// this.placeorderButtonDisabled = true;
+				// if (this.cart.length > 0) {
+				// 	this.fiacreCustomerOrder();
+				// } else {
+				// 	this.errorMessage = "You Dont Have Selected Products.";
+				// 	window.scrollTo(0, 0);
+				// 	LoadingOverlayHide();
+				// 	this.placeorderButtonDisabled = false;
+				// }
 			},
 
 			fiacreCustomerOrder() {
@@ -374,14 +382,14 @@
 						if (res.status == 200) {
 							window.location.href = "/placeorder/thankyou";
 						}
-                        this.placeorderButtonDisabled = false;
+						this.placeorderButtonDisabled = false;
 					})
 					.catch((err) => {
 						//   console.error(err.response.data.data_message);
 						this.errorMessage =
 							"Payment error: " + err.response.data.data_message;
-                        this.placeorderButtonDisabled = false;
-                          window.scrollTo(0, 0);
+						this.placeorderButtonDisabled = false;
+						window.scrollTo(0, 0);
 						LoadingOverlayHide();
 						//   console.error(err);
 					});
@@ -411,18 +419,19 @@
 				}
 			},
 
-            async getCart2() {
+			async getCart2() {
 				LoadingOverlay();
-                 axios.get(`/cart/getUserCartDetails/${this.user.id}/${this.org_id}`)
-                    .then(res => {
-                        let lastcart = res.data;
-                        this.cart = [];
-                        lastcart.forEach(cart => {
-                            cart.atr_details.qty = cart.qty;
-                            this.cart.push(cart.atr_details);
-                        });
-                        LoadingOverlayHide();
-                    })
+				axios
+					.get(`/cart/getUserCartDetails/${this.user.id}/${this.org_id}`)
+					.then((res) => {
+						let lastcart = res.data;
+						this.cart = [];
+						lastcart.forEach((cart) => {
+							cart.atr_details.qty = cart.qty;
+							this.cart.push(cart.atr_details);
+						});
+						LoadingOverlayHide();
+					});
 			},
 
 			ifCartExpired() {
@@ -445,90 +454,99 @@
 			},
 
 			removeItemInCart(data) {
-                if(this.guest == 1){
-				this.cart.splice(
-					this.cart.findIndex(function (i) {
-						return i.id === data.id;
-					}),
-					1
-				);
-				localStorage.setItem("cart", JSON.stringify(this.cart));
-				localStorage.setItem("cart_badge", this.cart.length);
-				this.$events.fire("updateCartBadge", "update cart");
-				this.setCartExpiry(86400000);
-                }else{
-                     LoadingOverlay();
-                    axios.post(`/cart/removeProductOfUserCart/${this.user.id}/${this.org_id}/${data.id}`)
-                        .then(res => {
-                            this.$events.fire("updateCartBadge3", res.data);
-                            LoadingOverlayHide();
-                               this.cart.splice(
-                                    this.cart.findIndex(function (i) {
-                                        return i.id === data.id;
-                                    }),
-                                    1
-                                );
-                        })
-                        .catch(err => {
-                            LoadingOverlayHide();
-                            console.error(err);
-                        })
-                }
-            },
-             addQty(product) {
-                    if (product.qty < product.maxorder + 50) {
-                        product.qty++;
-                        if(this.guest == 1){
-                           localStorage.setItem("cart", JSON.stringify(this.cart));
-                           this.setCartExpiry(86400000);
-                        }else{
-                             LoadingOverlay();
-                             var rawData = {
-                                 product_details: product,
-                                 user_id: this.user.id,
-                                 org_id: this.org_id
-                             }
-                                axios.post('/cart/updateQuantity',rawData)
-                                .then(res => {
-                                    console.log(res);
-                                    LoadingOverlayHide();
-                                })
-                                .catch(err => {
-                                      product.qty--;
-                                    console.error(err);
-                                    LoadingOverlayHide();
-                                    alert('Something went wrong! Please Contat Support. '+err);
-                                })
-                        }
-                    }
-            },
-            subQty(product) {
-                    if (product.qty > 1) {
-                        product.qty--;
-                         if(this.guest == 1){
-                        localStorage.setItem("cart", JSON.stringify(this.cart));
-                        this.setCartExpiry(86400000);
-                         }else{
-                             LoadingOverlay();
-                             var rawData = {
-                                 product_details: product,
-                                 user_id: this.user.id,
-                                 org_id: this.org_id
-                             }
-                                axios.post('/cart/updateQuantity',rawData)
-                                .then(res => {
-                                    console.log(res);
-                                    LoadingOverlayHide();
-                                })
-                                .catch(err => {
-                                    product.qty++;
-                                    console.error(err);
-                                    LoadingOverlayHide();
-                                    alert('Something went wrong! Please Contat Support. '+err);
-                                })
-                        }
-                    }
-            },
+				if (this.guest == 1) {
+					this.cart.splice(
+						this.cart.findIndex(function (i) {
+							return i.id === data.id;
+						}),
+						1
+					);
+					localStorage.setItem("cart", JSON.stringify(this.cart));
+					localStorage.setItem("cart_badge", this.cart.length);
+					this.$events.fire("updateCartBadge", "update cart");
+					this.setCartExpiry(86400000);
+				} else {
+					LoadingOverlay();
+					axios
+						.post(
+							`/cart/removeProductOfUserCart/${this.user.id}/${this.org_id}/${data.id}`
+						)
+						.then((res) => {
+							this.$events.fire("updateCartBadge3", res.data);
+							LoadingOverlayHide();
+							this.cart.splice(
+								this.cart.findIndex(function (i) {
+									return i.id === data.id;
+								}),
+								1
+							);
+						})
+						.catch((err) => {
+							LoadingOverlayHide();
+							console.error(err);
+						});
+				}
+			},
+			addQty(product) {
+				if (product.qty < product.maxorder + 50) {
+					product.qty++;
+					if (this.guest == 1) {
+						localStorage.setItem("cart", JSON.stringify(this.cart));
+						this.setCartExpiry(86400000);
+					} else {
+						LoadingOverlay();
+						var rawData = {
+							product_details: product,
+							user_id: this.user.id,
+							org_id: this.org_id,
+						};
+						axios
+							.post("/cart/updateQuantity", rawData)
+							.then((res) => {
+								console.log(res);
+								LoadingOverlayHide();
+							})
+							.catch((err) => {
+								product.qty--;
+								console.error(err);
+								LoadingOverlayHide();
+								alert(
+									"Something went wrong! Please Contat Support. " + err
+								);
+							});
+					}
+				}
+			},
+			subQty(product) {
+				if (product.qty > 1) {
+					product.qty--;
+					if (this.guest == 1) {
+						localStorage.setItem("cart", JSON.stringify(this.cart));
+						this.setCartExpiry(86400000);
+					} else {
+						LoadingOverlay();
+						var rawData = {
+							product_details: product,
+							user_id: this.user.id,
+							org_id: this.org_id,
+						};
+						axios
+							.post("/cart/updateQuantity", rawData)
+							.then((res) => {
+								console.log(res);
+								LoadingOverlayHide();
+							})
+							.catch((err) => {
+								product.qty++;
+								console.error(err);
+								LoadingOverlayHide();
+								alert(
+									"Something went wrong! Please Contat Support. " + err
+								);
+							});
+					}
+				}
+			},
 		},
 	};
 </script>

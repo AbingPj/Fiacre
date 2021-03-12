@@ -426,6 +426,7 @@
 			this.user = this.propsuser;
 			if (this.propsuser.organization) {
 				this.oraganization = this.propsuser.organization;
+                this.$events.fire("updateCartBadge4", this.propsuser.organization.id);
 			}
 
 			this.profileImage = this.user.image_path;

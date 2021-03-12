@@ -87,7 +87,7 @@ class SelectionsController extends Controller
             ->orWhere('org_optionc_id', 'LIKE', "%$search%")
             ->orderBy('org_name')
             ->skip(0)
-            ->take(10)
+            ->take(20)
             ->get()
             ->makeHidden(['atr_logo_link','atr_type_label','atr_active_label', 'atr_contact_person', 'atr_address']);
         // $data->setAppends(['atr_name_with_optionc']);

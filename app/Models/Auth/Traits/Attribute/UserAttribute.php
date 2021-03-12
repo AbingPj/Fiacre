@@ -3,6 +3,7 @@
 namespace App\Models\Auth\Traits\Attribute;
 
 use App\Models\City;
+use App\Models\Organization;
 use App\Models\State;
 use App\Models\SubscriptionSunclubMember;
 use Illuminate\Support\Facades\Hash;
@@ -164,6 +165,19 @@ trait UserAttribute
             return "Fiacre Customer";
         } else {
             return "";
+        }
+    }
+    public function getAtrOrganizationAttribute()
+    {
+        if ($this->selected_org_id) {
+            $org = Organization::find($this->selected_org_id);
+            if (!empty($org)) {
+                return $org;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 }

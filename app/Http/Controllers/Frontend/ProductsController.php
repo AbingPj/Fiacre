@@ -79,7 +79,16 @@ class ProductsController extends Controller
 
         $org = Organization::where('org_optionc_id', $request->optionc_id)->first();
         if (!empty($org)) {
-            return response()->json($org, 200);
+            if (Auth::guest() == false) {
+                $user = User::find(Auth::user()->id);
+                $user->selected_org_id = $org->id;
+                $user->selected_org_optionc_id =$org->org_optionc_id;
+                $user->save();
+                return response()->json($org, 200);
+            }else{
+                return response()->json($org, 200);
+            }
+
         } else {
             return response()->json('Sorry, your school is not yet registered', 404);
         }

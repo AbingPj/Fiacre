@@ -14,7 +14,7 @@
 	</li>
 </template>
 <script>
-    import cookies from "js-cookie";
+	import cookies from "js-cookie";
 	export default {
 		props: [
 			"guest",
@@ -22,22 +22,24 @@
 			"wholesaler_minimum_order_amount",
 			"guest_status",
 			"user_id",
+			"org_id",
+			"organization",
 		],
 		data() {
 			return {
 				cart: [],
 				message: "",
-                countFromDB:0
+				countFromDB: 0,
 			};
 		},
 		computed: {
 			cart_badge() {
-                var length = 0;
-                if(this.guest == 1){
-                    length = this.cart.length;
-                }else{
-                    length = this.countFromDB;
-                }
+				var length = 0;
+				if (this.guest == 1) {
+					length = this.cart.length;
+				} else {
+					length = this.countFromDB;
+				}
 				var badge = "";
 				if (length != 0) {
 					var badge = length;
@@ -62,7 +64,33 @@
 					this.getCart();
 				}
 			} else {
-                this.getCart2();
+				var ff_org_id = cookies.get("ff-org-id");
+				if (this.organization) {
+					if (ff_org_id != this.org_id) {
+						console.log("if");
+						cookies.remove("ff-org-id");
+						cookies.remove("ff-org-name");
+						cookies.remove("ff-org-address");
+						const expiryTime = new Date(new Date().getTime() + 86400 * 1000);
+						cookies.set("ff-org-id", this.organization.id, {
+							expires: expiryTime,
+						});
+						cookies.set("ff-org-name", this.organization.org_name, {
+							expires: expiryTime,
+						});
+						cookies.set("ff-org-address", this.organization.atr_address, {
+							expires: expiryTime,
+						});
+						this.getCart2();
+					} else {
+						console.log("else");
+						this.getCart2();
+					}
+				}else{
+                    cookies.remove("ff-org-id");
+						cookies.remove("ff-org-name");
+						cookies.remove("ff-org-address");
+                }
 			}
 		},
 		methods: {
@@ -91,15 +119,26 @@
 					localStorage.setItem("cart_badge", this.cart.length);
 				}
 			},
-            async getCart2() {
-                var org_id = cookies.get("ff-org-id");
-                axios.get(`/cart/getUserCartCount/${this.user_id}/${org_id}`)
-                .then(res => {
-                    this.countFromDB = res.data;
-                })
-                .catch(err => {
-                    console.error(err);
-                })
+			async getCart2() {
+				var org_id = cookies.get("ff-org-id");
+				axios
+					.get(`/cart/getUserCartCount/${this.user_id}/${org_id}`)
+					.then((res) => {
+						this.countFromDB = res.data;
+					})
+					.catch((err) => {
+						console.error(err);
+					});
+			},
+			async getCart3(data) {
+				axios
+					.get(`/cart/getUserCartCount/${this.user_id}/${data}`)
+					.then((res) => {
+						this.countFromDB = res.data;
+					})
+					.catch((err) => {
+						console.error(err);
+					});
 			},
 		},
 		events: {
@@ -107,12 +146,15 @@
 				this.message = message;
 				this.getCart();
 			},
-            updateCartBadge2(message) {
+			updateCartBadge2(message) {
 				this.message = message;
 				this.getCart2();
 			},
-            updateCartBadge3(message) {
+			updateCartBadge3(message) {
 				this.countFromDB = message;
+			},
+			updateCartBadge4(data) {
+				this.getCart3(data);
 			},
 		},
 	};

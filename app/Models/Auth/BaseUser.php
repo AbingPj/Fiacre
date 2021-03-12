@@ -66,7 +66,8 @@ abstract class BaseUser extends Authenticatable implements Recordable
         'sun_is_expired',
         'atr_image_link',
         'atr_full_address',
-        'atr_customer_role'
+        'atr_customer_role',
+        'atr_organization'
     ];
     /**
      * The attributes that should be cast to native types.
