@@ -1,4 +1,5 @@
 <template>
+    <div>
 	<div
 		class="modal fade"
 		id="addToCartModal"
@@ -7,6 +8,7 @@
 		aria-labelledby="exampleModalLabel"
 		aria-hidden="true"
 		style="padding: 0px !important"
+        data-backdrop="static"
 	>
 		<div
 			class="modal-dialog modal-dialog-centered product-modaol-dialog"
@@ -150,7 +152,7 @@
 								<label>Included Products:</label>
 								<ul class="list-group list-group-flush">
 									<li
-										v-for="(item, index) in product.selected_products"
+										v-for="(item, index) in selected_products"
 										:key="index"
 										class="list-group-item"
 										style="padding: 2px 10px 2px 10px"
@@ -160,7 +162,7 @@
 												{{ item.qty }}/{{ item.unit }} &nbsp; &nbsp;
 												&nbsp;
 											</div>
-											<div>
+											<div style="width: 30%">
 												<img
 													:src="item.image_link"
 													style="
@@ -170,6 +172,9 @@
 													"
 												/>
 												{{ item.name }}
+											</div>
+                                            <div v-if="ifNotGuest" style="width: 50%" class="text-right">
+                                                <button type="button" @click="sub(item, index)" class="btn btn-sm" :class="item.sub == 'sub'? 'btn-info':'btn-secondary'">{{subUnsub(item)}}</button>
 											</div>
 										</div>
 									</li>
@@ -181,7 +186,10 @@
 			</div>
 		</div>
 	</div>
+        <ProductsSubModal ref="ProductsSubModalRef"></ProductsSubModal>
+    </div>
 </template>
+
 
 <style lang="scss" scoped>
 	@import "resources/sass/mixins";
@@ -244,18 +252,87 @@
 </style>
 
 <script>
+//   const ProductsSubModal = () =>
+//   import(
+//     /* webpackChunkName: "js/f/productsSubModal" */ "./productsSubModal.vue"
+//   );
 	export default {
+        // props: ["guest"],
+        // components:{
+        //     ProductsSubModal
+        // },
 		data() {
 			return {
 				product: {},
+				updated_product: {},
 				update_prodct: {},
 				guest: 1,
 				customer_role: 0,
 				category: {},
 				sub_category: {},
+                selected_products:[],
+                orginal_selected_products:[],
 			};
 		},
+        computed:{
+            ifNotGuest(){
+               return this.$parent.guest == 0;
+            },
+            // selected_products(){
+            //     if(this.product.selected_products){
+            //         return this.product.selected_products;
+            //     } else {
+            //         return [];
+            //     }
+            // }
+        },
 		methods: {
+             subUnsub(data){
+                if(data.sub == "sub"){
+                    return "SUB"
+                } else {
+                    return "UNSUB"
+                }
+            },
+            updateProducts(item,index){
+
+                const new_selected_products = this.selected_products;
+                this.selected_products = [];
+                this.selected_products = new_selected_products;
+                // this.selected_products[index] = item;
+                // this.selected_products = this.selected_products;
+                // this.product.name = "UPDATED";
+
+            },
+            showModal(data, guest, customer_role){
+                this.product = data;
+                if(data.selected_products){
+                    const newdata = JSON.stringify(data.selected_products);
+                    this.selected_products = JSON.parse(newdata);
+                    this.orginal_selected_products = data.selected_products;
+                }
+
+                this.category = data.category;
+                this.sub_category = data.sub_category;
+                this.guest = guest;
+                this.customer_role = customer_role;
+                $("#addToCartModal").modal("show");
+            },
+            sub(data, index){
+                console.log(data);
+                if(data.sub == "sub"){
+                    this.$refs.ProductsSubModalRef.data = data;
+                    this.$refs.ProductsSubModalRef.index = index;
+                    this.$refs.ProductsSubModalRef.openModal();
+                }
+                if(data.sub == "unsub"){
+                     this.selected_products[index] = this.orginal_selected_products[index];
+                     const new_selected_products = this.selected_products;
+                     this.selected_products = [];
+                     this.selected_products = new_selected_products;
+                }
+
+            },
 			updateProductPrice(product) {
 				if (this.customer_role == 2) {
 					return this.displayNumberWithComma(product.member_price);
@@ -288,7 +365,7 @@
 			},
 			addToCart() {
 				if (this.product.qty > 0) {
-					this.$parent.addtoCart(this.product);
+					this.$parent.addtoCart(this.product, this.selected_products, this.orginal_selected_products);
 					$("#addToCartModal").modal("hide");
 				}
 			},

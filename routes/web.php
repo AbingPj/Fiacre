@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\FiacrePlaceOrderController;
+use App\Http\Controllers\Frontend\ProductsController;
 use App\Http\Controllers\Frontend\ReferralPageController;
 use App\Http\Controllers\LanguageController;
 use Illuminate\Support\Facades\Route;
@@ -113,7 +114,13 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('cart/getUserCartCount/{user_id}/{org_id}', [CartController::class, 'getUserCartCount'])->name('cart.getUserCartCount');
     Route::post('cart/removeProductOfUserCart/{user_id}/{org_id}/{product_id}', [CartController::class, 'removeProductOfUserCart'])->name('cart.removeProductOfUserCart');
     Route::post('cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+    Route::post('cart/updateProductDetails', [CartController::class, 'updateProductDetails'])->name('cart.updateProductDetails');
     Route::post('cart/addToCart', [CartController::class, 'addToCart'])->name('cart.details');
+
+
+    Route::get('prod/getProductsToSwap', [ProductsController::class, 'getProductsToSwap'])->name('getProductsToSwap');
+
+
     // });
 });
 
