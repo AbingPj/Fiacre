@@ -138,6 +138,7 @@ const RefferalsPageModal = () => import(/* webpackChunkName: "js/f/RefferalsPage
 Vue.component("ProductsPageModal", require("./components/products-page/productsModal.vue").default);
 Vue.component("ProductsSubModal", require("./components/products-page/productsSubModal.vue").default);
 Vue.component("ProductsSubModal2", require("./components/products-page/productsSubModal2.vue").default);
+Vue.component("ProductsSubModal3", require("./components/checkout-page/productsSubModal3.vue").default);
 Vue.component("ProductsModalEdit", require("./components/products-page/productsModalEdit.vue").default);
 // Vue.component("products-warning-modal", require("./components/products-page/wholesalerWarningModal.vue").default);
 // Vue.component("products-user-balance-mobile", require("./components/products-page/userBalanceMobile.vue").default);
