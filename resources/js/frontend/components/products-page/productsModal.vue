@@ -150,7 +150,7 @@
 						<div v-if="product.is_bundle == 1" class="row mt-2">
 							<div class="col">
 								<label>Included Products:</label>
-								<ul class="list-group list-group-flush">
+								<ul class="list-group list-group-flush selected-products-scrollable">
 									<li
 										v-for="(item, index) in selected_products"
 										:key="index"
@@ -249,6 +249,12 @@
 	.minmax-color {
 		color: #007bff;
 	}
+
+    .selected-products-scrollable{
+        max-height: 250px;
+        overflow-y: scroll;
+        border-bottom: 1px solid lightgreen;
+    }
 </style>
 
 <script>
