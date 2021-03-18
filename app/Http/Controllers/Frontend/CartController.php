@@ -58,6 +58,25 @@ class CartController extends Controller
 
     }
 
+    public function updateProductDetails(Request $request)
+    {
+        $user_id = $request->user_id;
+        $org_id  = $request->org_id;
+        $product_id  = $request->product_details['id'];
+        $data = Cart::where('user_id', $user_id)
+            ->where('org_id', $org_id)
+            ->where('product_id', $product_id)
+            ->first();
+        if(!empty($data)){
+            $data->details = json_encode($request->product_details);
+            $data->save();
+            return response()->json('updated', 200);
+        } else {
+            return response()->json('not found', 404);
+        }
+
+    }
+
     public function addToCart(Request $request)
     {
 
@@ -69,6 +88,7 @@ class CartController extends Controller
         $data->product_id = $request->product_id;
         $data->qty = $request->qty;
         $data->details = json_encode($request->product_details);
+        $data->original_selected_products = json_encode($request->original_selected_products);
         $data->save();
 
         // $cart = Cart::where('user_id', $request->user_id)->where('org_id', $request->org_id)->get();

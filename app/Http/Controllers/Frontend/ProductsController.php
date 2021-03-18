@@ -147,7 +147,7 @@ class ProductsController extends Controller
                     if (!empty($prod)) {
                         $prod->selected = true;
                         $prod->qty = $value2->quantity;
-                        // $b_product->save();
+                        $prod->sub = "sub";
                         array_push($selected, $prod);
                     }
                 }
@@ -266,5 +266,31 @@ class ProductsController extends Controller
         }
 
         return response()->json($products, 200);
+    }
+
+    public function getProductsToSwap(Request $request){
+        $search = $request->search;
+        $price = $request->price;
+        $id = $request->id;
+        $products = Product::with('category:id,name')
+            ->where('id','!=', $id)
+            ->where('price', $price)
+            ->where('is_visible', 1)
+            ->where('status', '!=', 3)
+            ->where('is_bundle', 0)
+            ->where(function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%$search%")
+                    ->orWhere('sku', 'LIKE', "%$search%");
+            })
+            // ->where('name', 'LIKE', "%$search%")
+            // ->where('sku', 'LIKE', "%$search%")
+            ->paginate(50);
+
+        $products->getCollection()->transform(function ($value) {
+            $value->selected = false;
+            $value->qty = 1;
+            return $value;
+        });
+        return response()->json($products);
     }
 }

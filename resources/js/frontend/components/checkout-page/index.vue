@@ -182,6 +182,7 @@
 				</div>
 			</div>
 		</div>
+           <ProductsSubModal3 ref="ProductsSubModalRef3"></ProductsSubModal3>
 	</div>
 </template>
 <script>
@@ -547,6 +548,62 @@
 					}
 				}
 			},
+            sub(data1, data,index){
+                console.log(data1);
+                console.log(data);
+				if (data.sub == "sub") {
+					this.$refs.ProductsSubModalRef3.data1 = data1;
+					this.$refs.ProductsSubModalRef3.data = data;
+					this.$refs.ProductsSubModalRef3.index = index;
+					this.$refs.ProductsSubModalRef3.openModal();
+				}
+				if (data.sub == "unsub") {
+                    const selected_products = data1.selected_products;
+                    const atr_orginal_selected_products = data1.atr_orginal_selected_products;
+					selected_products[index] = atr_orginal_selected_products[index];
+                    const newdata = selected_products;
+                    data1.selected_products = [];
+                    data1.selected_products = newdata;
+					this.updateProductDetails(data1);
+				}
+            },
+            updateProducts(data1,item, index) {
+
+                const selected_products = data1.selected_products;
+                selected_products[index] = item;
+                const newdata = selected_products;
+				data1.selected_products = [];
+                data1.selected_products = newdata;
+				this.updateProductDetails(data1);
+			},
+             updateProductDetails(product) {
+                if(this.guest == 0){
+                    LoadingOverlay();
+                        var rawData = {
+                            product_details: product,
+                            user_id: this.user.id,
+                            org_id: this.org_id,
+                        };
+                        axios
+                            .post("/cart/updateProductDetails", rawData)
+                            .then((res) => {
+                                console.log(res);
+                                LoadingOverlayHide();
+                                // window.location.reload(true)
+                                // document.location.reload(true)
+                            })
+                            .catch((err) => {
+                                console.error(err);
+                                // LoadingOverlayHide();
+                                alert(
+                                    "Something went wrong! Please Contat Support. " + err
+                                );
+                                // window.location.reload(true)
+                                document.location.reload(true)
+                            });
+                }
+                },
+
 		},
 	};
 </script>

@@ -135,7 +135,11 @@ const RefferalsPageModal = () => import(/* webpackChunkName: "js/f/RefferalsPage
 /// New Products Page
 // Vue.component("products-page", require("./components/products-page/index.vue").default);
 // Vue.component("products-page-order-summary", require("./components/products-page/orderSummary.vue").default);
-// Vue.component("products-page-modal", require("./components/products-page/productsModal.vue").default);
+Vue.component("ProductsPageModal", require("./components/products-page/productsModal.vue").default);
+Vue.component("ProductsSubModal", require("./components/products-page/productsSubModal.vue").default);
+Vue.component("ProductsSubModal2", require("./components/products-page/productsSubModal2.vue").default);
+Vue.component("ProductsSubModal3", require("./components/checkout-page/productsSubModal3.vue").default);
+Vue.component("ProductsModalEdit", require("./components/products-page/productsModalEdit.vue").default);
 // Vue.component("products-warning-modal", require("./components/products-page/wholesalerWarningModal.vue").default);
 // Vue.component("products-user-balance-mobile", require("./components/products-page/userBalanceMobile.vue").default);
 // Vue.component("products-user-balance", require("./components/products-page/userBalance.vue").default);

@@ -341,7 +341,9 @@
     <div :class="display == 'box'? 'container-fluid con-f-margin':'container'">
       <div class="row">
         <div class="col">
-          <products-page-modal ref="productmodal"></products-page-modal>
+          <!-- <products-page-modal :guest="guest" ref="productmodal"></products-page-modal> -->
+          <ProductsPageModal :guest="guest" ref="productmodal" ></ProductsPageModal>
+          <ProductsModalEdit :guest="guest" ref="productmodalEdit" ></ProductsModalEdit>
           <products-warning-modal :minimum="wholesaler_minimum_order_amount"></products-warning-modal>
           <!-- <OrganizationModal :guest="guest" :user="user"></OrganizationModal> -->
           <EnterOptionCModal :guest="guest" :user="user"></EnterOptionCModal>
@@ -357,10 +359,10 @@ const prodOrderSummary = () =>
   import(
     /* webpackChunkName: "js/f/prodOrderSummaryNew" */ "./orderSummary.vue"
   );
-const prodModal = () =>
-  import(
-    /* webpackChunkName: "js/f/prodModalNew" */ "./productsModal.vue"
-  );
+// const prodModal = () =>
+//   import(
+//     /* webpackChunkName: "js/f/prodModalNew" */ "./productsModal.vue"
+//   );
 const prodWarningModal = () =>
   import(
     /* webpackChunkName: "js/f/prodWarningModal" */ "./wholesalerWarningModal.vue"
@@ -387,7 +389,7 @@ const prodGrid = () =>
 export default {
   components: {
     'products-page-order-summary': prodOrderSummary,
-    'products-page-modal': prodModal,
+    // 'products-page-modal': prodModal,
     'products-warning-modal': prodWarningModal,
     'products-user-balance-mobile': prodUserBalanceMobile,
     'products-user-balance': prodUserBalance,
@@ -612,12 +614,12 @@ export default {
     },
 
     showAddToCartModal(data) {
-      this.$refs.productmodal.product = data;
-      this.$refs.productmodal.guest = this.guest;
-      this.$refs.productmodal.category = data.category;
-      this.$refs.productmodal.sub_category = data.sub_category;
-      this.$refs.productmodal.customer_role = this.user.customer_role;
-      $("#addToCartModal").modal("show");
+      this.$refs.productmodal.showModal(data,this.guest,this.user.customer_role);
+    //   $("#addToCartModal").modal("show");
+    },
+
+    showAddToCartModalEdit(data) {
+      this.$refs.productmodalEdit.showModal(data,this.guest,this.user.customer_role);
     },
 
     setDisplay(data) {
@@ -667,10 +669,125 @@ export default {
                     console.error(err);
                 })
       }
-
     },
 
-    addtoCart(data) {
+     updateProductDetails(product) {
+      if(this.guest == 0){
+          LoadingOverlay();
+		    var rawData = {
+		    	product_details: product,
+		    	user_id: this.user.id,
+		    	org_id: this.org_id,
+		    };
+		    axios
+		    	.post("/cart/updateProductDetails", rawData)
+		    	.then((res) => {
+		    		console.log(res);
+		    		LoadingOverlayHide();
+		    	})
+		    	.catch((err) => {
+		    		console.error(err);
+		    		LoadingOverlayHide();
+		    		alert(
+		    			"Something went wrong! Please Contat Support. " + err
+		    		);
+		    	});
+      }
+    },
+
+      updateProductQuantity(product) {
+      if(this.guest == 0){
+          LoadingOverlay();
+		    var rawData = {
+		    	product_details: product,
+		    	user_id: this.user.id,
+		    	org_id: this.org_id,
+		    };
+		    axios
+		    	.post("/cart/updateProductDetails", rawData)
+		    	.then((res) => {
+		    		console.log(res);
+		    		LoadingOverlayHide();
+		    	})
+		    	.catch((err) => {
+		    		console.error(err);
+		    		LoadingOverlayHide();
+		    		alert(
+		    			"Something went wrong! Please Contat Support. " + err
+		    		);
+		    	});
+      }
+    },
+
+
+    addQty(product) {
+				if (product.qty < product.maxorder + 50) {
+					product.qty++;
+					if (this.guest == 1) {
+						localStorage.setItem("cart", JSON.stringify(this.cart));
+						this.setCartExpiry(86400000);
+					} else {
+						LoadingOverlay();
+						var rawData = {
+							product_details: product,
+							user_id: this.user.id,
+							org_id: this.org_id,
+						};
+						axios
+							.post("/cart/updateQuantity", rawData)
+							.then((res) => {
+								console.log(res);
+								LoadingOverlayHide();
+							})
+							.catch((err) => {
+								product.qty--;
+								console.error(err);
+								LoadingOverlayHide();
+								alert(
+									"Something went wrong! Please Contat Support. " + err
+								);
+							});
+					}
+				}
+			},
+			subQty(product) {
+				if (product.qty > 1) {
+					product.qty--;
+					if (this.guest == 1) {
+						localStorage.setItem("cart", JSON.stringify(this.cart));
+						this.setCartExpiry(86400000);
+					} else {
+						LoadingOverlay();
+						var rawData = {
+							product_details: product,
+							user_id: this.user.id,
+							org_id: this.org_id,
+						};
+						axios
+							.post("/cart/updateQuantity", rawData)
+							.then((res) => {
+								console.log(res);
+								LoadingOverlayHide();
+							})
+							.catch((err) => {
+								product.qty++;
+								console.error(err);
+								LoadingOverlayHide();
+								alert(
+									"Something went wrong! Please Contat Support. " + err
+								);
+							});
+					}
+				}
+			},
+
+
+
+
+
+
+
+    addtoCart(data, selected_products, original) {
       data.selected = true;
       if(this.guest == 1){
           if (data.selected == true) {
@@ -691,13 +808,20 @@ export default {
         //   this.setCartExpiry(40000);
         this.$events.fire("updateCartBadge", "update cart");
       }else{
+          const newdata = JSON.stringify(data);
+          let newdata2 =  JSON.parse(newdata);
+          if(data.is_bundle == 1){
+              newdata2.selected_products = selected_products;
+              newdata2.atr_orginal_selected_products = original;
+          }
           var rawData = {
               user_id: this.user.id,
               org_id: this.org_id,
               product_id: data.id,
               qty: data.qty,
               price: data.price,
-              product_details: data,
+              product_details: newdata2,
+              original_selected_products: original,
           }
           LoadingOverlay();
 
@@ -705,7 +829,7 @@ export default {
           .then(res => {
              console.log(res);
              this.$events.fire("updateCartBadge3", res.data);
-             this.cart.push(data);
+             this.cart.push(newdata2);
              LoadingOverlayHide();
           })
           .catch(err => {

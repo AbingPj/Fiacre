@@ -48,13 +48,27 @@
 					// width: 10%;
 					padding: 0px;
 					position: relative;
-					#x {
+					.top-right {
 						position: absolute;
 						top: 0px;
 						right: 0px;
-						background: transparent;
-						border: 0px;
-						color: gray;
+                        .u-btn{
+                            background: transparent;
+                            border: 0px;
+                            color: gray;
+                        }
+                        .u-btn:hover{
+                            color: #339f25;
+                        }
+                        .x-btn{
+                            background: transparent;
+                            border: 0px;
+                            color: gray;
+                        }
+                        .x-btn:hover{
+                            color: red;
+                        }
+
 					}
 					#sub-total {
 						//   overflow: visible;
@@ -148,9 +162,15 @@
 								</p>
 							</div>
 							<div class="cart-item-close-container ml-auto w-25">
-								<button id="x" @click="removeItemInCart(item)">
-									<i class="fa fa-times" aria-hidden="true"></i>
-								</button>
+                                <div class="top-right">
+                                    <button v-if="guest == '0'" class="u-btn" @click="showProductsModalEdit(item)">
+									    <i class="fa fa-pencil-alt" aria-hidden="true"></i>
+								    </button>
+                                    <button class="x-btn" @click="removeItemInCart(item)">
+									    <i class="fa fa-times" aria-hidden="true"></i>
+								    </button>
+                                </div>
+
 								<span id="sub-total">
 									<b v-if="item.is_subscription == 0"
 										>$ {{ displayNumberWithComma(subTotal(item)) }}</b
@@ -212,6 +232,9 @@
 			removeItemInCart(data) {
 				this.$parent.removeItemInCart(data);
 			},
+            showProductsModalEdit(data){
+                this.$parent.showAddToCartModalEdit(data);
+            },
 
 			subTotal(item) {
 				let subtotal = 0;
