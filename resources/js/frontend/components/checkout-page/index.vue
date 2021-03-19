@@ -351,20 +351,21 @@
 			placeOrder() {
 				LoadingOverlay();
 
-                // In-progress
-				alert("Under Construction!");
-                LoadingOverlayHide();
-                //
+                // // In-progress
+				// alert("Under Construction!");
+                // LoadingOverlayHide();
+                // //
 
-				// this.placeorderButtonDisabled = true;
-				// if (this.cart.length > 0) {
-				// 	this.fiacreCustomerOrder();
-				// } else {
-				// 	this.errorMessage = "You Dont Have Selected Products.";
-				// 	window.scrollTo(0, 0);
-				// 	LoadingOverlayHide();
-				// 	this.placeorderButtonDisabled = false;
-				// }
+                //Continue Process
+				this.placeorderButtonDisabled = true;
+				if (this.cart.length > 0) {
+					this.fiacreCustomerOrder();
+				} else {
+					this.errorMessage = "You Dont Have Selected Products.";
+					window.scrollTo(0, 0);
+					LoadingOverlayHide();
+					this.placeorderButtonDisabled = false;
+				}
 			},
 
 			fiacreCustomerOrder() {
@@ -376,9 +377,9 @@
 					.then((res) => {
 						// LoadingOverlayHide();
 						// console.log(res);
-						this.cart = [];
-						localStorage.setItem("cart", JSON.stringify(this.cart));
-						localStorage.setItem("cart_badge", this.cart.length);
+						// this.cart = [];
+						// localStorage.setItem("cart", JSON.stringify(this.cart));
+						// localStorage.setItem("cart_badge", this.cart.length);
 
 						if (res.status == 200) {
 							window.location.href = "/placeorder/thankyou";

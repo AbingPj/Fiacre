@@ -108,17 +108,17 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     // Route::group(['middleware' => 'role:' . config('access.users.fiacre_customer_role'),], function () {
 
-    Route::post('placeorder/fiacreCustomer', [FiacrePlaceOrderController::class, 'fiacreCustomerPlaceOrder'])->name('products.placeorder.fiacreCustomer');
 
-    Route::get('cart/getUserCartDetails/{user_id}/{org_id}', [CartController::class, 'getUserCartDetails'])->name('cart.getUserCartDetails');
-    Route::get('cart/getUserCartCount/{user_id}/{org_id}', [CartController::class, 'getUserCartCount'])->name('cart.getUserCartCount');
-    Route::post('cart/removeProductOfUserCart/{user_id}/{org_id}/{product_id}', [CartController::class, 'removeProductOfUserCart'])->name('cart.removeProductOfUserCart');
-    Route::post('cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
-    Route::post('cart/updateProductDetails', [CartController::class, 'updateProductDetails'])->name('cart.updateProductDetails');
-    Route::post('cart/addToCart', [CartController::class, 'addToCart'])->name('cart.details');
-
-
-    Route::get('prod/getProductsToSwap', [ProductsController::class, 'getProductsToSwap'])->name('getProductsToSwap');
+    Route::group(['middleware' => 'auth'], function () {
+        Route::post('placeorder/fiacreCustomer', [FiacrePlaceOrderController::class, 'fiacreCustomerPlaceOrder'])->name('products.placeorder.fiacreCustomer');
+        Route::get('cart/getUserCartDetails/{user_id}/{org_id}', [CartController::class, 'getUserCartDetails'])->name('cart.getUserCartDetails');
+        Route::get('cart/getUserCartCount/{user_id}/{org_id}', [CartController::class, 'getUserCartCount'])->name('cart.getUserCartCount');
+        Route::post('cart/removeProductOfUserCart/{user_id}/{org_id}/{product_id}', [CartController::class, 'removeProductOfUserCart'])->name('cart.removeProductOfUserCart');
+        Route::post('cart/updateQuantity', [CartController::class, 'updateQuantity'])->name('cart.updateQuantity');
+        Route::post('cart/updateProductDetails', [CartController::class, 'updateProductDetails'])->name('cart.updateProductDetails');
+        Route::post('cart/addToCart', [CartController::class, 'addToCart'])->name('cart.details');
+        Route::get('prod/getProductsToSwap', [ProductsController::class, 'getProductsToSwap'])->name('getProductsToSwap');
+    });
 
 
     // });

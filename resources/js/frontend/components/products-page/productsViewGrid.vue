@@ -11,6 +11,9 @@
     }
     .prod-container:hover{
       border: #339f25 solid 2px;
+      .prod-btn-hover {
+        background-color: #339f25;
+      }
     }
     .prod-selected{
         cursor: not-allowed;
@@ -186,7 +189,7 @@
 
               <button
                 type="button"
-                class="btn btn-sm btn-outline-success prod-btn"
+                class="btn btn-sm btn-outline-success prod-btn prod-btn-hover"
                 :class="prod.selected == true? 'prod-btn-selected': ''"
                 :disabled="prod.selected == true? true:false"
               >

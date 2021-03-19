@@ -22,7 +22,13 @@ class OrderProduct extends Model
         'atr_sub_total_f',
         'atr_fundraise',
         'atr_fundraise_f',
+        'atr_product_details',
     ];
+
+    public function getAtrProductDetailsAttribute()
+    {
+        return json_decode($this->product_details);
+    }
 
     public function getAtrPriceFAttribute()
     {
