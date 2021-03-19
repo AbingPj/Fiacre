@@ -21,7 +21,6 @@ class CreateCartTable extends Migration
             $table->integer('qty')->default(1);
             // $table->double('price', 24, 2)->nullable();
             $table->LongText('details');
-            // $table->LongText('product_bundle_details')->nullable();
             $table->timestamps();
         });
     }

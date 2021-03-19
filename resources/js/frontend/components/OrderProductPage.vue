@@ -151,9 +151,10 @@
               <li
                 v-for="(or_prod, index) in order_products"
                 :key="index"
-                class="list-group-item d-flex cart-item"
+                class="list-group-item cart-item"
                 style="margin-bottom:10px;"
               >
+              <div class="d-flex">
                 <div>
                   <img :src="or_prod.product.image_link" class="cart-item-image" />
                 </div>
@@ -206,6 +207,52 @@
                     <b>$ {{displayNumberWithComma(or_prod.subscription_price)}}</b>
                   </span>
                 </div>
+              </div>
+              	<div v-if="or_prod.is_bundle == 1" class="row mt-2">
+							<div class="col">
+								<label>Included Products:</label>
+								<ul class="list-group list-group-flush">
+									<li
+										v-for="(item2, index) in or_prod.atr_product_details.selected_products"
+										:key="index"
+										class="list-group-item"
+										style="padding: 2px 10px 2px 10px"
+									>
+										<div class="d-flex">
+											<div style="width: 20%">
+												{{ item2.qty }}/{{ item2.unit }} &nbsp;
+												&nbsp; &nbsp;
+											</div>
+											<div style="width: 30%">
+												<img
+													:src="item2.image_link"
+													style="
+														width: 20px;
+														height: 20px;
+														object-fit: cover;
+													"
+												/>
+												{{ item2.name }}
+											</div>
+											<div style="width: 50%" class="text-right">
+												<!-- <button
+													type="button"
+													@click="sub(item, item2, index)"
+													class="btn btn-sm"
+													:class="
+														item2.sub == 'sub'
+															? 'btn-info'
+															: 'btn-secondary'
+													"
+												>
+													{{ subUnsub(item2) }}
+												</button> -->
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
               </li>
             </ul>
           </div>
