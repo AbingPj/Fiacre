@@ -167,6 +167,7 @@ const pgAboutUs = () => import(/* webpackChunkName: "js/f/pgAboutUs" */ './compo
 const pgFAQ = () => import(/* webpackChunkName: "js/f/pgFAQ" */ './components/content-pages/FAQ.vue');
 const pgPrivacy = () => import(/* webpackChunkName: "js/f/pgPrivacy" */ './components/content-pages/PrivacyPage.vue');
 const pgTerms = () => import(/* webpackChunkName: "js/f/pgTerms" */ './components/content-pages/TermsPage.vue');
+const delivArea = () => import(/* webpackChunkName: "js/f/pgTerms" */ './components/content-pages/DelivArea.vue');
 
 
 
@@ -252,6 +253,7 @@ const app = new Vue({
         'faqs-page': pgFAQ,
         'privacy-page': pgPrivacy,
         'terms-page': pgTerms,
+        'delivery-page': delivArea,
 
         //Others
         'rewards-modal': rewardsModal,

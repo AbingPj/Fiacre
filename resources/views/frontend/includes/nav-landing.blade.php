@@ -22,6 +22,7 @@
                     @endif
                 @endauth
                 <li class="nav-item"><a href="{{url('/products')}}" class="nav-link">Products</a></li>
+                <li class="nav-item"><a href="{{route('frontend.delivery-area')}}" class="nav-link {{ active_class(Route::is('frontend.delivery-area*'))}}">Delivery Area</a></li>
                 <li class="nav-item"><a href="{{route('frontend.faq')}}" class="nav-link {{ active_class(Route::is('frontend.faq')) }}">@lang('FAQ')</a></li>
 
                 {{-- @auth

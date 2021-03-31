@@ -221,5 +221,6 @@ export default {
   color: #fff !important;
   background-color: #339f25 !important;
   border-color: #339f25 !important;
+  cursor: pointer;
 }
 </style>

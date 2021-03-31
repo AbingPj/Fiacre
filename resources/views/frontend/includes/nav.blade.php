@@ -29,6 +29,7 @@
                 @auth
                 <li class="nav-item"><a href="{{url('/orders')}}" class="nav-link {{ active_class(Route::is('frontend.orders*'))}}">Orders</a></li>
                 @endauth
+                <li class="nav-item"><a href="{{route('frontend.delivery-area')}}" class="nav-link {{ active_class(Route::is('frontend.delivery-area*'))}}">Delivery Area</a></li>
                 <li class="nav-item"><a href="{{route('frontend.faq')}}" class="nav-link {{ active_class(Route::is('frontend.faq')) }}">@lang('FAQ')</a></li>
 
                 {{-- @auth
@@ -61,6 +62,7 @@
                             @endif
 
                             @if( Auth::user()->customer_role == 4)
+                                <a href="/products" class="dropdown-item">Recurring Products</a>
                                 <a href="/myprofile" class="dropdown-item">Billing Profile</a>
                             @elseif(Auth::user()->customer_role == 1)
                                 <a href="/register/success/confirmed" class="dropdown-item">Set Billing Info</a>
