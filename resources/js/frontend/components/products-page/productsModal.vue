@@ -44,7 +44,7 @@
 								</h6>
 								<div class="custom-control custom-switch pb-3">
 									<input v-model="recurringProd" @change="setRecurr()" type="checkbox" class="custom-control-input" id="customSwitch1">
-									<label class="custom-control-label" for="customSwitch1">Recurring Product</label>
+									<label class="custom-control-label" for="customSwitch1">Add to Recurring</label>
 								</div>							
 								<p class="mb-0">
 									{{ product.description }}
