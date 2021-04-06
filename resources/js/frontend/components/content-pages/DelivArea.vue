@@ -64,7 +64,7 @@
                 <i class="fa fa-map-pin" aria-hidden="true"></i>
                 <span>Check if our delivery area includes <strong>YOUR</strong> zip code:</span>
                 <input v-model="zipCode" placeholder="Enter Zip Code" name="name" type="text" class="form-control" />
-                <b-button squared variant="success" size="md" @click="checkZip">Check My Zip</b-button>
+                <b-button squared variant="success" size="md" @click="checkZip">Check My Zip Code</b-button>
             </div>
           </div>
         </div>

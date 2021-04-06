@@ -23,7 +23,7 @@
 					>
 						<i class="fa fa-times-circle" aria-hidden="true"></i>
 					</button>
-					<div class="container product-container">
+					<div class="container product-container test">
 						<div class="row">
 							<div class="col-md-6 p-image">
 								<img
@@ -42,6 +42,10 @@
 										{{ product.unit }}</b
 									>
 								</h6>
+								<div class="custom-control custom-switch pb-3">
+									<input v-model="recurringProd" @change="setRecurr()" type="checkbox" class="custom-control-input" id="customSwitch1">
+									<label class="custom-control-label" for="customSwitch1">Recurring Product</label>
+								</div>							
 								<p class="mb-0">
 									{{ product.description }}
 									<br />
@@ -272,6 +276,7 @@
 				sub_category: {},
                 selected_products:[],
                 orginal_selected_products:[],
+				recurringProd: false // this should be part of the product table
 			};
 		},
         computed:{
@@ -287,6 +292,14 @@
             // }
         },
 		methods: {
+			setRecurr() {
+				if (this.recurringProd) {
+					console.log(this.product)
+					
+				} else {
+					console.log('Product is not recurring')
+				}
+			},
              subUnsub(data){
                 if(data.sub == "sub"){
                     return "SUB"
