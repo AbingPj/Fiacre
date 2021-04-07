@@ -18,16 +18,15 @@ class ReferralCodesSeeder extends Seeder
     {
         ReferralCodeSubmitted::truncate();
         ReferralCode::truncate();
-        $users = User::where('customer_role', '!=', '1')->where('customer_role', '!=', '0')->get();
+        // $users = User::where('customer_role', '!=', '1')->where('customer_role', '!=', '0')->get();
+        $users = User::where('is_fiacre_customer', 1)->get();
 
         foreach ($users as $key => $user) {
-
-
             if (!$this->userExists($user->id)) {
                 $code = $this->generateRandomString(8);
                 $reffercode = new ReferralCode;
                 $reffercode->user_id = $user->id;
-                $reffercode->code = 'SF' . $code;
+                $reffercode->code = 'F'.$user->id .'F'. $code;
                 $reffercode->save();
             }
         }
@@ -55,7 +54,7 @@ class ReferralCodesSeeder extends Seeder
 
     function codeExists($code)
     {
-        return ReferralCode::where('code', $code)->exists();
+        return ReferralCode::where('code','F'.$code)->exists();
     }
 
     function userExists($user_id)
