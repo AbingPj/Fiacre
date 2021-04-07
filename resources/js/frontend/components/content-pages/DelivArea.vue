@@ -9,9 +9,9 @@
     padding: 100px 0px 100px 0px;
 
     .delivary-container-2 {
-      padding: 100px 30px 100px 30px;
+      padding: 30px 30px 10px;
       margin: 0px;
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.80);
 
       .title {
         color: #88c43a;
