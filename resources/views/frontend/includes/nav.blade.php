@@ -1,12 +1,22 @@
 <nav id="nav-contacts" class="font-weight-bold py-2 navbar-light bg-light">
     <div class="container">
         <div class="d-flex flex-row-reverse bd-highlight">
+            @auth
+                @if( Auth::user()->customer_role == 4)
+                    @if(isset(Auth::user()->atr_user_referral_link))
+                        <div class="p-2 bd-highlight">
+                            <i class="fas fa-share-square"></i> {{ Auth::user()->atr_user_referral_link }}
+                        </div>
+                    @endif
+                @endif
+            @endauth
             <div class="p-2 bd-highlight">
                 <i class="fas fa-envelope fa-fw mr-2"></i>{{ $store_settings->email }}
             </div>
             <div class="p-2 bd-highlight">
                 <i class="fas fa-phone-alt fa-fw mr-2"></i>{{ $store_settings->phone }}
             </div>
+
         </div>
     </div>
 </nav>

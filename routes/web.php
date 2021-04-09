@@ -33,7 +33,13 @@ Route::get('lang/{lang}', [LanguageController::class, 'swap']);
 Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     include_route_files(__DIR__ . '/frontend/');
     /// Products Page
+
+
+
+
+
     Route::get('/testDate', 'FiacrePlaceOrderController@testDate')->name('testDate');
+
     Route::get('/products', 'ProductsController@index')->name('products');
     Route::post('/proceed/optioncid', 'ProductsController@proceedOptionCid')->name('proceedOptionCid');
 

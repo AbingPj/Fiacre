@@ -51,6 +51,7 @@ Route::group(['namespace' => 'Auth', 'as' => 'auth.'], function () {
 
         // Registration Routes
         Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+        Route::get('register/r/{code}', [RegisterController::class, 'showRegistrationFormWithCode'])->name('registerWithCode');
         Route::post('register', [RegisterController::class, 'register'])->name('register.post');
         Route::get('register/success', function() {
             return view('frontend.auth.success');
