@@ -42,10 +42,11 @@
 										{{ product.unit }}</b
 									>
 								</h6>
-								<div class="custom-control custom-switch pb-3">
-									<input v-model="recurringProd" @change="setRecurr()" type="checkbox" class="custom-control-input" id="customSwitch1">
+								<div v-if="guest == 0" class="custom-control custom-switch pb-3">
+									<!-- <input v-model="recurringProd" @change="setRecurr()" type="checkbox" class="custom-control-input" id="customSwitch1"> -->
+									<input v-model="product.recurring" type="checkbox" class="custom-control-input" id="customSwitch1">
 									<label class="custom-control-label" for="customSwitch1">Add to Recurring</label>
-								</div>							
+								</div>
 								<p class="mb-0">
 									{{ product.description }}
 									<br />
@@ -276,7 +277,7 @@
 				sub_category: {},
                 selected_products:[],
                 orginal_selected_products:[],
-				recurringProd: false // this should be part of the product table
+				// recurringProd: false // this should be part of the product table
 			};
 		},
         computed:{
@@ -295,7 +296,7 @@
 			setRecurr() {
 				if (this.recurringProd) {
 					console.log(this.product)
-					
+
 				} else {
 					console.log('Product is not recurring')
 				}

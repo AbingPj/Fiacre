@@ -42,6 +42,11 @@
 											{{ product.unit }}</b
 										>
 									</h6>
+                                    <div v-if="guest == 0" @click="updateRecurring()" class="custom-control custom-switch pb-3">
+                                        <!-- <input v-model="recurringProd" @change="setRecurr()" type="checkbox" class="custom-control-input" id="customSwitch1"> -->
+                                        <input v-model="product.recurring" type="checkbox" class="custom-control-input">
+                                        <label class="custom-control-label" for="customSwitch1">Add to Recurring</label>
+                                    </div>
 									<p class="mb-0">
 										{{ product.description }}
 										<br />
@@ -379,6 +384,7 @@
 					this.$parent.updateProductDetails(this.product);
 				}
 			},
+
 			updateProductPrice(product) {
 				if (this.customer_role == 2) {
 					return this.displayNumberWithComma(product.member_price);
@@ -425,7 +431,10 @@
             addQty(item) {
                 this.$parent.addQty(item);
             },
-
+            updateRecurring(){
+                this.product.recurring = !this.product.recurring;
+				this.$parent.updateProductDetails(this.product);
+            },
 
 
 		},

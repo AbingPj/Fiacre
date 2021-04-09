@@ -549,6 +549,7 @@
 					}
 				}
 			},
+
             sub(data1, data,index){
                 console.log(data1);
                 console.log(data);
@@ -577,6 +578,10 @@
                 data1.selected_products = newdata;
 				this.updateProductDetails(data1);
 			},
+            updateRecurring(product){
+                product.recurring = !product.recurring;
+                this.updateProductDetails(product);
+            },
              updateProductDetails(product) {
                 if(this.guest == 0){
                     LoadingOverlay();

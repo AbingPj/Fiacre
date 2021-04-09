@@ -135,6 +135,7 @@ class ProductsController extends Controller
 
         $products->getCollection()->transform(function ($value) use ($org_id, $request) {
             $value->selected = false;
+            $value->recurring = false;
             $value->qty = 1;
             if ($value->is_bundle == 1) {
                 $value->price = round($value->getBundlePrice('retailer'), 2);
