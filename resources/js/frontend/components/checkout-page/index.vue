@@ -159,6 +159,7 @@
 								:cc="getCCAmount"
 								:ach="getACHAmount"
 								:user_billing_type="user_billing_type"
+                                :referral_details="referral_details"
 							>
 							</os-fiacre>
 						</div>
@@ -243,6 +244,9 @@
 				org_id: cookies.get("ff-org-id"),
 				org_name: cookies.get("ff-org-name"),
 				org_address: cookies.get("ff-org-address"),
+                referral_details:{
+                    total_user_refferal_amount:0
+                },
 			};
 		},
 		computed: {
@@ -316,6 +320,7 @@
 				if (this.user_billing_type == "ACH") {
 					total = total + this.getACHAmount;
 				}
+                total  = total  - this.referral_details.total_user_refferal_amount;
 				return total;
 			},
 
@@ -327,6 +332,7 @@
 			if (this.guest == 1) {
 				this.getCart();
 			} else {
+                this.getReferralDetails();
 				setTimeout(() => {
 					this.org_id = cookies.get("ff-org-id");
 					this.org_name = cookies.get("ff-org-name");
@@ -433,6 +439,14 @@
 							this.cart.push(cart.atr_details);
 						});
 						LoadingOverlayHide();
+					});
+			},
+
+            getReferralDetails() {
+				axios
+					.get(`/getUserReferralCodeDetails`)
+					.then((res) => {
+                        this.referral_details = res.data;
 					});
 			},
 

@@ -193,6 +193,23 @@
             />
           </div>
         </div>
+
+         <div class="form-group">
+                <label for="wsrvisible">Wholesaler Sign-up Visibility</label>
+                 <div class="custom-control custom-switch">
+                <input
+                 :checked="store.wholesaler_signup_is_hide != 1 ? true: false"
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="wsrvisible"
+                  name="wsrvisible"
+                />
+                <label class="custom-control-label" for="wsrvisible">Show/Hide</label>
+                <!-- <label class="custom-control-label" for="wsrvisible">{{ store.wholesaler_signup_is_hide == 1? 'hide' : 'show' }}</label> -->
+              </div>
+              </div>
+
+
         <div class="form-group">
           <label for="name" class="font-weight-bold">Delivery Fee</label>
           <div class="input-group">
@@ -228,20 +245,26 @@
           </div>
         </div>
 
-              <div class="form-group">
-                <label for="wsrvisible">Wholesaler Sign-up Visibility</label>
-                 <div class="custom-control custom-switch">
-                <input
-                 :checked="store.wholesaler_signup_is_hide != 1 ? true: false"
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="wsrvisible"
-                  name="wsrvisible"
-                />
-                <label class="custom-control-label" for="wsrvisible">Show/Hide</label>
-                <!-- <label class="custom-control-label" for="wsrvisible">{{ store.wholesaler_signup_is_hide == 1? 'hide' : 'show' }}</label> -->
-              </div>
-              </div>
+
+        <div class="form-group">
+          <label for="name" class="font-weight-bold">Referral Amount</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input
+              v-model="store.referral_amount"
+              type="text"
+              class="form-control"
+              id="referral_amount"
+              name="referral_amount"
+              @keypress="onlyNumber"
+              required
+            />
+          </div>
+        </div>
+
+
 
       </div>
 

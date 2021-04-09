@@ -5,7 +5,7 @@
                 @if( Auth::user()->customer_role == 4)
                     @if(isset(Auth::user()->atr_user_referral_link))
                         <div class="p-2 bd-highlight">
-                            <i class="fas fa-share-square"></i> {{ Auth::user()->atr_user_referral_link }}
+                            <a href="{{Auth::user()->atr_user_referral_link}}" target="_blank"><i class="fas fa-share-square"></i> {{ Auth::user()->atr_user_referral_link }}</a>
                         </div>
                     @endif
                 @endif

@@ -192,4 +192,16 @@ trait UserAttribute
         }
         return $response;
     }
+
+    public function getAtrUserReferralAmountAttribute()
+    {
+        $response = null;
+        if ($this->customer_role == 4) {
+            $rc = ReferralCode::where('user_id', $this->id)->first();
+            if(!empty($rc)){
+                $response = url('/register/r/' . $rc->code);
+            }
+        }
+        return $response;
+    }
 }

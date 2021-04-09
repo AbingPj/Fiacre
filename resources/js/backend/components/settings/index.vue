@@ -85,13 +85,13 @@
             role="tabpanel"
             aria-labelledby="nav-profile-tab"
           >
-            <admin-settings-membership-tab
+            <!-- <admin-settings-membership-tab
               ref="membership_tab"
               :choices="prop_sunclub_choices"
               :prop_store="prop_store"
               :sunclub_action_add="sunclub_action_add"
               :sunclub_action_update="sunclub_action_update"
-            ></admin-settings-membership-tab>
+            ></admin-settings-membership-tab> -->
           </div>
 
           <!-- <div

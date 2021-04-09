@@ -40,7 +40,10 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     Route::get('/testDate', 'FiacrePlaceOrderController@testDate')->name('testDate');
 
+    Route::get('/getUserReferralCodeDetails', 'User\ReferralsController@getUserReferralCodeDetails');
+
     Route::get('/products', 'ProductsController@index')->name('products');
+
     Route::post('/proceed/optioncid', 'ProductsController@proceedOptionCid')->name('proceedOptionCid');
 
     Route::get('/api/OrganizationSelection', 'ProductsController@OrganizationSelection')->name('OrganizationSelection');
