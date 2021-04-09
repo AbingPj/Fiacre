@@ -39,7 +39,7 @@
                 @auth
                 <li class="nav-item"><a href="{{url('/orders')}}" class="nav-link {{ active_class(Route::is('frontend.orders*'))}}">Orders</a></li>
                 @endauth
-                <li class="nav-item"><a href="{{route('frontend.delivery-area')}}" class="nav-link {{ active_class(Route::is('frontend.delivery-area*'))}}">Delivery Area</a></li>
+                {{-- <li class="nav-item"><a href="{{route('frontend.delivery-area')}}" class="nav-link {{ active_class(Route::is('frontend.delivery-area*'))}}">Delivery Area</a></li> --}}
                 <li class="nav-item"><a href="{{route('frontend.faq')}}" class="nav-link {{ active_class(Route::is('frontend.faq')) }}">@lang('FAQ')</a></li>
 
                 {{-- @auth
