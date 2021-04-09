@@ -8,6 +8,8 @@ use App\Exceptions\GeneralException;
 use App\Models\Auth\SocialAccount;
 use App\Models\Auth\User;
 use App\Models\ChatMessage;
+use App\Models\ReferralCode;
+use App\Models\ReferralCodeSubmitted;
 use App\Notifications\Frontend\Auth\UserNeedsConfirmation;
 use App\Repositories\BaseRepository;
 use App\Services\EmailsService;
@@ -114,7 +116,21 @@ class UserRepository extends BaseRepository
             if ($user) {
                 // Add the default site role to the new user
                 $user->assignRole(config('access.users.default_role'));
+
+                // Save the referral code;
+                if(isset($data['referral_code'])){
+                    $referral_code = ReferralCode::where(DB::raw('BINARY `code`'), $data['referral_code'])->first();
+                    if($referral_code){
+                        $rf_submit = new ReferralCodeSubmitted;
+                        $rf_submit->user_id = $user->id;
+                        $rf_submit->code = $referral_code->code;
+                        $rf_submit->refferal_code_user_id = $referral_code->user_id;
+                        $rf_submit->save();
+                    }
+
+                }
             }
+
 
             /*
              * If users have to confirm their email and this is not a social account,

@@ -147,6 +147,7 @@ class SettingsController extends Controller
             $store->delivery_fee = $request->delivery_fee;
             $store->wholesaler_minimum_order_amount = $request->wholesaler_minimum_order_amount;
             $store->expected_delivery_days = $request->expected_delivery_days;
+            $store->referral_amount = $request->referral_amount;
 
 
             // upload image

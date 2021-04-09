@@ -52,7 +52,7 @@
      * // Footer options
      * 1. '.footer-fixed'					- Fixed footer
 --}}
-<body class="app header-fixed sidebar-fixed aside-menu-off-canvas sidebar-lg-show" style="font-family: Roboto !important;">
+<body class="app header-fixed sidebar-fixed aside-menu-off-canvas sidebar-lg-show"> <!--  style="font-family: Roboto !important;"-->
     @include('backend.includes.header')
 
     <div id="adminVueApp" class="app-body">

@@ -54,6 +54,11 @@ class HomeController extends Controller
         return view('frontend.pages.contents.terms-of-use', compact('terms'));
     }
 
+    public function deliveryArea()
+    {
+        return view('frontend.pages.contents.delivery-area');
+    }
+
     public function privacyPolicy()
     {
         $store = Store::find(1);

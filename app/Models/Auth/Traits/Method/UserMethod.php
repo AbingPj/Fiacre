@@ -5,6 +5,7 @@ namespace App\Models\Auth\Traits\Method;
 use App\Models\ChatMessage;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\ReferralCodeSubmitted;
 use App\Models\Store;
 use App\Models\SubscriptionSunclubChoice;
 use App\Models\SubscriptionSunclubMember;
@@ -268,4 +269,12 @@ trait UserMethod
             ->count();
         return $unread_chats_count;
     }
+
+    // public function getReferralAmount()
+    // {
+    //     if ($this->customer_role == 4) {
+    //         $rcs = ReferralCodeSubmitted::where('refferal_code_user_id', $this->id)->get_defined_functions();
+    //     }
+    //     return $unread_chats_count;
+    // }
 }

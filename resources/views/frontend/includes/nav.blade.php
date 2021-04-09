@@ -1,12 +1,22 @@
 <nav id="nav-contacts" class="font-weight-bold py-2 navbar-light bg-light">
     <div class="container">
         <div class="d-flex flex-row-reverse bd-highlight">
+            @auth
+                @if( Auth::user()->customer_role == 4)
+                    @if(isset(Auth::user()->atr_user_referral_link))
+                        <div class="p-2 bd-highlight">
+                            <a href="{{Auth::user()->atr_user_referral_link}}" target="_blank"><i class="fas fa-share-square"></i> {{ Auth::user()->atr_user_referral_link }}</a>
+                        </div>
+                    @endif
+                @endif
+            @endauth
             <div class="p-2 bd-highlight">
                 <i class="fas fa-envelope fa-fw mr-2"></i>{{ $store_settings->email }}
             </div>
             <div class="p-2 bd-highlight">
                 <i class="fas fa-phone-alt fa-fw mr-2"></i>{{ $store_settings->phone }}
             </div>
+
         </div>
     </div>
 </nav>
@@ -29,6 +39,7 @@
                 @auth
                 <li class="nav-item"><a href="{{url('/orders')}}" class="nav-link {{ active_class(Route::is('frontend.orders*'))}}">Orders</a></li>
                 @endauth
+                {{-- <li class="nav-item"><a href="{{route('frontend.delivery-area')}}" class="nav-link {{ active_class(Route::is('frontend.delivery-area*'))}}">Delivery Area</a></li> --}}
                 <li class="nav-item"><a href="{{route('frontend.faq')}}" class="nav-link {{ active_class(Route::is('frontend.faq')) }}">@lang('FAQ')</a></li>
 
                 {{-- @auth
@@ -61,6 +72,7 @@
                             @endif
 
                             @if( Auth::user()->customer_role == 4)
+                                <a href="/products" class="dropdown-item">Recurring Products</a>
                                 <a href="/myprofile" class="dropdown-item">Billing Profile</a>
                             @elseif(Auth::user()->customer_role == 1)
                                 <a href="/register/success/confirmed" class="dropdown-item">Set Billing Info</a>

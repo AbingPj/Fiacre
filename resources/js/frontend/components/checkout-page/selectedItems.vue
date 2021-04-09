@@ -9,7 +9,7 @@
 			overflow-x: hidden;
 			/* Hide horizontal scrollbar */
 
-            // overflow-y: scroll; //uncomment if u want to use scroll
+			// overflow-y: scroll; //uncomment if u want to use scroll
 
 			/* Add vertical scrollbar */
 			.cart-item {
@@ -209,6 +209,20 @@
 							</div>
 							<br />
 						</div>
+						<div
+							@click="updateRecurring(item)"
+							class="custom-control custom-switch pb-3 my-2"
+						>
+							<input
+								:checked="item.recurring == true ? true : false"
+								type="checkbox"
+								class="custom-control-input"
+							/>
+							<label class="custom-control-label" for="customSwitch1"
+								>Add to Recurring</label
+							>
+						</div>
+
 						<div v-if="item.is_bundle == 1" class="row mt-2">
 							<div class="col">
 								<label>Included Products:</label>
@@ -273,8 +287,11 @@
 				});
 				return withCommas;
 			},
-            sub(data1, data, index) {
-                this.$parent.sub(data1, data,index);
+			sub(data1, data, index) {
+				this.$parent.sub(data1, data, index);
+			},
+			updateRecurring(item) {
+				this.$parent.updateRecurring(item);
 			},
 			subQty(item) {
 				this.$parent.subQty(item);

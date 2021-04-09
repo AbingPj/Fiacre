@@ -4,6 +4,7 @@ namespace App\Models\Auth\Traits\Attribute;
 
 use App\Models\City;
 use App\Models\Organization;
+use App\Models\ReferralCode;
 use App\Models\State;
 use App\Models\SubscriptionSunclubMember;
 use Illuminate\Support\Facades\Hash;
@@ -179,5 +180,28 @@ trait UserAttribute
         } else {
             return null;
         }
+    }
+    public function getAtrUserReferralLinkAttribute()
+    {
+        $response = null;
+        if ($this->customer_role == 4) {
+            $rc = ReferralCode::where('user_id', $this->id)->first();
+            if(!empty($rc)){
+                $response = url('/register/r/' . $rc->code);
+            }
+        }
+        return $response;
+    }
+
+    public function getAtrUserReferralAmountAttribute()
+    {
+        $response = null;
+        if ($this->customer_role == 4) {
+            $rc = ReferralCode::where('user_id', $this->id)->first();
+            if(!empty($rc)){
+                $response = url('/register/r/' . $rc->code);
+            }
+        }
+        return $response;
     }
 }

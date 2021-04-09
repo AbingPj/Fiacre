@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Frontend\Auth;
 use App\Events\Frontend\Auth\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Frontend\Auth\RegisterRequest;
+use App\Models\ReferralCode;
 use App\Repositories\Frontend\Auth\UserRepository;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class RegisterController.
@@ -53,6 +55,20 @@ class RegisterController extends Controller
         return view('frontend.auth.register');
     }
 
+    public function showRegistrationFormWithCode($code)
+    {
+        abort_unless(config('access.registration'), 404);
+        \App\Services\TotalViewService::getView("Sgn Up");
+        $referral_code = $code;
+        $referral_code_is_valid = 0;
+        if(ReferralCode::where(DB::raw('BINARY `code`'), $referral_code)->exists()){
+            // dump("Is Valid");
+            $referral_code_is_valid = 1;
+        };
+        // dd($referral_code_is_valid);
+        return view('frontend.auth.register-with-referral-code',compact('referral_code','referral_code_is_valid'));
+    }
+
     /**
      * @param RegisterRequest $request
      *
@@ -62,8 +78,10 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         abort_unless(config('access.registration'), 404);
+        // dd($request);
+        // $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'contact_number', 'contact_number_type'));
 
-        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'contact_number', 'contact_number_type'));
+        $user = $this->userRepository->create($request->only('first_name', 'last_name', 'email', 'password', 'contact_number', 'contact_number_type', 'referral_code'));
 
         // If the user must confirm their email or their account requires approval,
         // create the account but don't log them in.

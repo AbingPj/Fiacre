@@ -67,6 +67,15 @@
           </div>
         </td>
       </tr>
+      <tr :class="referral_details.total_user_refferal_amount > 0? 'text-success':''" >
+        <td>Refferal Amount</td>
+        <td>
+          <div class="d-flex justify-content-between">
+            <div>$</div>
+            <div class="text-right">- {{displayNumber(referral_details.total_user_refferal_amount)}}</div>
+          </div>
+        </td>
+      </tr>
       <tr>
         <td>
           <b>Total</b>
@@ -83,7 +92,7 @@
 </template>
 <script>
 export default {
-  props: ["total_amount", "shipments_price", "over_all_total", "tax", "cc", "ach", "user_billing_type"],
+  props: ["total_amount", "shipments_price", "over_all_total", "tax", "cc", "ach", "user_billing_type","referral_details"],
   methods: {
     displayNumber(value) {
       var n = parseFloat(value).toFixed(2);

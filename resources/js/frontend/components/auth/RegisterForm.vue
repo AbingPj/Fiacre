@@ -91,6 +91,18 @@
             :default-country-code="defaultCountry"
             :only-countries="countriesList"
             v-model="contactNumber2" /> -->
+             <div v-if="referral_code && referral_code_is_valid == 1" class="row">
+                <div class="col-12">
+                     <label class="text-left float-left">Referral Code</label>
+                </div>
+                <div class="col-12 mb-3">
+                     <input id="referral_code" :value="referral_code" name="referral_code" readonly class="form-control">
+                </div>
+                <!-- <div class="col-12 mb-3">
+                     <label v-if="referral_code_is_valid == '1'" class="text-success float-left" >Referral code is valid.</label>
+                     <label v-else class="text-danger float-left" >Referral code is not valid anymore.</label>
+                </div> -->
+            </div>
             <div class="row">
                 <div class="col">
                      <label class="text-left float-left">Contact Number</label>
@@ -118,6 +130,7 @@
                      <label class="text-danger" :class="results.isValid != false? 'd-none':'d-block'">Contact Number is not valid in US.</label>
                 </div>
             </div>
+
 
             <ValidationProvider name="terms" rules="required">
                 <!-- <ValidationProvider name="agreedToTerms" :rules="agreedToTerms == true"> -->
@@ -178,6 +191,7 @@ export default {
 // components: {
 //     "vue-phone-number-input": VuePhoneNumberInput,
 //   },
+    props:['referral_code','referral_code_is_valid'],
     data() {
         return {
             firstName: "",
