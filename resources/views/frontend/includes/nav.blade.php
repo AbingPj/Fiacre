@@ -5,7 +5,8 @@
                 @if( Auth::user()->customer_role == 4)
                     @if(isset(Auth::user()->atr_user_referral_link))
                         <div class="p-2 bd-highlight">
-                            <a href="{{Auth::user()->atr_user_referral_link}}" target="_blank"><i class="fas fa-share-square"></i> {{ Auth::user()->atr_user_referral_link }}</a>
+                            <!--<a href="{{Auth::user()->atr_user_referral_link}}" target="_blank"><i class="fas fa-share-square"></i> {{ Auth::user()->atr_user_referral_link }}</a>-->
+                            <social-component link="{{Auth::user()->atr_user_referral_link}}" ></social-component>
                         </div>
                     @endif
                 @endif
@@ -16,6 +17,8 @@
             <div class="p-2 bd-highlight">
                 <i class="fas fa-phone-alt fa-fw mr-2"></i>{{ $store_settings->phone }}
             </div>
+
+            
 
         </div>
     </div>
@@ -72,7 +75,6 @@
                             @endif
 
                             @if( Auth::user()->customer_role == 4)
-                                <a href="/products" class="dropdown-item">Recurring Products</a>
                                 <a href="/myprofile" class="dropdown-item">Billing Profile</a>
                             @elseif(Auth::user()->customer_role == 1)
                                 <a href="/register/success/confirmed" class="dropdown-item">Set Billing Info</a>
