@@ -12,14 +12,22 @@
 			class="row mt-4"
 			style="font-family: Source Sans Pro, sans-serif !important"
 		>
-			<div class="col-md-7">
+			<div class="col-md-9">
 				<h4>
 					Fiacre ID: <b>{{ propsorg.org_optionc_id }}</b>
 				</h4>
-				<h5>email: {{ propsorg.org_email }}</h5>
-				<h5>type: {{ propsorg.atr_type_label }}</h5>
-				<h6>Contact Person: {{ propsorg.atr_contact_person }}</h6>
-				<h6>Address: {{ propsorg.atr_address }}</h6>
+				<div class="row pt-2">
+					<div class="col-md-6">
+						<h6>email: {{ propsorg.org_email }}</h6>
+						<h6>type: {{ propsorg.atr_type_label }}</h6>
+					</div>
+					<div class="col-md-6">
+						<h6>Contact Person: {{ propsorg.atr_contact_person }}</h6>
+						<h6>Address: {{ propsorg.atr_address }}</h6>					
+					</div>
+				</div>
+
+
 				<!-- <h6>Diocese: {{ propsorg.org_diocese }}</h6> -->
 				<!-- <h6>Website: {{ propsorg.org_website }}</h6> -->
 
@@ -34,7 +42,6 @@
 						name="type"
 						class="form-control rounded-0"
 						type="text"
-						readonly
 					/>
 				</div>
 				<div class="form-group">

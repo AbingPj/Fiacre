@@ -120,6 +120,11 @@
         <b-button class="float-right" variant="success" @click="saveChanges()">Save Changes</b-button>
       </b-col>
     </b-row>
+
+    <div class="float-right">
+      Powered By: <br>
+      <img src="/img/MattMoneyLogo.png" alt="" style="height:25px; width:auto;">
+    </div>    
   </div>
 </template>
 

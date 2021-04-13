@@ -337,9 +337,9 @@
 		methods: {
 			subUnsub(data) {
 				if (data.sub == "sub") {
-					return "SUB";
+					return "SWAP";
 				} else {
-					return "UNSUB";
+					return "RESET";
 				}
 			},
 			updateProducts(item, index) {

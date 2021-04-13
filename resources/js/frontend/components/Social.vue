@@ -9,7 +9,7 @@
             quote="Invite and send your referral trough email."
             hashtags="fiacre, referral"
         >
-            <i class="fas fa-share-square"></i> Share on Facebook
+            <i class="fas fa-share-square"></i> Share and Earn!
         </ShareNetwork>
 
     </div>

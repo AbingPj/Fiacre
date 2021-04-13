@@ -304,9 +304,9 @@
 			},
 			subUnsub(data) {
 				if (data.sub == "sub") {
-					return "SUB";
-				} else {
-					return "UNSUB";
+                    return "SWAP"
+                } else {
+                    return "RESET"
 				}
 			},
 		},

@@ -633,6 +633,5 @@
 		border-right: 0px;
 	}
 
-	.md-autocomplete {
-	}
+
 </style>
