@@ -184,6 +184,7 @@
 			</div>
 		</div>
            <ProductsSubModal3 ref="ProductsSubModalRef3"></ProductsSubModal3>
+		   <ReferralModal ref="ReferralModalRef"></ReferralModal>
 	</div>
 </template>
 <script>
@@ -245,7 +246,8 @@
 				org_name: cookies.get("ff-org-name"),
 				org_address: cookies.get("ff-org-address"),
                 referral_details:{
-                    total_user_refferal_amount:0
+                    total_user_refferal_amount:0,
+					details: []
                 },
 			};
 		},
@@ -447,6 +449,8 @@
 					.get(`/getUserReferralCodeDetails`)
 					.then((res) => {
                         this.referral_details = res.data;
+						console.log(res.data.details)
+						this.$refs.ReferralModalRef.data = res.data;
 					});
 			},
 

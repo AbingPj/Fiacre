@@ -13,6 +13,8 @@ import { ValidationProvider, ValidationObserver } from "vee-validate";
 
 import "vue-material/dist/vue-material.min.css";
 import "vue-material/dist/theme/default.css";
+import VueSocialSharing from 'vue-social-sharing';
+
 
 import VueEvents from 'vue-events'
 
@@ -24,6 +26,7 @@ Vue.use(BootstrapVue); // Telling Vue to use this in whole application
 Vue.use(VueMaterial);
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
+Vue.use(VueSocialSharing);
 
 
 
@@ -126,7 +129,9 @@ const ProfilePage = () => import(/* webpackChunkName: "js/f/ProfilePage" */ './c
 
 
 // Vue.component("referrals-page", require("./components/referrals/RefferalsPage.vue").default);
-// Vue.component("referrals-page-modal", require("./components/referrals/RefferalsPageModal.vue").default);
+Vue.component("ReferralModal", require("./components/referrals/RefferalsPageModal.vue").default);
+Vue.component("social-component", require("./components/Social.vue").default);
+
 
 const RefferalsPage = () => import(/* webpackChunkName: "js/f/RefferalsPage" */ './components/referrals/RefferalsPage.vue');
 const RefferalsPageModal = () => import(/* webpackChunkName: "js/f/RefferalsPageModal" */ './components/referrals/RefferalsPageModal.vue');

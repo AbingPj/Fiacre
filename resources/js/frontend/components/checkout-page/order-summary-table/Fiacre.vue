@@ -4,6 +4,7 @@
 </style>
 
 <template>
+  <div>
   <table class="table">
     <tbody>
       <tr>
@@ -67,8 +68,13 @@
           </div>
         </td>
       </tr>
-      <tr :class="referral_details.total_user_refferal_amount > 0? 'text-success':''" >
-        <td>Refferal Amount</td>
+      <tr :class="referral_details.total_user_refferal_amount > 0? 'text-success':''" style="color:green;">
+        <td>
+          <span>Referral Amount</span><br>
+          <a v-if="referral_details.details.length > 0" class="referral-detail-btn" data-toggle="modal" data-target="#referModal">
+            Details
+          </a>          
+        </td>
         <td>
           <div class="d-flex justify-content-between">
             <div>$</div>
@@ -89,6 +95,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 </template>
 <script>
 export default {
@@ -105,3 +112,11 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.referral-detail-btn {
+  cursor: pointer;
+}
+
+</style>
