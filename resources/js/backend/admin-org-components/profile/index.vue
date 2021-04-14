@@ -30,9 +30,28 @@
 
 				<!-- <h6>Diocese: {{ propsorg.org_diocese }}</h6> -->
 				<!-- <h6>Website: {{ propsorg.org_website }}</h6> -->
-
-				<div class="mt-5 mb-1">
+				<div class="row mt-5">
+				<div class="col-md-6">
 					<h4>Address</h4>
+				</div>
+				<div class="col-md-6">
+					<button
+						type="button"
+						:class="edit == true ? 'd-none' : ''"
+						class="btn btn-success float-right"
+						@click="clickEdit()"
+					>
+						EDIT
+					</button>
+					<button
+						type="button"
+						:class="edit == false ? 'd-none' : ''"
+						class="btn btn-danger float-right"
+						@click="edit = false"
+					>
+						Cancel
+					</button>					
+				</div>
 				</div>
 				<div class="form-group">
 					<label for="name">Street</label>
@@ -42,6 +61,7 @@
 						name="type"
 						class="form-control rounded-0"
 						type="text"
+						:disabled="!edit == true"
 					/>
 				</div>
 				<div class="form-group">
@@ -51,7 +71,7 @@
 						v-model="org.org_cityprov"
 						:options="cities"
 						:multiple="false"
-						:disabled="false"
+						:disabled="!edit == true"
 						:clearable="true"
 						:searchable="true"
 						:filterable="true"
@@ -85,7 +105,7 @@
                         :reduce="(state) => state.iso2"
 						:options="states"
 						:multiple="false"
-						:disabled="false"
+						:disabled="!edit == true"
 						:clearable="true"
 						:searchable="true"
 						:filterable="true"
@@ -101,6 +121,7 @@
 						v-model="org.org_zipcode"
 						class="form-control rounded-0"
 						type="text"
+						:disabled="!edit == true"
 					/>
 				</div>
 				<!-- <div class="form-group">
@@ -144,6 +165,7 @@
 					<label for="name">Landline</label>
 					<vue-phone-number-input
 						@update="onUpdate"
+						class="landline-tel"
 						:default-country-code="defaultCountry"
 						no-country-selector
 						:error="results.isValid == false"
@@ -152,6 +174,7 @@
 						:translations="{
 							phoneNumberLabel: 'Landline Number',
 						}"
+						:disabled="!edit == true"
 					>
 					</vue-phone-number-input>
 
@@ -170,10 +193,12 @@
 					<label for="name">Mobile</label>
 					<vue-phone-number-input
 						@update="onUpdate2"
+						class="mobile-tel"
 						:default-country-code="defaultCountry"
 						no-country-selector
 						:error="results2.isValid == false"
 						v-model="org.org_contact_mobile"
+						:disabled="!edit == true"
 					>
 					</vue-phone-number-input>
 					<label
@@ -193,6 +218,7 @@
 			<div class="col-md-7">
 				<hr />
 				<button
+					:class="edit == false ? 'd-none' : ''"
 					class="mr-2 btn btn-info rounded-0"
 					@click="updateOrganization()"
 				>
@@ -223,6 +249,7 @@
 				results: {},
 				results2: {},
 				errors: new Errors(),
+				edit: false,
 			};
 		},
 
@@ -348,6 +375,9 @@
 				//   console.log(shit);
 				this.$events.fire("showErrorMessage", errors);
 			},
+			clickEdit() {
+				this.edit = true;
+			},			
 		},
 		computed: {
 			loadlist() {
@@ -376,6 +406,9 @@
 	.vs__search {
 		line-height: 1.5;
 	}
+	.input-tel.is-disabled .input-tel__input[data-v-e59be3b4] {
+		color:#333!important;
+	}	
 </style>
 
 <style lang="scss" scoped>
