@@ -28,8 +28,8 @@
 					</thead>
 					<tbody>
 						<tr v-for="(item, index) in products" :key="index">
-							<td>{{ item.product_details.name }}</td>
-							<td>$ {{ item.atr_price_f }}/{{item.product_details.unit}}</td>
+							<td>{{ item.atr_product_details.name }}</td>
+							<td>$ {{ item.atr_price_f }}/{{item.atr_product_details.unit}}</td>
 							<td><span v-if="!item.is_subscription">{{ item.updated_quantity }}</span></td>
 							<td><span v-if="item.is_subscription">{{ item.subscription_weeks }}</span></td>
 							<td>
@@ -65,6 +65,15 @@
 							<td></td>
 							<td>$ {{ order.atr_billing_amount_f }}</td>
 							<td></td>
+						</tr> -->
+                        <!-- <tr>
+							<th>Total</th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th>$ {{ order.atr_subscription_total_amount_f }}</th>
+							<th></th>
 						</tr> -->
 						<tr>
 							<th>Total</th>

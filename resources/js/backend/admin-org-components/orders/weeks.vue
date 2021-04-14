@@ -4,7 +4,7 @@
 			<div class="col-md-6">
 				<h2 class="card-title mb-0">
 					<i class="fas fa-file-invoice"></i> Product:
-					{{ orderd_product.product_details.name }}
+					{{ orderd_product.atr_product_details.name }}
 				</h2>
 			</div>
 			<div class="col-md-6"></div>

@@ -48,9 +48,20 @@ class Order extends Model
         // 'atr_coupon_discount',
         // 'atr_coupon_discount_f',
         'atr_expected_delivery_date',
-        'atr_total_tax'
+        'atr_total_tax',
         // 'atr_expected_delivery_date',
+        'atr_referral_amount',
+        'atr_referral_amount_f',
     ];
+    public function getAtrReferralAmountAttribute()
+    {
+        return $this->referral_amount;
+    }
+
+     public function getAtrReferralAmountFAttribute()
+    {
+        return number_format($this->referral_amount,2);
+    }
 
     public function getAtrSubscriptionOverallTotalAmountAttribute()
     {
@@ -118,7 +129,10 @@ class Order extends Model
 
         }
         $billing_type_price = $total * ($this->billing_type_percentage / 100);
+        // $total_with_referral_discount = ($total + $billing_type_price) - ;
         $overAlltotal = $total + $billing_type_price;
+        $overAlltotal = $overAlltotal - $this->referral_amount;
+
         if($var == 'overAlltotal'){
             return $overAlltotal;
         }
@@ -226,6 +240,8 @@ class Order extends Model
 
         // total amount + delivery fee
         $totalAmount = $totalAmount + $tax;
+
+
 
         if ($return_data == 'products') {
             return $updated_totalamount;

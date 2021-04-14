@@ -78,12 +78,12 @@ class SalesReportController extends Controller
             $total_price = 0;
             // $tax = 0;
             foreach ($ordererdProducts as $key2 => $orderedprod) {
-                if($orderedprod->is_subscription){
+                if ($orderedprod->is_subscription) {
                     $total_price = $total_price + $orderedprod->subscription_price;
-                }else{
+                } else {
                     $total_price = $total_price + ($orderedprod->updated_quantity * $orderedprod->price);
                 }
-                 // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
+                // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
                 $total_products = $total_products + $orderedprod->updated_quantity;
             }
 
@@ -120,6 +120,9 @@ class SalesReportController extends Controller
 
             // // total + billing percentage
             $overallTotalOrderEarn = $total_price + $CCorACHFee;
+
+            /// total - referral discount
+            $overallTotalOrderEarn = $overallTotalOrderEarn - $order->referral_amount;
 
             $class = new stdClass;
             $class->order_id = $order->id;
@@ -192,12 +195,12 @@ class SalesReportController extends Controller
                 $tax = 0;
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
-                    if($orderedprod->is_subscription){
+                    if ($orderedprod->is_subscription) {
                         $order_amount = $order_amount + $orderedprod->subscription_price;
-                    }else{
+                    } else {
                         $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
                     }
-                     // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
+                    // $tax = $tax + ($orderedprod->updated_quantity * $orderedprod->tax_amount);
                     $total_products = $total_products + $orderedprod->updated_quantity;
                 }
 
@@ -234,6 +237,9 @@ class SalesReportController extends Controller
 
                 // // total + billing percentage
                 $overall_order_amount = $order_amount + $CCorACHFee;
+
+                /// total - referral discount
+                $overall_order_amount = $overall_order_amount - $order->referral_amount;
 
                 // //get total earnings in a day
                 $total_earnings = $total_earnings + $overall_order_amount;
@@ -316,9 +322,9 @@ class SalesReportController extends Controller
 
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
-                    if($orderedprod->is_subscription){
+                    if ($orderedprod->is_subscription) {
                         $order_amount = $order_amount + $orderedprod->subscription_price;
-                    }else{
+                    } else {
                         $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
                     }
                     $total_products = $total_products + $orderedprod->updated_quantity;
@@ -359,6 +365,9 @@ class SalesReportController extends Controller
 
                 // // total + billing percentage
                 $overall_order_amount = $order_amount + $CCorACHFee;
+
+                /// total - referral discount
+                $overall_order_amount = $overall_order_amount - $order->referral_amount;
 
                 // //get total earnings in a day
                 $total_earnings = $total_earnings + $overall_order_amount;
@@ -442,9 +451,9 @@ class SalesReportController extends Controller
                 $tax = 0;
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
-                    if($orderedprod->is_subscription){
+                    if ($orderedprod->is_subscription) {
                         $order_amount = $order_amount + $orderedprod->subscription_price;
-                    }else{
+                    } else {
                         $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
                     }
                     $total_products = $total_products + $orderedprod->updated_quantity;
@@ -483,6 +492,9 @@ class SalesReportController extends Controller
 
                 // // total + billing percentage
                 $overall_order_amount = $order_amount + $CCorACHFee;
+
+                /// total - referral discount
+                $overall_order_amount = $overall_order_amount - $order->referral_amount;
 
 
                 // //get total earnings in a day
@@ -571,9 +583,9 @@ class SalesReportController extends Controller
                 $tax = 0;
                 $ordererdProducts  = OrderProduct::where('order_id', $order->id)->get();
                 foreach ($ordererdProducts as $key2 => $orderedprod) {
-                    if($orderedprod->is_subscription){
+                    if ($orderedprod->is_subscription) {
                         $order_amount = $order_amount + $orderedprod->subscription_price;
-                    }else{
+                    } else {
                         $order_amount = $order_amount + ($orderedprod->updated_quantity * $orderedprod->price);
                     }
                     $total_products = $total_products + $orderedprod->updated_quantity;
@@ -613,6 +625,9 @@ class SalesReportController extends Controller
 
                 // // total + billing percentage
                 $overall_order_amount = $order_amount + $CCorACHFee;
+
+                /// total - referral discount
+                $overall_order_amount = $overall_order_amount - $order->referral_amount;
 
                 // //get total earnings in a day
                 $total_earnings = $total_earnings + $overall_order_amount;

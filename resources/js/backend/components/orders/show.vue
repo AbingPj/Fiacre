@@ -218,6 +218,16 @@
                 ${{order.atr_billing_amount_f}}
               </h4>
             </div>
+
+             <div class="text-right w-100">
+              <h4>
+                <span class="mr-5">Referral Discount- </span>
+                ${{order.atr_referral_amount_f}}
+              </h4>
+            </div>
+
+
+
             <!-- <div class="text-right w-100">
               <h4>
                 <span class="mr-5">Discount:</span>
