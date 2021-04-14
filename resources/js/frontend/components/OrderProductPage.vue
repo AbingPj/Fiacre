@@ -298,6 +298,17 @@
                         </div>
                       </td>
                     </tr>
+                    <tr :class="order.atr_referral_amount > 0? 'text-success':''">
+                      <td>
+                        <span>Referral Amount</span><br>
+                      </td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">- {{order.atr_referral_amount_f}}</div>
+                        </div>
+                      </td>
+                    </tr>
                     <tr>
                       <td>
                         <b>Total</b>

@@ -210,6 +210,7 @@
 							<br />
 						</div>
 						<div
+                            v-if="item.is_subscription == 0"
 							@click="updateRecurring(item)"
 							class="custom-control custom-switch pb-3 my-2"
 						>

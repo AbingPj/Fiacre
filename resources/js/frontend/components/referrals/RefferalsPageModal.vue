@@ -39,7 +39,7 @@
                                 <div v-if="referral.status_name === 'Pending'">
                                     <i class="fa fa-hourglass mr-2" aria-hidden="true"></i>Pending
                                 </div>
-                                <div v-else></div>
+                                <div v-else>Used</div>
                             </td>
                         </tr>
                     </table>

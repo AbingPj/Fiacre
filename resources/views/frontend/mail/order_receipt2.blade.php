@@ -111,6 +111,15 @@
                 <td></td>
                 <td></td>
                 <td></td>
+                <td>
+                   Discount
+                </td>
+                <td>{{$order->referral_amount}}</th>
+            </tr>
+            <tr style="border-collapse:collapse; height:30px;">
+                <td></td>
+                <td></td>
+                <td></td>
                 <td><b>Total Amount</b></td>
                 <td><b>$ {{$overalltotal}}</b></td>
             </tr>

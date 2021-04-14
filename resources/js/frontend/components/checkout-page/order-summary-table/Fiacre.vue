@@ -68,12 +68,12 @@
           </div>
         </td>
       </tr>
-      <tr :class="referral_details.total_user_refferal_amount > 0? 'text-success':''" style="color:green;">
+      <tr :class="referral_details.total_user_refferal_amount > 0? 'text-success':''">
         <td>
           <span>Referral Amount</span><br>
           <a v-if="referral_details.details.length > 0" class="referral-detail-btn" data-toggle="modal" data-target="#referModal">
             Details
-          </a>          
+          </a>
         </td>
         <td>
           <div class="d-flex justify-content-between">

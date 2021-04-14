@@ -12,6 +12,7 @@ use App\Models\SubscriptionSunclubMember;
 use App\Models\SubscriptionSunclubRecord;
 use App\Services\ImagePathService;
 use Illuminate\Support\Facades\Auth;
+use stdClass;
 
 /**
  * Trait UserMethod.
@@ -268,6 +269,45 @@ trait UserMethod
             ->where('viewed', 0)
             ->count();
         return $unread_chats_count;
+    }
+
+    public function getUserReferralCodeDetails()
+    {
+        $data = [];
+        $referral_amount = Store::first()->referral_amount;
+        $total_refferal_amount = 0;
+        $total_success = 0;
+
+        if ($this->customer_role == 4) {
+            $details = ReferralCodeSubmitted::where('refferal_code_user_id', $this->id)->get();
+
+            if (!empty($details)) {
+                $data = $details;
+                foreach ($data as $key => $value) {
+                    if ($value->status == 2) {
+                        $total_refferal_amount = $total_refferal_amount + $referral_amount;
+                        $total_success = $total_success + 1;
+                        $value->referral_amount = $referral_amount;
+                    } else {
+                        $value->referral_amount = 0;
+                    }
+                }
+            }
+        }
+        $class = new stdClass;
+        $class->store_referral_amount = $referral_amount;
+        $class->total_user_refferal_amount = $total_refferal_amount;
+        $class->total_success = $total_success;
+        $class->details = $data;
+        return $class;
+    }
+
+    public function setUserReferralCodesFromSuccessToUsed()
+    {
+        ReferralCodeSubmitted::with('user:id,first_name,last_name,email')
+            ->where('refferal_code_user_id', $this->id)
+            ->where('status', 2)
+            ->update(['status' => 3]);
     }
 
     // public function getReferralAmount()

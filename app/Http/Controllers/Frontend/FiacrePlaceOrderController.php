@@ -33,6 +33,12 @@ class FiacrePlaceOrderController extends Controller
 
     public function testDate()
     {
+
+        $user_referral_details = Auth::user()->getUserReferralCodeDetails();
+        dd($user_referral_details->total_user_refferal_amount);
+
+        return response()->json(Auth::user()->getUserReferralCodeDetails(), 200);
+
         $sample = Carbon::now()
             ->next(0);
 
@@ -103,6 +109,13 @@ class FiacrePlaceOrderController extends Controller
                         $order->billing_type_percentage = 2;
                     }
 
+                    $user_referral_details = Auth::user()->getUserReferralCodeDetails();
+                    Auth::user()->setUserReferralCodesFromSuccessToUsed();
+
+                    $order->referral_amount =  $user_referral_details->total_user_refferal_amount;
+
+
+
                     $order->save();
                     $totalAmount = 0;
 
@@ -145,7 +158,7 @@ class FiacrePlaceOrderController extends Controller
                             $orderproduct->fundraise_percentage = $product->fundraise_percentage;
                             $orderproduct->quantity = $cart->qty;
                             $orderproduct->order_by = Auth::user()->id;
-                            $orderproduct->updated_quantity =$cart->qty;
+                            $orderproduct->updated_quantity = $cart->qty;
 
 
 
@@ -222,10 +235,23 @@ class FiacrePlaceOrderController extends Controller
 
                         }
                     }
+
+
+
                     // dump($totalAmount);
                     $totalAmountForEmail = $totalAmount;
                     $billing_method_price  = $totalAmount * ($order->billing_type_percentage / 100);
                     $totalAmount = $totalAmount + $billing_method_price;
+
+                    if ($order->referral_amount >= $totalAmount) {
+                        DB::rollBack();
+                        return response()->json([
+                            "data_message" => "Order Amount must be heigher than Referral Amount. Please shop more."
+                        ], 422);
+                    }
+
+
+                    $totalAmount = $totalAmount - $order->referral_amount;
 
                     Cart::where('user_id', Auth::user()->id)->where('org_id', $request->org_id)->delete();
                     // DB::rollBack();
@@ -361,7 +387,7 @@ class FiacrePlaceOrderController extends Controller
                             }
                         }
                     }
-                }else{
+                } else {
                     return response()->json("Empty Cart.", 400);
                 }
             } else {

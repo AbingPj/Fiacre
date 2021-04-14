@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderedProductWeek;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
+use stdClass;
 
 class OrgOrdersController extends Controller
 {
@@ -38,9 +39,19 @@ class OrgOrdersController extends Controller
             ->where('id', $order_id)->first();
 
         $ordered_products = OrderProduct::where('order_id', $order->id)->get();
-        foreach ($ordered_products as $key => $value) {
-            $value->product_details  = json_decode($value->product_details);
-        }
+        // foreach ($ordered_products as $key => $value) {
+        //     $class = new stdClass;
+        //     $class->data1 = json_decode($value->product_details);
+        //     $class->data2 = json_decode($value->original_bundle_details);
+        //     $value->product_details  = $class->data1;
+        //     $value->original_bundle_details  = $class->data2;
+        // }
+
+        // $ordered_products = json_encode($ordered_products);
+        // dd($ordered_products);
+
+
+
         return view(
             'backend.admin-org.org-orders-show',
             [
@@ -51,6 +62,26 @@ class OrgOrdersController extends Controller
         );
     }
 
+    public function getOrderDetails($order_id)
+    {
+        $order = Order::with('order_by')
+            ->with('organization')
+            ->where('id', $order_id)->first();
+
+        $ordered_products = OrderProduct::where('order_id', $order->id)->get();
+        // foreach ($ordered_products as $key => $value) {
+        //     $value->product_details  = json_decode($value->product_details);
+        //     $value->original_bundle_details  = json_decode($value->original_bundle_details);
+        // }
+        $class = new stdClass;
+        $class->order = $order;
+        $class->products = $ordered_products;
+        return response()->json($class, 200);
+    }
+
+
+
+
     public function weeks($order_id, $ordered_prod_id)
     {
         $org = Organization::where('user_id', auth()->user()->id)->first();
@@ -59,7 +90,7 @@ class OrgOrdersController extends Controller
         $weeks = null;
 
         $ordered_product = OrderProduct::findOrFail($ordered_prod_id);
-        $ordered_product->product_details  = json_decode($ordered_product->product_details);
+        // $ordered_product->product_details  = json_decode($ordered_product->product_details);
 
         $weeks = OrderedProductWeek::where('order_id', $order_id)
             ->where('order_product_id', $ordered_product->id)
@@ -79,13 +110,13 @@ class OrgOrdersController extends Controller
     public function weeksChangeStatus(Request $request)
     {
         $week = OrderedProductWeek::find($request->id);
-        if(!empty($week)){
+        if (!empty($week)) {
             $week->actual_pickup_day = $request->date;
             $week->pick_up_by = $request->pickupby;
             $week->is_picked_up = $request->status;
             $week->save();
             return response()->json('Success', 200);
-        }else{
+        } else {
             return response()->json('Cant Find OrderedProductWeek', 404);
         }
     }
