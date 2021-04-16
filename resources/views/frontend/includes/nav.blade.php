@@ -18,7 +18,7 @@
                 <i class="fas fa-phone-alt fa-fw mr-2"></i>{{ $store_settings->phone }}
             </div>
 
-            
+
 
         </div>
     </div>
@@ -48,7 +48,6 @@
                 {{-- @auth
                     <li class="nav-item"><a href="{{route('frontend.user.dashboard')}}" class="nav-link {{ active_class(Route::is('frontend.user.dashboard')) }}">@lang('navs.frontend.dashboard')</a></li>
                 @endauth --}}
-
                 @guest
                     <li class="nav-item"><a href="#" class="nav-link" data-toggle="modal" data-target="#modalLogin">@lang('Sign In')</a></li>
 
@@ -76,9 +75,12 @@
 
                             @if( Auth::user()->customer_role == 4)
                                 <a href="/myprofile" class="dropdown-item">Billing Profile</a>
+                                <a href="/recurring-products" class="dropdown-item">My Recurring Products</a>
                             @elseif(Auth::user()->customer_role == 1)
                                 <a href="/register/success/confirmed" class="dropdown-item">Set Billing Info</a>
                             @endif
+
+
 
 
                             {{-- @if( Auth::user()->customer_role == 2 || Auth::user()->customer_role == 3)
