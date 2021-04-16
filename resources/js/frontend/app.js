@@ -153,6 +153,8 @@ Vue.component("ProductsModalEdit", require("./components/products-page/productsM
 
 /// Recurring Products Page
 Vue.component("RecurProductsModal", require("./components/products-page/recurproductsModal.vue").default);
+Vue.component("RecurProductsQtyErrModal", require("./components/products-page/recurproductsModalQtyErr.vue").default);
+Vue.component("RecurProductsRemove", require("./components/products-page/recurproductsModalRemove.vue").default);
 
 
 const products = () => import(/* webpackChunkName: "js/f/products" */ './components/products-page/index.vue');

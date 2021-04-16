@@ -44,7 +44,7 @@
 									</h6>
                                     <div v-if="guest == 0 && product.is_subscription == 0" @click="updateRecurring()" class="custom-control custom-switch pb-3">
                                         <!-- <input v-model="recurringProd" @change="setRecurr()" type="checkbox" class="custom-control-input" id="customSwitch1"> -->
-                                        <input v-model="product.recurring" type="checkbox" class="custom-control-input">
+                                        <input v-model="product.recurring" :disabled="product.recurring_is_disabled" type="checkbox" class="custom-control-input">
                                         <label class="custom-control-label" for="customSwitch1">Add to Recurring</label>
                                     </div>
 									<p class="mb-0">
