@@ -418,4 +418,18 @@ class Product extends Model
 
         return $alreadySubscribe;
     }
+
+    public function isRecurring_is_disabled($org_id, $user_id)
+    {
+        $res = false;
+        $uRecProd = UserRecurringProduct::where('user_id', $user_id)
+            ->where('org_id', $org_id)
+            ->where('product_id', $this->id)
+            ->exists();
+        if($uRecProd){
+            $res = true;
+        }
+
+        return $res;
+    }
 }

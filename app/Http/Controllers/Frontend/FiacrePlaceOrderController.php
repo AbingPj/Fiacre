@@ -14,6 +14,7 @@ use App\Models\FiacreCustomerPaymentRecord;
 use App\Models\OrderedProductWeek;
 use App\Models\ProductSubscriptionOrdered;
 use App\Models\Cart;
+use App\Models\UserRecurringProduct;
 use App\Services\EmailsService;
 use App\Services\PaceFuzePaymentApiService;
 use App\Services\TotalViewService;
@@ -229,6 +230,23 @@ class FiacrePlaceOrderController extends Controller
                                 $totalAmount =  $totalAmount + $orderproduct->subscription_price;
                             } else {
                                 $totalAmount =  $totalAmount + ($orderproduct->price  * $orderproduct->updated_quantity);
+                            }
+
+                            $orderproduct->order_id = $order->id;
+                            $orderproduct->product_id = $cart->product_id;
+                            $orderproduct->organization_id = $org->id; // n
+
+                            // $cart->atr_details->price
+                            if ($cart->atr_details->recurring) {
+                                if ($cart->atr_details->recurring_is_disabled != true) {
+                                    $recurring = new UserRecurringProduct();
+                                    $recurring->user_id =  $order->order_by;
+                                    $recurring->org_id = $org->id;
+                                    $recurring->product_id = $orderproduct->product_id;
+                                    $recurring->qty = $cart->qty;
+                                    $recurring->product_current_details =  $orderproduct->product_details;
+                                    $recurring->save();
+                                }
                             }
 
                             // $tax =  $tax + ($orderproduct->tax_amount  * $value['qty']);
