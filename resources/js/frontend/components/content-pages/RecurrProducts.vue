@@ -180,6 +180,7 @@ export default {
   },
   methods: {
     preview(prod) {
+        //test
         this.$refs.preview_modal.product = prod;
         this.$refs.preview_modal.preview_image =
             prod.image == null ? "/img/no-product-image.png" : prod.image;
