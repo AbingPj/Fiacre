@@ -56,6 +56,7 @@
 
                             @if( Auth::user()->customer_role == 4)
                                 <a href="/myprofile" class="dropdown-item">Billing Profile</a>
+                                <a href="/recurring-products" class="dropdown-item">My Recurring Products</a>
                             @elseif(Auth::user()->customer_role == 1)
                                 <a href="/register/success/confirmed" class="dropdown-item">Set Billing Info</a>
                             @endif
