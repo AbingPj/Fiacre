@@ -210,7 +210,7 @@
 							<br />
 						</div>
 						<div
-                            v-if="item.is_subscription == 0"
+                            v-if="item.is_subscription == 0 && !item.recurring_is_disabled"
 							@click="updateRecurring(item)"
 							class="custom-control custom-switch pb-3 my-2"
 						>
@@ -222,6 +222,9 @@
 							<label class="custom-control-label" for="customSwitch1"
 								>Add to Recurring</label
 							>
+						</div>
+						<div v-else class="mt-3">
+							<em style="font-size:.8rem">This item is a recurring product</em>
 						</div>
 
 						<div v-if="item.is_bundle == 1" class="row mt-2">

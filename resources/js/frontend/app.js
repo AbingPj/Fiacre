@@ -151,6 +151,11 @@ Vue.component("ProductsModalEdit", require("./components/products-page/productsM
 // Vue.component("products-list", require("./components/products-page/productsViewList.vue").default);
 // Vue.component("products-grid", require("./components/products-page/productsViewGrid.vue").default);
 
+/// Recurring Products Page
+Vue.component("RecurProductsModal", require("./components/products-page/recurproductsModal.vue").default);
+Vue.component("RecurProductsQtyErrModal", require("./components/products-page/recurproductsModalQtyErr.vue").default);
+Vue.component("RecurProductsRemove", require("./components/products-page/recurproductsModalRemove.vue").default);
+
 
 const products = () => import(/* webpackChunkName: "js/f/products" */ './components/products-page/index.vue');
 // const prodOrderSummary = () => import(/* webpackChunkName: "js/f/prodOrderSummary" */ './components/products-page/orderSummary.vue');
@@ -173,6 +178,7 @@ const pgFAQ = () => import(/* webpackChunkName: "js/f/pgFAQ" */ './components/co
 const pgPrivacy = () => import(/* webpackChunkName: "js/f/pgPrivacy" */ './components/content-pages/PrivacyPage.vue');
 const pgTerms = () => import(/* webpackChunkName: "js/f/pgTerms" */ './components/content-pages/TermsPage.vue');
 const delivArea = () => import(/* webpackChunkName: "js/f/pgTerms" */ './components/content-pages/DelivArea.vue');
+const recurProducts = () => import(/* webpackChunkName: "js/f/pgTerms" */ './components/content-pages/RecurrProducts.vue');
 
 
 
@@ -259,6 +265,7 @@ const app = new Vue({
         'privacy-page': pgPrivacy,
         'terms-page': pgTerms,
         'delivery-page': delivArea,
+        'recurring-products': recurProducts,
 
         //Others
         'rewards-modal': rewardsModal,

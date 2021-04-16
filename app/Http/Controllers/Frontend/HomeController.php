@@ -59,6 +59,11 @@ class HomeController extends Controller
         return view('frontend.pages.contents.delivery-area');
     }
 
+    public function recurrProducts()
+    {
+        return view('frontend.pages.contents.recurring-products');
+    }
+
     public function privacyPolicy()
     {
         $store = Store::find(1);

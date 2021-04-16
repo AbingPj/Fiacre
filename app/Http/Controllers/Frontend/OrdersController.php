@@ -162,7 +162,8 @@ class OrdersController extends Controller
             abort(404);
         }
 
-        $ordered_product = OrderProduct::findOrFail($ordered_product_id);
+        $ordered_product = OrderProduct::findOrFail($ordered_product_id)
+        ->makeHidden(['atr_product_details']);
         $ordered_product->product_details  = json_decode($ordered_product->product_details);
 
         $weeks = OrderedProductWeek::where('order_id', $order->id)

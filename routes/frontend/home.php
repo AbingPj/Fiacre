@@ -16,6 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/delivery-area', [HomeController::class, 'deliveryArea'])->name('delivery-area');
+Route::get('/recurring-products', [HomeController::class, 'recurrProducts'])->name('recurring-products');
 Route::get('/terms-of-use', [HomeController::class, 'termsOfUse'])->name('terms-of-use');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 

@@ -42,6 +42,12 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     Route::get('/getUserReferralCodeDetails', 'User\ReferralsController@getUserReferralCodeDetails');
 
+    //recurring
+    Route::get('/getUserRecurringProducts', 'User\RecurringProductsController@getUserRecurringProducts');
+    Route::post('/removeRecurringProduct', 'User\RecurringProductsController@removeRecurringProduct');
+    Route::post('/updateQuantityRecurringProduct', 'User\RecurringProductsController@updateQuantityRecurringProduct');
+    Route::get('/getUserRecurringProductSchedules', 'User\RecurringProductsController@getUserRecurringProductSchedules');
+
     Route::get('/products', 'ProductsController@index')->name('products');
 
     Route::post('/proceed/optioncid', 'ProductsController@proceedOptionCid')->name('proceedOptionCid');

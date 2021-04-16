@@ -136,6 +136,11 @@ class ProductsController extends Controller
         $products->getCollection()->transform(function ($value) use ($org_id, $request) {
             $value->selected = false;
             $value->recurring = false;
+            $value->recurring_is_disabled = false;
+            if($value->isRecurring_is_disabled($org_id, Auth::user()->id)){
+                $value->recurring_is_disabled = $value->isRecurring_is_disabled($org_id, Auth::user()->id);
+                $value->recurring = true;
+            }
             $value->qty = 1;
             if ($value->is_bundle == 1) {
                 $value->price = round($value->getBundlePrice('retailer'), 2);
@@ -162,6 +167,7 @@ class ProductsController extends Controller
                     $value->is_subscription = 0;
                 } else {
                     $value->is_subscription = 1;
+                    $value->recurring_is_disabled = true;
                     $subscription_price = $value->price * $value->weeks;
                     $value->subscription_price = round($subscription_price, 2);
                     $value->subscribers_total = $value->getSubscriptionNumber($org_id);
