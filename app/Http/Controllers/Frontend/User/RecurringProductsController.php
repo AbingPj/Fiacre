@@ -191,7 +191,7 @@ class RecurringProductsController extends Controller
                 }
                 return response()->json($data, 200);
             } else {
-                return response()->json("User have no recurring settings", 404);
+                return response()->json("User has not set recurring settings", 404);
             }
         } else {
             abort(401);
