@@ -96,6 +96,28 @@ class RecurringProductsController extends Controller
         }
     }
 
+    public function getUserRecurringSettings(Request $request)
+    {
+        if (Auth::guest() == false) {
+
+            $user_id = Auth::user()->id;
+            $org_id = Auth::user()->selected_org_id;
+            $data =
+                UserRecurringSettings::where('user_id', $user_id)
+                ->where('org_id', $org_id)
+                ->first();
+
+            if (!empty($data)) {
+                return response()->json($data, 200);
+            } else {
+                return response()->json("User has not set recurring settings", 404);
+            }
+        } else {
+            abort(401);
+        }
+    }
+
+
     public function setUserRecurringCancelSchedule(Request $request)
     {
         if (Auth::guest() == false) {
@@ -110,13 +132,10 @@ class RecurringProductsController extends Controller
                 $org_id = Auth::user()->selected_org_id;
 
                 // $orgRecurringSettings = OrgRecurringSettings::where('org_id', $org_id)->first();
-                $Settings = new UserRecurringSettings();
+                $Settings = new UserRecurringScheduleCancel();
                 $Settings->user_id = $user_id;
                 $Settings->org_id = $org_id;
-                $Settings->is_pickup = $request->is_pickup;
-                $Settings->selected_every_week_schedule = $request->week_schedule;
-                $Settings->selected_day_of_week = $request->day;
-                $Settings->incoming_date = Carbon::now()->next($Settings->selected_day_of_week);;
+                $Settings->date = Carbon::parse($request->date);
                 $Settings->save();
             }
         } else {
@@ -128,24 +147,14 @@ class RecurringProductsController extends Controller
     {
         if (Auth::guest() == false) {
             $validator = \Validator::make($request->all(), [
-                'date' => 'required',
+                'cancel_id' => 'required',
             ]);
 
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 422);
             } else {
-                $user_id = Auth::user()->id;
-                $org_id = Auth::user()->selected_org_id;
-
-                // $orgRecurringSettings = OrgRecurringSettings::where('org_id', $org_id)->first();
-                $Settings = new UserRecurringSettings();
-                $Settings->user_id = $user_id;
-                $Settings->org_id = $org_id;
-                $Settings->is_pickup = $request->is_pickup;
-                $Settings->selected_every_week_schedule = $request->week_schedule;
-                $Settings->selected_day_of_week = $request->day;
-                $Settings->incoming_date = Carbon::now()->next($Settings->selected_day_of_week);;
-                $Settings->save();
+                UserRecurringScheduleCancel::findOrFail($request->cancel_id)->delete();
+                return response()->json("successfully removed", 200);
             }
         } else {
             abort(401);
@@ -181,8 +190,7 @@ class RecurringProductsController extends Controller
                     if (!empty($cancel)) {
                         $class->date_cancel = true;
                         $class->date_cancel_id = $cancel->id;
-
-                    }else{
+                    } else {
                         $class->date_cancel = false;
                         $class->date_cancel_id = null;
                     }
