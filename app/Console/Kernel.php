@@ -26,18 +26,30 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('epawn:confiscate')
+        // $schedule->command('fiacre:recurring-order-run')
         //     ->dailyAt('00:01')
         //     ->timezone('Asia/Manila')
-        //     ->appendOutputTo('epawn-confiscate.log');
+        //     ->appendOutputTo('confiscate.log');
 
         // $schedule->command('sunfarmacy:warning-expiration-email')
         //     ->dailyAt('00:01')
-        //     ->appendOutputTo('epawn-confiscate.log');
+        //     ->appendOutputTo('confiscate.log');
 
-        $schedule->command('sunfarmacy:warning-expiration-email')
+        // $schedule->command('sunfarmacy:warning-expiration-email')
+        //     ->dailyAt('00:01')
+        //     ->appendOutputTo('storage/logs/sunfarmacy-warning-expiration-email.log');;
+
+        $schedule->command('fiacre:recurring-order-run')
             ->dailyAt('00:01')
-            ->appendOutputTo('storage/logs/sunfarmacy-warning-expiration-email.log');;
+            ->appendOutputTo('storage/logs/recurring-order-run.log');;
+
+
+        $schedule->command('fiacre:recurring-order-run')
+            ->everyMinute()
+            ->appendOutputTo('storage/logs/recurring-order-run.log');;
+
+
+        //     ->appendOutputTo('epawn-sample.log');;
     }
 
     /**

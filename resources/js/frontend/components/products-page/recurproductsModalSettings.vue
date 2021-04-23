@@ -29,10 +29,10 @@
                     <input class="form-check-input" type="radio" name="typeSched" id="set-week" :value="1" v-model="recurSettings.week_schedule">
                     <label class="form-check-label" for="set-week">Every Week</label>
                     </div>
-                    <div class="form-check form-check-inline">
+                    <!-- <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="typeSched" id="set-week2" :value="2" v-model="recurSettings.week_schedule">
                     <label class="form-check-label" for="set-week2">Every 2 Weeks</label>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="settings-cont settings-day">
                     <div class="settings-heading">Select Day</div>
@@ -55,7 +55,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" @click="saveSettings()">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </div>          
+            </div>
         </div>
       </div>
     </div>
@@ -152,7 +152,7 @@ export default {
       .catch((err) => {
           console.error(err);
           window.location.href = "/recurring-products";
-      });      
+      });
     }
   }
 };

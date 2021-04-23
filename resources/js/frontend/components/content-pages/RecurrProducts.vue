@@ -57,7 +57,7 @@
             .prod-img {
                 display:none;
             }
-        }        
+        }
         .content-headers {
             h1,
             h2,
@@ -110,9 +110,9 @@
                                 Selected Recurring Products
                             </div>
                             <div class="recur-prod-body">
-                                
+
                                 <table class="table prod-table">
- 
+
                                     <tr v-for="prod in recurProds" :key="prod.id">
                                         <td width="20%" class="prod-img">
                                             <img :src="prod.product_current_details.image_link" />
@@ -192,6 +192,8 @@
                                     </button>
                                 </div>
                                 <div v-else>
+                                    <div style="font-size:15px;"><b>{{settings.label}}</b></div>
+                                    <div class="mb-2">Type: {{settings.label2}}</div>
                                     <table class="sched-table w-100" cellspacing="0" cellpadding="10">
                                         <tr>
                                             <td width="33%" class="font-weight-bold">Date</td>
@@ -220,13 +222,13 @@
                                                         @click="cancelSched(sched.date_cancel_date_format)"
                                                         class="btn btn-danger btn-sm">
                                                         Cancel
-                                                    </button>                                                    
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
                                     </table>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
 
@@ -248,7 +250,8 @@ export default {
             recurProds: [],
             recurScheds: [],
             recurSettings: [],
-            recurSettingsBtn: false
+            recurSettingsBtn: false,
+            settings: {},
         };
     },
     methods: {
@@ -269,6 +272,7 @@ export default {
             .then((res) => {
                 //console.log(res.data);
                 this.recurSettingsBtn = false
+                this.settings = res.data;
                 this.getRecurringScheds()
             })
             .catch((err) => {
@@ -288,7 +292,7 @@ export default {
             .catch((err) => {
                 console.log(err.response.data);
             });
-        },           
+        },
         subQty(pid, pqty) {
             var fqty = pqty - 1
             if (fqty < 1) {
@@ -326,7 +330,7 @@ export default {
                 console.error(err);
                 LoadingOverlayHide();
             });
-        },        
+        },
         preview(prod) {
             //test
             this.$refs.preview_modal.product = prod;
@@ -371,7 +375,7 @@ export default {
                     console.error(err);
                     LoadingOverlayHide();
                     this.getRecurringSettings()
-                });              
+                });
         },
         uncancelSched(id) {
             console.log('id is' + id)
@@ -388,7 +392,7 @@ export default {
                     console.error(err);
                     LoadingOverlayHide();
                     this.getRecurringSettings()
-                });              
+                });
         }
     },
     mounted() {
