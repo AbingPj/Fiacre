@@ -44,9 +44,9 @@ class Kernel extends ConsoleKernel
             ->appendOutputTo('storage/logs/recurring-order-run.log');;
 
 
-        $schedule->command('fiacre:recurring-order-run')
-            ->everyMinute()
-            ->appendOutputTo('storage/logs/recurring-order-run.log');;
+        // $schedule->command('fiacre:recurring-order-run')
+        //     ->everyMinute()
+        //     ->appendOutputTo('storage/logs/recurring-order-run.log');;
 
 
         //     ->appendOutputTo('epawn-sample.log');;
