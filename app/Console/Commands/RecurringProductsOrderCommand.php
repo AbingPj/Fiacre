@@ -203,9 +203,10 @@ class RecurringProductsOrderCommand extends Command
                     $cctokenSale_decoded = json_decode($cctokenSale, true);
                     if ($cctokenSale_decoded['ResultCode'] == 0) {
                         $this->RecordCustomerPayment("CC", $order->id, $userBilling, $totalAmount, $cctokenSale_decoded, $user);
+                        $this->successRecurring($user->id, $org->id, $order->id);
+                        $this->updatedUserRecurringSettings($user->id, $org->id);
                         DB::commit();
                         $this->emailOrderDetails($order->id, $user);
-                        $this->successRecurring($user->id, $org->id, $order->id);
                         print("\n Success!, Order id: $order->id");
                     } else {
                         DB::rollBack();
@@ -225,9 +226,10 @@ class RecurringProductsOrderCommand extends Command
                     $ACHtokenSale_decoded = json_decode($ACHtokenSale, true);
                     if ($ACHtokenSale_decoded['ResultCode'] == 0) {
                         $this->RecordCustomerPayment("ACH", $order->id, $userBilling, $totalAmount, $ACHtokenSale_decoded, $user);
+                        $this->successRecurring($user->id, $org->id, $order->id);
+                        $this->updatedUserRecurringSettings($user->id, $org->id);
                         DB::commit();
                         $this->emailOrderDetails($order->id, $user);
-                        $this->successRecurring($user->id, $org->id, $order->id);
                         print("\n Success!, Order id: $order->id");
                     } else {
                         DB::rollBack();
@@ -279,5 +281,17 @@ class RecurringProductsOrderCommand extends Command
         $success->order_id = $order_id;
         $success->date = Carbon::now();
         $success->save();
+    }
+
+    public function updatedUserRecurringSettings($user_id, $org_id)
+    {
+        $userRecurringSettings = UserRecurringSettings::where('user_id', $user_id)->where('org_id', $org_id)->first();
+        if (!empty($userRecurringSettings)) {
+            $date = new Carbon($userRecurringSettings->incoming_date);
+            $userRecurringSettings->incoming_date = $date->addWeek(1);
+            $userRecurringSettings->save();
+        }else{
+            print("\n Recurring Settings not found| uid:$user_id, oid:$org_id");
+        }
     }
 }
