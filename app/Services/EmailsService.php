@@ -241,6 +241,49 @@ class EmailsService
         );
     }
 
+    public function orderReceipt3(
+        $user,
+        $products,
+        $order_number
+    ) {
+
+        $storeName = $this->storeName;
+        $storeEmail = $this->storeEmail;
+
+        $order = Order::findOrFail($order_number);
+
+        $data = [
+            'store_logo' => $this->storeLogo,
+            'online_store_name' => $this->storeEmail,
+            'online_store_address' =>  $this->storeAddress,
+            'online_store_email' =>  $this->storeEmail,
+
+            'total_amount' =>  $order->atr_subscription_total_amount_f,
+            'overalltotal' =>  $order->atr_subscription_overall_total_amount_f,
+
+            'products' =>  $products,
+            'order_number' =>  $order_number,
+            'order_date' =>  $order->atr_date_label2,
+            'customer_name' => $user->full_name,
+
+            // 'billing_method_price' => $billing_method_price,
+            'billing_method_price' => $order->atr_billing_amount_f,
+            'billing_type' => $order->billing_type,
+            'order' => $order
+        ];
+
+        $this->beautymail->send(
+            'frontend.mail.order_receipt3',
+            $data,
+            function ($message) use ($user, $storeName,  $storeEmail, $order_number) {
+                $message
+                    ->from($storeEmail)
+                    ->to($user->email)
+                    ->subject($storeName . ': Order #' . $order_number . ' Confirmation');
+            }
+        );
+    }
+
     public function sendExpirationWarning($user, $expiration_date)
     {
 

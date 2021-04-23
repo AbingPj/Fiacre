@@ -46,7 +46,12 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
     Route::get('/getUserRecurringProducts', 'User\RecurringProductsController@getUserRecurringProducts');
     Route::post('/removeRecurringProduct', 'User\RecurringProductsController@removeRecurringProduct');
     Route::post('/updateQuantityRecurringProduct', 'User\RecurringProductsController@updateQuantityRecurringProduct');
+
     Route::get('/getUserRecurringProductSchedules', 'User\RecurringProductsController@getUserRecurringProductSchedules');
+    Route::post('/setUserRecurringSettings', 'User\RecurringProductsController@setUserRecurringSettings');
+    Route::post('/setUserRecurringCancelSchedule', 'User\RecurringProductsController@setUserRecurringCancelSchedule');
+    Route::post('/setUserRecurringRemoveCancelSchedule', 'User\RecurringProductsController@setUserRecurringRemoveCancelSchedule');
+    Route::get('/getUserRecurringSettings', 'User\RecurringProductsController@getUserRecurringSettings');
 
     Route::get('/products', 'ProductsController@index')->name('products');
 

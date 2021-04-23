@@ -237,15 +237,19 @@ class FiacrePlaceOrderController extends Controller
                             $orderproduct->organization_id = $org->id; // n
 
                             // $cart->atr_details->price
+
                             if ($cart->atr_details->recurring) {
                                 if ($cart->atr_details->recurring_is_disabled != true) {
-                                    $recurring = new UserRecurringProduct();
-                                    $recurring->user_id =  $order->order_by;
-                                    $recurring->org_id = $org->id;
-                                    $recurring->product_id = $orderproduct->product_id;
-                                    $recurring->qty = $cart->qty;
-                                    $recurring->product_current_details =  $orderproduct->product_details;
-                                    $recurring->save();
+                                    if (!$orderproduct->is_subscription) {
+                                        $recurring = new UserRecurringProduct();
+                                        $recurring->user_id =  $order->order_by;
+                                        $recurring->org_id = $org->id;
+                                        $recurring->product_id = $orderproduct->product_id;
+                                        $recurring->qty = $cart->qty;
+                                        $recurring->product_current_details =  $orderproduct->product_details;
+                                        $recurring->product_original_details =  $orderproduct->original_bundle_details;
+                                        $recurring->save();
+                                    }
                                 }
                             }
 
@@ -253,8 +257,6 @@ class FiacrePlaceOrderController extends Controller
 
                         }
                     }
-
-
 
                     // dump($totalAmount);
                     $totalAmountForEmail = $totalAmount;
@@ -267,22 +269,8 @@ class FiacrePlaceOrderController extends Controller
                             "data_message" => "Order Amount must be heigher than Referral Amount. Please shop more."
                         ], 422);
                     }
-
-
                     $totalAmount = $totalAmount - $order->referral_amount;
-
                     Cart::where('user_id', Auth::user()->id)->where('org_id', $request->org_id)->delete();
-                    // DB::rollBack();
-                    // return response()->json([
-                    //     "data_message" => "testing"
-                    // ], 422);
-                    // DB::commit();
-                    // total amount + tax
-                    // dd($totalAmount);
-
-                    // dd($totalAmount);
-
-
 
                     if ($totalAmount >= 0) {
                         //CC Token
@@ -297,45 +285,11 @@ class FiacrePlaceOrderController extends Controller
                                 $email,
                                 $userBilling->Token_SF
                             );
-
                             $cctokenSale_decoded = json_decode($cctokenSale, true);
-
                             if ($cctokenSale_decoded['ResultCode'] == 0) {
-                                // save user Subscription
-                                // dd($user_subs->id);
-                                $record = new FiacreCustomerPaymentRecord();
-                                $record->user_id =  Auth::user()->id;
-                                $record->order_id = $order->id;
-                                $record->billing_infos_id = $userBilling->id;
-                                $record->CC_or_ACH = "CC";
-                                $record->amount = $totalAmount;
-                                $record->Token =  $userBilling->Token;
-                                $record->Token_SF =  $userBilling->Token_SF;
-                                $record->TransRefID = $cctokenSale_decoded['TransRefID'];
-                                $record->FuzeID = $cctokenSale_decoded['FuzeID'];
-                                $record->ApprovalCode = $cctokenSale_decoded['ApprovalCode'];
-                                $record->save();
-
+                                $this->RecordCustomerPayment("CC", $order->id, $userBilling, $totalAmount, $cctokenSale_decoded);
                                 DB::commit();
-
-                                $user = new \stdClass;
-                                $user->full_name = Auth::user()->full_name;
-                                $user->email = Auth::user()->email;
-
-                                $order_prododucts2 = OrderProduct::where('order_id', $order->id)->get();
-
-                                $this->EmailsService
-                                    ->orderReceipt2(
-                                        $user,
-                                        $totalAmountForEmail,
-                                        $totalAmount,
-                                        $order_prododucts2,
-                                        $order->date,
-                                        $order->id,
-                                        $billing_method_price,
-                                        $order->billing_type
-                                    );
-
+                                $this->emailOrderDetails($order->id);
                                 $data = "success";
                                 return response()->json($data, 200);
                             } else {
@@ -349,51 +303,18 @@ class FiacrePlaceOrderController extends Controller
                         }
                         //ACH Token
                         else {
-
                             $email = Auth::user()->email;
-
                             $ACHtokenSale = $this->PacePayment->ProcessACHTokenSale(
                                 $userBilling->Token,
                                 $totalAmount,
                                 $email,
                                 $userBilling->Token_SF,
                             );
-
                             $ACHtokenSale_decoded = json_decode($ACHtokenSale, true);
-
                             if ($ACHtokenSale_decoded['ResultCode'] == 0) {
-                                $record = new FiacreCustomerPaymentRecord();
-                                $record->user_id =  Auth::user()->id;
-                                $record->order_id = $order->id;
-                                $record->billing_infos_id = $userBilling->id;
-                                $record->CC_or_ACH = "ACH";
-                                $record->amount = $totalAmount;
-                                $record->Token =  $userBilling->Token;
-                                $record->Token_SF =  $userBilling->Token_SF;
-                                $record->TransRefID = $ACHtokenSale_decoded['TransRefID'];
-                                $record->FuzeID = $ACHtokenSale_decoded['FuzeID'];
-                                $record->ApprovalCode = $ACHtokenSale_decoded['ApprovalCode'];
-                                $record->save();
+                                $this->RecordCustomerPayment("ACH", $order->id, $userBilling, $totalAmount, $ACHtokenSale_decoded);
                                 DB::commit();
-
-                                $user = new \stdClass;
-                                $user->full_name = Auth::user()->full_name;
-                                $user->email = Auth::user()->email;
-
-                                $order_prododucts2 = OrderProduct::where('order_id', $order->id)->get();
-
-                                $this->EmailsService
-                                    ->orderReceipt2(
-                                        $user,
-                                        $totalAmountForEmail,
-                                        $totalAmount,
-                                        $order_prododucts2,
-                                        $order->date,
-                                        $order->id,
-                                        $billing_method_price,
-                                        $order->billing_type
-                                    );
-
+                                $this->emailOrderDetails($order->id);
                                 $data = "success";
                                 return response()->json($data, 200);
                             } else {
@@ -414,5 +335,32 @@ class FiacrePlaceOrderController extends Controller
         } else {
             return response()->json("Unauthorozid", 400);
         }
+    }
+
+
+    public function RecordCustomerPayment($cc_or_ach, $order_id, $userBilling, $totalAmount, $pace)
+    {
+        $record = new FiacreCustomerPaymentRecord();
+        $record->user_id =  Auth::user()->id;
+        $record->order_id = $order_id;
+        $record->billing_infos_id = $userBilling->id;
+        // $record->CC_or_ACH = "CC";
+        $record->CC_or_ACH = $cc_or_ach;;
+        $record->amount = $totalAmount;
+        $record->Token =  $userBilling->Token;
+        $record->Token_SF =  $userBilling->Token_SF;
+        $record->TransRefID = $pace['TransRefID'];
+        $record->FuzeID = $pace['FuzeID'];
+        $record->ApprovalCode = $pace['ApprovalCode'];
+        $record->save();
+    }
+
+    public function emailOrderDetails($order_id)
+    {
+        $user = new \stdClass;
+        $user->full_name = Auth::user()->full_name;
+        $user->email = Auth::user()->email;
+        $order_prododucts2 = OrderProduct::where('order_id', $order_id)->get();
+        $this->EmailsService->orderReceipt3($user, $order_prododucts2, $order_id);
     }
 }
