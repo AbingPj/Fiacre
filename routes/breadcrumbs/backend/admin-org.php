@@ -45,3 +45,9 @@ Breadcrumbs::for('admin.org.fundraise', function ($trail) {
 //     $trail->parent('admin.org.fundraise');
 //     $trail->push('Id: ' . $id, route('admin.org.fundraiseShow', $id));
 // });
+
+
+
+Breadcrumbs::for('admin.org.settings', function ($trail) {
+    $trail->push('Organization Settings', route('admin.org.settings'));
+});
