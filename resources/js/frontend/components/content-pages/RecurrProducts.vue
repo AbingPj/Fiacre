@@ -192,7 +192,7 @@
                                     </button>
                                 </div>
                                 <div v-else>
-                                    <div style="font-size:15px;"><b>{{settings.label}}</b></div>
+                                    <div style="font-size:15px;"><b>{{settings.label}}</b> <a href="#" @click="recurSetModalUpdate()" class="ml-2">Update Settings</a> </div>
                                     <div class="mb-2">Type: {{settings.label2}}</div>
                                     <table class="sched-table w-100" cellspacing="0" cellpadding="10">
                                         <tr>
@@ -240,6 +240,7 @@
         <RecurProductsQtyErrModal></RecurProductsQtyErrModal>
         <RecurProductsRemove ref="remove_modal"></RecurProductsRemove>
         <RecurProductsSettingsModal></RecurProductsSettingsModal>
+        <RecurProductsSettingsModalUpdate ref="settings_update"></RecurProductsSettingsModalUpdate>
     </div>
 </template>
 
@@ -343,6 +344,10 @@ export default {
         },
         recurSetModal() {
             $("#recurrSet_modal").modal("show");
+        },
+        recurSetModalUpdate() {
+            // $("#recurrSet_modal_update").modal("show");
+            this.$refs.settings_update.getRecurringSettings();
         },
         removeConfirmation(prod) {
             this.$refs.remove_modal.productName = prod.product_current_details.name;

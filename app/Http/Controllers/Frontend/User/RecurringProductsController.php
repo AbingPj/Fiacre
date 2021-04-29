@@ -96,6 +96,31 @@ class RecurringProductsController extends Controller
         }
     }
 
+    public function updateUserRecurringSettings(Request $request)
+    {
+        if (Auth::guest() == false) {
+            $validator = \Validator::make($request->all(), [
+                'settings_id' => 'required',
+                'is_pickup' => 'required|digits_between:0,1',
+                'week_schedule' => 'required|digits_between:1,2',
+                'day' => 'required|digits_between:0,6'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            } else {
+                $Settings = UserRecurringSettings::findOrFail($request->settings_id);
+                $Settings->is_pickup = $request->is_pickup;
+                $Settings->selected_every_week_schedule = $request->week_schedule;
+                $Settings->selected_day_of_week = $request->day;
+                $Settings->incoming_date = Carbon::now()->next($Settings->selected_day_of_week);;
+                $Settings->save();
+            }
+        } else {
+            abort(401);
+        }
+    }
+
     public function getUserRecurringSettings(Request $request)
     {
         if (Auth::guest() == false) {

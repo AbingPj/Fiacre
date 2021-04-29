@@ -49,6 +49,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 
     Route::get('/getUserRecurringProductSchedules', 'User\RecurringProductsController@getUserRecurringProductSchedules');
     Route::post('/setUserRecurringSettings', 'User\RecurringProductsController@setUserRecurringSettings');
+    Route::post('/updateUserRecurringSettings', 'User\RecurringProductsController@updateUserRecurringSettings');
     Route::post('/setUserRecurringCancelSchedule', 'User\RecurringProductsController@setUserRecurringCancelSchedule');
     Route::post('/setUserRecurringRemoveCancelSchedule', 'User\RecurringProductsController@setUserRecurringRemoveCancelSchedule');
     Route::get('/getUserRecurringSettings', 'User\RecurringProductsController@getUserRecurringSettings');
