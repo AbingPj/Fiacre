@@ -34,6 +34,15 @@
     </a>
 </li>
 
+<li class="nav-item">
+    <a class="nav-link {{
+        active_class(Route::is('admin.org.settings'))
+    }}" href="{{ route('admin.org.settings') }}">
+        <i class="nav-icon fas fa-cogs"></i>
+        Settings
+    </a>
+</li>
+
 
 
 @endif

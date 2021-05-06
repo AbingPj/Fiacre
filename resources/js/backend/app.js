@@ -353,6 +353,7 @@ Vue.component("admin-org-orders-show-weeks-status-modal", require("./admin-org-c
 
 Vue.component("admin-org-fundraise", require("./admin-org-components/fundraise/index.vue").default);
 Vue.component("admin-reports-fundraise-details-modal-2", require("./admin-org-components/fundraise/DetailsModal2.vue").default);
+Vue.component("admin-org-settings", require("./admin-org-components/settings/index.vue").default);
 
 const adminVueApp = new Vue({
     el: "#adminVueApp",

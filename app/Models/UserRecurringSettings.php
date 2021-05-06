@@ -18,18 +18,31 @@ class UserRecurringSettings extends Model
     {
         // $week = $this->selected_every_week_schedule == 1? 'Every Week':'Every 2 Weeks';
         $week = 'Every Week';
-        $day = $this->selected_day_of_week == 0? 'Sunday':'Sunday';
-        $day = $this->selected_day_of_week == 1? 'Monday':'Sunday';
-        $day = $this->selected_day_of_week == 2? 'Tuesday':'Sunday';
-        $day = $this->selected_day_of_week == 3? 'Wednesday':'Sunday';
-        $day = $this->selected_day_of_week == 4? 'Thursday':'Sunday';
-        $day = $this->selected_day_of_week == 5? 'Friday':'Sunday';
-        $day = $this->selected_day_of_week == 6? 'Saturday':'Sunday';
-        return $week . ', (' . $day. ')';
+        $day = 'Sunday';
+        if ($this->selected_day_of_week == 1) {
+            $day = 'Monday';
+        }
+        if ($this->selected_day_of_week == 2) {
+            $day = 'Tuesday';
+        }
+        if ($this->selected_day_of_week == 3) {
+            $day = 'Wednesday';
+        }
+        if ($this->selected_day_of_week == 4) {
+            $day = 'Thursday';
+        }
+        if ($this->selected_day_of_week == 5) {
+            $day = 'Friday';
+        }
+        if ($this->selected_day_of_week == 6) {
+            $day = 'Saturday';
+        }
+
+        return $week . ', (' . $day . ')';
     }
 
     public function getLabel2Attribute()
     {
-        return  $this->is_pickup == 1? 'For Pickup':'For Delivery';
+        return  $this->is_pickup == 1 ? 'For Pickup' : 'For Delivery';
     }
 }

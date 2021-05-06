@@ -31,8 +31,10 @@ class OrgFundraiseController extends Controller
         $org = Organization::where('user_id', auth()->user()->id)->first();
 
         $orders = Order::with('user','order_products')->where('organization_id', $org->id)->OrderBy('date', 'DESC')->get();
+
         foreach ($orders as $key => $item) {
             foreach ($item->order_products as $key => $value) {
+                $value->makeHidden('atr_product_details');
                 $value->product_details  = json_decode($value->product_details);
             }
         }

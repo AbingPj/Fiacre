@@ -13,8 +13,33 @@ class Organization extends Model
         'atr_active_label',
         'atr_contact_person',
         'atr_address',
-        'atr_name_with_optionc'
+        'atr_name_with_optionc',
+        'atr_selected_day_of_pickup',
     ];
+
+    public function getAtrSelectedDayOfPickupAttribute()
+    {
+        $org_settings = OrganizationSetting::where('org_id', $this->id)->first();
+
+        if (!empty($org_settings)) {
+            return $org_settings->selected_day_of_pickup;
+        }else{
+            return 1;
+        }
+    }
+
+    public function getAtrSettingsAttribute()
+    {
+        $org_settings = OrganizationSetting::where('org_id', $this->id)->first();
+
+        if (empty($org_settings)) {
+            $temp = new stdClass;
+            $temp->selected_day_of_pickup = 1;
+            $org_settings =  $temp;
+        }
+        return $org_settings;
+    }
+
 
     public function getAtrNameWithOptioncAttribute()
     {

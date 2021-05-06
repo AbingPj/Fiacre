@@ -15,11 +15,11 @@
                 <div class="settings-cont settings-pickup mt-3 mb-3">
                     <div class="settings-heading">Select Type</div>
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="typeOptions" id="set-pickup" :value="0" v-model="recurSettings.is_pickup">
+                    <input class="form-check-input" type="radio" name="typeOptions" id="set-pickup" :value="1" v-model="recurSettings.is_pickup">
                     <label class="form-check-label" for="set-pickup">For Pickup</label>
                     </div>
                     <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="typeOptions" id="set-delivery" :value="1" v-model="recurSettings.is_pickup">
+                    <input class="form-check-input" type="radio" name="typeOptions" id="set-delivery" :value="0" v-model="recurSettings.is_pickup">
                     <label class="form-check-label" for="set-delivery">For Delivery</label>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\Organization\OrgFundraiseController;
 use App\Http\Controllers\Backend\Organization\OrgOrdersController;
 use App\Http\Controllers\Backend\Organization\OrgProductsController;
 use App\Http\Controllers\Backend\Organization\OrgProfileController;
+use App\Http\Controllers\Backend\Organization\OrgSettingsController;
 
 // All route names are prefixed with 'admin.auth'.
 Route::group([
@@ -33,5 +34,7 @@ Route::group([
     Route::get('fundraise', [OrgFundraiseController::class, 'index'])->name('fundraise');
     Route::get('getOrganizationFundraise', [OrgFundraiseController::class, 'getOrganizationFundraise'])->name('getOrganizationFundraise');
 
+    Route::get('settings', [OrgSettingsController::class, 'index'])->name('settings');
+    Route::post('UpdateSettings', [OrgSettingsController::class, 'UpdateSettings'])->name('UpdateSettings');
 
 });
