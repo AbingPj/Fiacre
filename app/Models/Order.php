@@ -24,6 +24,10 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Organization', 'organization_id');
     }
+    public function order_address_info()
+    {
+        return $this->hasOne('App\Models\OrderAddressInfo', 'order_id');
+    }
     public function retailer()
     {
         return $this->belongsTo('App\Models\Retailer', 'retailer_id');
@@ -52,7 +56,17 @@ class Order extends Model
         // 'atr_expected_delivery_date',
         'atr_referral_amount',
         'atr_referral_amount_f',
+        // 'atr_delivery_address',
+        // 'atr_pickup_address',
     ];
+    // public function getAtrDeliveryAddressAttribute()
+    // {
+    //     return $this->;
+    // }
+    // public function getAtrPickupAddressAttribute()
+    // {
+    //     return $this->;
+    // }
     public function getAtrReferralAmountAttribute()
     {
         return $this->referral_amount;
