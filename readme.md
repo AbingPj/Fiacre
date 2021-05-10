@@ -1,25 +1,23 @@
-
-
 ## SERVER DEPLOYMENT
   0. Create Fresh MYSQL DB ang Git clone the Repository;
 
   1. Copy .env.example file into .env file;
       - update DB_DATABASE in the .env file. change it in fresh DB name. 
-
+      - ; 
 
   2. RUN sudo chown -R www-data:www-data {PROJECT_DIRECTORY PATH};
       - ex "sudo chown -R www-data:www-data /var/www/fiacre_project";
-
+      - ;
 
   3. Temporary Comment Out: "app\Console\Commands\EmailExpirationNotifCommand.php"
      - temp comment out line 27 "$this->EmailsService = new EmailsService;"
-
+     - ;
 
   4. Temporary Comment Out: "app\Http\Composers\GlobalComposer.php"
      - temp comment out line 20 "$settings = Store::with('landing')->find(1);"
      - temp comment out line 22 "$view->with('logged_in_user', auth()->user());"
      - temp comment out line 23 "$view->with('store_settings', $settings);"
-
+     - ;
 
   5. Run: composer install
 
@@ -44,17 +42,17 @@
 
   1. Copy .env.example file into .env file;
       - update DB_DATABASE in the .env file. change it in fresh DB name. 
-      
+      - ; 
 
   2. Temporary Comment Out: "app\Console\Commands\EmailExpirationNotifCommand.php"
      - temp comment out line 27 "$this->EmailsService = new EmailsService;"
-
+     - ;
 
   3. Temporary Comment Out: "app\Http\Composers\GlobalComposer.php"
      - temp comment out line 20 "$settings = Store::with('landing')->find(1);"
      - temp comment out line 22 "$view->with('logged_in_user', auth()->user());"
      - temp comment out line 23 "$view->with('store_settings', $settings);"
-
+     - ;
 
   4. Run: composer install
 
