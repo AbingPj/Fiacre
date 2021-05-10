@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Auth\User;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Organization;
@@ -14,6 +15,8 @@ use App\Models\FiacreCustomerPaymentRecord;
 use App\Models\OrderedProductWeek;
 use App\Models\ProductSubscriptionOrdered;
 use App\Models\Cart;
+use App\Models\OrderAddressInfo;
+use App\Models\OrganizationSetting;
 use App\Models\UserRecurringProduct;
 use App\Services\EmailsService;
 use App\Services\PaceFuzePaymentApiService;
@@ -99,7 +102,12 @@ class FiacrePlaceOrderController extends Controller
                     $order->discount_percentage = 0;
                     $order->delivery_fee = 0;
                     $order->additional_charge = 0;
-                    $order->is_pickup = 1;
+                    // $order->is_pickup = 1;
+                    if ($request->shipments == 'deliver') {
+                        $order->is_pickup =  0;
+                    } else {
+                        $order->is_pickup = 1;
+                    };
                     $order->organization_id = $org->id;
 
                     $userBilling =  BillingInfo::where('user_id', Auth::user()->id)->first();
@@ -116,8 +124,23 @@ class FiacrePlaceOrderController extends Controller
                     $order->referral_amount =  $user_referral_details->total_user_refferal_amount;
 
 
-
                     $order->save();
+
+
+                    $user1 =  User::find(Auth::user()->id);
+                    $selected_day_of_pickup = 1;
+                    $org_settings = OrganizationSetting::where('org_id', $org->id)->first();
+                    if (!empty($org_settings)) {
+                        $selected_day_of_pickup = $org_settings->$selected_day_of_pickup;
+                    }
+                    $addressInfo = new OrderAddressInfo();
+                    $addressInfo->order_id = $order->id;
+                    $addressInfo->address = $user1->atr_full_address;
+                    $addressInfo->address_pickup = $org->atr_address;
+                    $addressInfo->pick_up_date = Carbon::now()->next($org_settings->selected_day_of_pickup);
+                    $addressInfo->save();
+
+
                     $totalAmount = 0;
 
                     foreach ($usercart as $key => $cart) {

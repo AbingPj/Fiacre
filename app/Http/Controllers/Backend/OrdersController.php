@@ -73,7 +73,7 @@ class OrdersController extends Controller
 
     public function show($order_id)
     {
-        $order = Order::with('organization')->find($order_id);
+        $order = Order::with('organization','order_address_info')->find($order_id);
 
         $date = new Carbon($order->date);
         $order->date_label =  $date->format('m/d/Y');

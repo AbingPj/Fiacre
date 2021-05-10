@@ -107,7 +107,7 @@
 													type="radio"
 													value="deliver"
 													v-model="shipments"
-													disabled
+                                                    :disabled="this.guest == 1"
 												/>
 												<label
 													class="form-check-label"
@@ -132,7 +132,7 @@
 									</td>
 								</tr>
 
-								<tr>
+								<tr v-if="shipments == 'pickup'">
 									<td colspan="2">
 										<div class="mb-2">School/Parish Address:</div>
 										<div class="ml-3">
@@ -143,6 +143,34 @@
 										</div>
 										<br />
 										<i>This will be the pick-up address</i>
+									</td>
+								</tr>
+
+								<tr v-if="shipments == 'deliver'">
+									<td colspan="2">
+										<div class="mb-2">Your Address:</div>
+										<div class="ml-3">
+											<!-- <b>{{ org_name }}</b> -->
+											<!-- <br /> -->
+											<i class="fas fa-map-marker mr-2"></i>
+											{{ user.atr_full_address }}
+											<button
+												type="button"
+												class="btn-edit float-right"
+												@click="editAddress()"
+											>
+												<!-- <i class="fas fa-pencil-alt"></i> -->
+												<i class="fas fa-edit"></i>
+											</button>
+										</div>
+										<br />
+										<i>This will be the delivery address</i>
+									</td>
+								</tr>
+								<tr v-if="shipments == 'deliver'">
+									<td>Expected Delivery Date:</td>
+									<td class="text-right">
+										{{ expected_delivery_dates }}
 									</td>
 								</tr>
 							</tbody>
@@ -159,7 +187,7 @@
 								:cc="getCCAmount"
 								:ach="getACHAmount"
 								:user_billing_type="user_billing_type"
-                                :referral_details="referral_details"
+								:referral_details="referral_details"
 							>
 							</os-fiacre>
 						</div>
@@ -183,8 +211,8 @@
 				</div>
 			</div>
 		</div>
-           <ProductsSubModal3 ref="ProductsSubModalRef3"></ProductsSubModal3>
-		   <ReferralModal ref="ReferralModalRef"></ReferralModal>
+		<ProductsSubModal3 ref="ProductsSubModalRef3"></ProductsSubModal3>
+		<ReferralModal ref="ReferralModalRef"></ReferralModal>
 	</div>
 </template>
 <script>
@@ -245,10 +273,10 @@
 				org_id: cookies.get("ff-org-id"),
 				org_name: cookies.get("ff-org-name"),
 				org_address: cookies.get("ff-org-address"),
-                referral_details:{
-                    total_user_refferal_amount:0,
-					details: []
-                },
+				referral_details: {
+					total_user_refferal_amount: 0,
+					details: [],
+				},
 			};
 		},
 		computed: {
@@ -322,7 +350,7 @@
 				if (this.user_billing_type == "ACH") {
 					total = total + this.getACHAmount;
 				}
-                total  = total  - this.referral_details.total_user_refferal_amount;
+				total = total - this.referral_details.total_user_refferal_amount;
 				return total;
 			},
 
@@ -334,7 +362,7 @@
 			if (this.guest == 1) {
 				this.getCart();
 			} else {
-                this.getReferralDetails();
+				this.getReferralDetails();
 				setTimeout(() => {
 					this.org_id = cookies.get("ff-org-id");
 					this.org_name = cookies.get("ff-org-name");
@@ -345,6 +373,12 @@
 		},
 
 		methods: {
+			editAddress() {
+				if (this.guest == 0) {
+					LoadingOverlay();
+					window.location.href = "/myprofile";
+				}
+			},
 			displayNumber(value) {
 				var n = parseFloat(value).toFixed(2);
 				var withCommas = Number(n).toLocaleString("en", {
@@ -359,12 +393,12 @@
 			placeOrder() {
 				LoadingOverlay();
 
-                // // In-progress
+				// // In-progress
 				// alert("Under Construction!");
-                // LoadingOverlayHide();
-                // //
+				// LoadingOverlayHide();
+				// //
 
-                //Continue Process
+				//Continue Process
 				this.placeorderButtonDisabled = true;
 				if (this.cart.length > 0) {
 					this.fiacreCustomerOrder();
@@ -381,6 +415,7 @@
 					.post("/placeorder/fiacreCustomer", {
 						cart: this.cart,
 						org_id: this.org_id,
+						shipments: this.shipments,
 					})
 					.then((res) => {
 						// LoadingOverlayHide();
@@ -444,14 +479,12 @@
 					});
 			},
 
-            getReferralDetails() {
-				axios
-					.get(`/getUserReferralCodeDetails`)
-					.then((res) => {
-                        this.referral_details = res.data;
-						console.log(res.data.details)
-						this.$refs.ReferralModalRef.data = res.data;
-					});
+			getReferralDetails() {
+				axios.get(`/getUserReferralCodeDetails`).then((res) => {
+					this.referral_details = res.data;
+					console.log(res.data.details);
+					this.$refs.ReferralModalRef.data = res.data;
+				});
 			},
 
 			ifCartExpired() {
@@ -568,9 +601,9 @@
 				}
 			},
 
-            sub(data1, data,index){
-                console.log(data1);
-                console.log(data);
+			sub(data1, data, index) {
+				console.log(data1);
+				console.log(data);
 				if (data.sub == "sub") {
 					this.$refs.ProductsSubModalRef3.data1 = data1;
 					this.$refs.ProductsSubModalRef3.data = data;
@@ -578,56 +611,53 @@
 					this.$refs.ProductsSubModalRef3.openModal();
 				}
 				if (data.sub == "unsub") {
-                    const selected_products = data1.selected_products;
-                    const atr_orginal_selected_products = data1.atr_orginal_selected_products;
+					const selected_products = data1.selected_products;
+					const atr_orginal_selected_products =
+						data1.atr_orginal_selected_products;
 					selected_products[index] = atr_orginal_selected_products[index];
-                    const newdata = selected_products;
-                    data1.selected_products = [];
-                    data1.selected_products = newdata;
+					const newdata = selected_products;
+					data1.selected_products = [];
+					data1.selected_products = newdata;
 					this.updateProductDetails(data1);
 				}
-            },
-            updateProducts(data1,item, index) {
-
-                const selected_products = data1.selected_products;
-                selected_products[index] = item;
-                const newdata = selected_products;
+			},
+			updateProducts(data1, item, index) {
+				const selected_products = data1.selected_products;
+				selected_products[index] = item;
+				const newdata = selected_products;
 				data1.selected_products = [];
-                data1.selected_products = newdata;
+				data1.selected_products = newdata;
 				this.updateProductDetails(data1);
 			},
-            updateRecurring(product){
-                product.recurring = !product.recurring;
-                this.updateProductDetails(product);
-            },
-             updateProductDetails(product) {
-                if(this.guest == 0){
-                    LoadingOverlay();
-                        var rawData = {
-                            product_details: product,
-                            user_id: this.user.id,
-                            org_id: this.org_id,
-                        };
-                        axios
-                            .post("/cart/updateProductDetails", rawData)
-                            .then((res) => {
-                                console.log(res);
-                                LoadingOverlayHide();
-                                // window.location.reload(true)
-                                // document.location.reload(true)
-                            })
-                            .catch((err) => {
-                                console.error(err);
-                                // LoadingOverlayHide();
-                                alert(
-                                    "Something went wrong! Please Contat Support. " + err
-                                );
-                                // window.location.reload(true)
-                                document.location.reload(true)
-                            });
-                }
-                },
-
+			updateRecurring(product) {
+				product.recurring = !product.recurring;
+				this.updateProductDetails(product);
+			},
+			updateProductDetails(product) {
+				if (this.guest == 0) {
+					LoadingOverlay();
+					var rawData = {
+						product_details: product,
+						user_id: this.user.id,
+						org_id: this.org_id,
+					};
+					axios
+						.post("/cart/updateProductDetails", rawData)
+						.then((res) => {
+							console.log(res);
+							LoadingOverlayHide();
+							// window.location.reload(true)
+							// document.location.reload(true)
+						})
+						.catch((err) => {
+							console.error(err);
+							// LoadingOverlayHide();
+							alert("Something went wrong! Please Contat Support. " + err);
+							// window.location.reload(true)
+							document.location.reload(true);
+						});
+				}
+			},
 		},
 	};
 </script>

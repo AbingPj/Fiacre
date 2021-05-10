@@ -137,9 +137,11 @@ class ProductsController extends Controller
             $value->selected = false;
             $value->recurring = false;
             $value->recurring_is_disabled = false;
-            if($value->isRecurring_is_disabled($org_id, Auth::user()->id)){
-                $value->recurring_is_disabled = $value->isRecurring_is_disabled($org_id, Auth::user()->id);
-                $value->recurring = true;
+            if (Auth::guest() == false) {
+                if($value->isRecurring_is_disabled($org_id, Auth::user()->id)){
+                    $value->recurring_is_disabled = $value->isRecurring_is_disabled($org_id, Auth::user()->id);
+                    $value->recurring = true;
+                }
             }
             $value->qty = 1;
             if ($value->is_bundle == 1) {
