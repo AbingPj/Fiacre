@@ -1,3 +1,85 @@
+
+
+## SERVER DEPLOYMENT
+  0. Create Fresh MYSQL DB ang Git clone the Repository;
+
+  1. Copy .env.example file into .env file;
+      - update DB_DATABASE in the .env file. change it in fresh DB name. 
+  2. RUN sudo chown -R www-data:www-data {PROJECT_DIRECTORY PATH};
+      - ex "sudo chown -R www-data:www-data /var/www/fiacre_project";
+
+  3. Temporary Comment Out: "app\Console\Commands\EmailExpirationNotifCommand.php"
+     - temp comment out line 27 "$this->EmailsService = new EmailsService;"
+
+  4. Temporary Comment Out: "app\Http\Composers\GlobalComposer.php"
+     - temp comment out line 20 "$settings = Store::with('landing')->find(1);"
+     - temp comment out line 22 "$view->with('logged_in_user', auth()->user());"
+     - temp comment out line 23 "$view->with('store_settings', $settings);"
+
+  5. Run: composer install
+
+  6. Discard Changes of Temporary Comment Out. (git reset --hard)
+
+  7. Run: php artisan migrate
+
+  8. Run: php artisan db:seed
+
+  9. Run: php artisan db:seed --class="OrganizationSeeder"
+
+  10. Run: php artisan db:seed --class="OrganizationSeeder"
+
+  11. (IF NEED)Run: php artisan db:seed --class="ProductCategoriesSeeder"
+
+  12. (IF NEED)Run: php artisan db:seed --class="ProductsSeeder"
+
+  13. Last Run: php artisan storage:link
+
+## LOCAL SETUP (DEV SETUP)
+  0. Create Fresh MYSQL DB ang Git clone the Repository;
+
+  1. Copy .env.example file into .env file;
+      - update DB_DATABASE in the .env file. change it in fresh DB name. 
+
+  2. Temporary Comment Out: "app\Console\Commands\EmailExpirationNotifCommand.php"
+     - temp comment out line 27 "$this->EmailsService = new EmailsService;"
+
+  3. Temporary Comment Out: "app\Http\Composers\GlobalComposer.php"
+     - temp comment out line 20 "$settings = Store::with('landing')->find(1);"
+     - temp comment out line 22 "$view->with('logged_in_user', auth()->user());"
+     - temp comment out line 23 "$view->with('store_settings', $settings);"
+
+  4. Run: composer install
+
+  5. Discard Changes of Temporary Comment Out. (git reset --hard)
+
+  6. Run: php artisan key:generate
+
+  7. Run: php artisan migrate
+
+  8. Run: php artisan db:seed
+
+  9. Run: php artisan db:seed --class="OrganizationSeeder"
+
+  10. Run: php artisan db:seed --class="OrganizationSeeder"
+
+  11. (IF NEED)Run: php artisan db:seed --class="ProductCategoriesSeeder"
+
+  12. (IF NEED)Run: php artisan db:seed --class="ProductsSeeder"
+
+  13. Lat Run: php artisan storage:link
+
+  14. (FOR DEV SETUP) Run: npm install
+
+  15. (FOR DEV SETUP) Run: npm run watch (for running development)
+
+  16. (FOR DEV SETUP) Run: npm run prod (compilation for deployment)
+
+
+
+
+
+
+
 ## Laravel Boilerplate (Current: Laravel 6.*) ([Demo](http://134.209.123.206/))
 
 [![Latest Stable Version](https://poser.pugx.org/rappasoft/laravel-boilerplate/v/stable)](https://packagist.org/packages/rappasoft/laravel-boilerplate)
