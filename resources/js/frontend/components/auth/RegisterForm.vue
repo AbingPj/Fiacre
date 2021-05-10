@@ -1,7 +1,7 @@
 <template>
     <div class="text-center">
         <ValidationObserver v-slot="{ invalid }">
-            <h1 class="s-header">FIACRE FOODS</h1>
+            <h1 class="s-header">OHeavenly</h1>
             <p class="s-sub-header">
                 Please complete to create your account.
             </p>

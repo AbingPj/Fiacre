@@ -43,7 +43,7 @@ class Organization extends Model
 
     public function getAtrNameWithOptioncAttribute()
     {
-        $nameAndOptionC = $this->org_name. ' ('. $this->org_optionc_id . ')';
+        $nameAndOptionC = $this->org_name. ' ['. $this->org_optionc_id . '] ('. $this->org_cityprov . ')';
         return $nameAndOptionC;
     }
 
