@@ -137,7 +137,7 @@ class FiacrePlaceOrderController extends Controller
                     $addressInfo->order_id = $order->id;
                     $addressInfo->address = $user1->atr_full_address;
                     $addressInfo->address_pickup = $org->atr_address;
-                    $addressInfo->pick_up_date = Carbon::now()->next($org_settings->selected_day_of_pickup);
+                    $addressInfo->pick_up_date = Carbon::now()->next($selected_day_of_pickup);
                     $addressInfo->save();
 
 
