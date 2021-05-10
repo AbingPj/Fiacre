@@ -12,10 +12,10 @@ class AddAdminSeeder extends Seeder
         $this->disableForeignKeys();
 
         $user =  User::create([
-            'first_name' => 'Fiacre',
-            'last_name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => 'password',
+            'first_name' => 'SuperAdmin',
+            'last_name' => 'Carl',
+            'email' => 'carllapp@yahoo.com',
+            'password' => 'secretadmin@2021',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
             'is_billing_updated' => 1,

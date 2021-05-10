@@ -208,28 +208,28 @@ class ProductsSeeder extends Seeder
                 //'created_at' => Carbon::now()
                 // 'created_by' => 1,
             ],
-            [
-                'id' => '10',
-                'name' => 'Christmas Tree',
-                'description' => "",
-                'price' => 110.00,
-                'discount_price' => 100.00,
-                'member_price' => 105.00,
-                'wholesale_price' => 90.00,
-                'tags' => "tree",
-                'unit' => "pc",
-                'minorder' => 1,
-                'maxorder' => 50,
-                'image_path' => "public/products/seeds/10.jpg",
-                'store_id' => 1,
-                'is_visible' => 1, // 1-show, 0-hide
-                'category_id' => 10, //1 - vegetable,  2 - fruit, 3 - dairy, 4 - meat, 5 - flower, 6 - herb, 7 - tree, 8 - animal
-                'status' => 1, // 1 - available, 2 - out, 3 - archived;
-                'sku' => 10010, // stock-keeping unit
-                'season' => 'Winter', // Winter, Spring, Summer, Fall
-                //'created_at' => Carbon::now()
-                // 'created_by' => 1,
-            ],
+            // [
+            //     'id' => '10',
+            //     'name' => 'Christmas Tree',
+            //     'description' => "",
+            //     'price' => 110.00,
+            //     'discount_price' => 100.00,
+            //     'member_price' => 105.00,
+            //     'wholesale_price' => 90.00,
+            //     'tags' => "tree",
+            //     'unit' => "pc",
+            //     'minorder' => 1,
+            //     'maxorder' => 50,
+            //     'image_path' => "public/products/seeds/10.jpg",
+            //     'store_id' => 1,
+            //     'is_visible' => 1, // 1-show, 0-hide
+            //     'category_id' => 10, //1 - vegetable,  2 - fruit, 3 - dairy, 4 - meat, 5 - flower, 6 - herb, 7 - tree, 8 - animal
+            //     'status' => 1, // 1 - available, 2 - out, 3 - archived;
+            //     'sku' => 10010, // stock-keeping unit
+            //     'season' => 'Winter', // Winter, Spring, Summer, Fall
+            //     //'created_at' => Carbon::now()
+            //     // 'created_by' => 1,
+            // ],
             [
                 'id' => '11',
                 'name' => 'Collards',
@@ -494,28 +494,28 @@ class ProductsSeeder extends Seeder
                 //'created_at' => Carbon::now()
                 // 'created_by' => 1,
             ],
-            [
-                'id' => '23',
-                'name' => 'Horse Backride',
-                'description' => "",
-                'price' => 110.00,
-                'discount_price' => 100.00,
-                'member_price' => 105.00,
-                'wholesale_price' => 90.00,
-                'tags' => "services",
-                'unit' => "hr",
-                'minorder' => 1,
-                'maxorder' => 50,
-                'image_path' => "public/products/seeds/23.jpg",
-                'store_id' => 1,
-                'is_visible' => 1, // 1-show, 0-hide
-                'category_id' => 22, //1 - vegetable,  2 - fruit, 3 - dairy, 4 - meat, 5 - flower, 6 - herb, 7 - tree, 8 - animal, 9 - prepared food, 10 - service
-                'status' => 1, // 1 - available, 2 - out, 3 - archived;
-                'sku' => 10023, // stock-keeping unit
-                'season' => 'Spring,Summer,Fall', // Winter, Spring, Summer, Fall
-                //'created_at' => Carbon::now()
-                // 'created_by' => 1,
-            ],
+            // [
+            //     'id' => '23',
+            //     'name' => 'Horse Backride',
+            //     'description' => "",
+            //     'price' => 110.00,
+            //     'discount_price' => 100.00,
+            //     'member_price' => 105.00,
+            //     'wholesale_price' => 90.00,
+            //     'tags' => "services",
+            //     'unit' => "hr",
+            //     'minorder' => 1,
+            //     'maxorder' => 50,
+            //     'image_path' => "public/products/seeds/23.jpg",
+            //     'store_id' => 1,
+            //     'is_visible' => 1, // 1-show, 0-hide
+            //     'category_id' => 22, //1 - vegetable,  2 - fruit, 3 - dairy, 4 - meat, 5 - flower, 6 - herb, 7 - tree, 8 - animal, 9 - prepared food, 10 - service
+            //     'status' => 1, // 1 - available, 2 - out, 3 - archived;
+            //     'sku' => 10023, // stock-keeping unit
+            //     'season' => 'Spring,Summer,Fall', // Winter, Spring, Summer, Fall
+            //     //'created_at' => Carbon::now()
+            //     // 'created_by' => 1,
+            // ],
             [
                 'id' => '24',
                 'name' => 'Hot Peppers',
@@ -1088,28 +1088,28 @@ class ProductsSeeder extends Seeder
                 //'created_at' => Carbon::now()
                 // 'created_by' => 1,
             ],
-            [
-                'id' => '49',
-                'name' => 'Wood Products',
-                'description' => "",
-                'price' => 110.00,
-                'discount_price' => 100.00,
-                'member_price' => 105.00,
-                'wholesale_price' => 90.00,
-                'tags' => "wood",
-                'unit' => "kg",
-                'minorder' => 1,
-                'maxorder' => 50,
-                'image_path' => "public/products/seeds/49.jpg",
-                'store_id' => 1,
-                'is_visible' => 1, // 1-show, 0-hide
-                'category_id' => 16, //1 - vegetable,  2 - fruit, 3 - dairy, 4 - meat, 5 - flower, 6 - herb, 7 - tree, 8 - animal, 9 - prepared food, 10 - service, 11 - wood
-                'status' => 1, // 1 - available, 2 - out, 3 - archived;
-                'sku' => 10049, // stock-keeping unit
-                'season' => 'Winter,Spring,Summer,Fall', // Winter, Spring, Summer, Fall
-                //'created_at' => Carbon::now()
-                // 'created_by' => 1,
-            ],
+            // [
+            //     'id' => '49',
+            //     'name' => 'Wood Products',
+            //     'description' => "",
+            //     'price' => 110.00,
+            //     'discount_price' => 100.00,
+            //     'member_price' => 105.00,
+            //     'wholesale_price' => 90.00,
+            //     'tags' => "wood",
+            //     'unit' => "kg",
+            //     'minorder' => 1,
+            //     'maxorder' => 50,
+            //     'image_path' => "public/products/seeds/49.jpg",
+            //     'store_id' => 1,
+            //     'is_visible' => 1, // 1-show, 0-hide
+            //     'category_id' => 16, //1 - vegetable,  2 - fruit, 3 - dairy, 4 - meat, 5 - flower, 6 - herb, 7 - tree, 8 - animal, 9 - prepared food, 10 - service, 11 - wood
+            //     'status' => 1, // 1 - available, 2 - out, 3 - archived;
+            //     'sku' => 10049, // stock-keeping unit
+            //     'season' => 'Winter,Spring,Summer,Fall', // Winter, Spring, Summer, Fall
+            //     //'created_at' => Carbon::now()
+            //     // 'created_by' => 1,
+            // ],
             [
                 'id' => '50',
                 'name' => 'Zucchini',
