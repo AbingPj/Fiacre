@@ -27,7 +27,7 @@ class OrdersController extends Controller
         // $email = $EmailService->myemail(); /// abing@gmail.com
         $search = $request->search;
         if ($request->has('search')) {
-            $orders = Order::with('user', 'retailer', 'organization')
+            $orders = Order::with('user', 'retailer', 'organization','order_address_info')
                 ->whereHas('retailer', function ($q) use ($search) {
                     return $q->where(
                         DB::raw('CONCAT_WS(" ", first_name, last_name)'),
@@ -46,7 +46,7 @@ class OrdersController extends Controller
                 ->OrderBy('date', 'DESC')
                 ->paginate(30);
         } else {
-            $orders = Order::with('user', 'retailer', 'organization')
+            $orders = Order::with('user', 'retailer', 'organization', 'order_address_info','order_products')
                 ->OrderBy('date', 'DESC')
                 ->paginate(30);
         }
@@ -76,7 +76,7 @@ class OrdersController extends Controller
 
         if ($request->has('search')) {
             $search = $request->search;
-            $orders = Order::with('user', 'retailer','organization')
+            $orders = Order::with('user', 'retailer','organization','order_address_info','order_products')
                 ->whereBetween('date', [$from, $to])
                 ->where(function ($query) use ($search) {
                     $query
@@ -98,7 +98,7 @@ class OrdersController extends Controller
                 ->OrderBy('date', 'DESC')
                 ->paginate(30);
         } else {
-            $orders = Order::with('user', 'retailer', 'organization')
+            $orders = Order::with('user', 'retailer', 'organization','order_address_info','order_products')
                 ->whereBetween('date', [$from, $to])
                 ->OrderBy('date', 'DESC')
                 ->paginate(30);
@@ -132,7 +132,7 @@ class OrdersController extends Controller
 
         if ($request->has('search')) {
             $search = $request->search;
-            $orders = Order::with('user', 'retailer', 'organization')
+            $orders = Order::with('user', 'retailer', 'organization','order_address_info','order_products')
                 ->whereBetween('date', [$from, $to])
                 ->where(function ($query) use ($search) {
                     $query
@@ -156,7 +156,7 @@ class OrdersController extends Controller
             $orders->date = $monthLabel;
             // $orders->save();
         } else {
-            $orders = Order::with('user', 'retailer', 'organization')
+            $orders = Order::with('user', 'retailer', 'organization', 'order_address_info','order_products')
                 ->whereBetween('created_at', [$from, $to])
                 ->OrderBy('date', 'DESC')
                 ->paginate(30);

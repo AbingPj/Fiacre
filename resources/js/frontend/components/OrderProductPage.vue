@@ -309,6 +309,15 @@
                         </div>
                       </td>
                     </tr>
+                     <tr>
+                      <td>Delivery Fee</td>
+                      <td>
+                        <div class="d-flex justify-content-between">
+                          <div>$</div>
+                          <div class="text-right">{{displayNumberWithComma(order.delivery_fee)}}</div>
+                        </div>
+                      </td>
+                    </tr>
                     <tr>
                       <td>
                         <b>Total</b>

@@ -66,6 +66,7 @@ abstract class BaseUser extends Authenticatable implements Recordable
         'sun_is_expired',
         'atr_image_link',
         'atr_full_address',
+        'atr_full_address2',
         'atr_customer_role',
         'atr_organization',
         'atr_user_referral_link'

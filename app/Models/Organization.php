@@ -23,7 +23,7 @@ class Organization extends Model
 
         if (!empty($org_settings)) {
             return $org_settings->selected_day_of_pickup;
-        }else{
+        } else {
             return 1;
         }
     }
@@ -43,13 +43,24 @@ class Organization extends Model
 
     public function getAtrNameWithOptioncAttribute()
     {
-        $nameAndOptionC = $this->org_name. ' ['. $this->org_optionc_id . '] ('. $this->org_cityprov . ')';
+        // $nameAndOptionC =
+        //     $this->org_name
+        //     . ' [' . $this->org_optionc_id
+        //     . '] ('
+        //     . $this->org_cityprov
+        //     . ','
+        //     . $this->org_zipcode . ')';
+
+
+        $nameAndOptionC =
+            $this->org_name . '(' . $this->org_cityprov . ', ' . $this->org_state . ', ' . $this->org_zipcode . ')';
+
         return $nameAndOptionC;
     }
 
     public function getAtrAddressAttribute()
     {
-        $address = $this->org_street. ', '. $this->org_cityprov . ', '.$this->org_state . ', ' . $this->org_zipcode;
+        $address = $this->org_street . ', ' . $this->org_cityprov . ', ' . $this->org_state . ', ' . $this->org_zipcode;
         return $address;
     }
 

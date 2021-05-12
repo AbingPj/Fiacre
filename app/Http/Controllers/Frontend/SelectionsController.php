@@ -82,12 +82,15 @@ class SelectionsController extends Controller
     public function searchOrganization(Request $request)
     {
         $search = $request->search;
-        $data = Organization::select('org_name','org_optionc_id','org_cityprov')
+        $data = Organization::select('org_name','org_optionc_id','org_cityprov','org_zipcode','org_state')
             ->where('org_name', 'LIKE', "%$search%")
             ->orWhere('org_optionc_id', 'LIKE', "%$search%")
+            ->orWhere('org_cityprov', 'LIKE', "%$search%")
+            ->orWhere('org_zipcode', 'LIKE', "%$search%")
+            ->orWhere('org_state', 'LIKE', "%$search%")
             ->orderBy('org_name')
             ->skip(0)
-            ->take(20)
+            ->take(50)
             ->get()
             ->makeHidden(['atr_logo_link','atr_type_label','atr_active_label', 'atr_contact_person', 'atr_address']);
         // $data->setAppends(['atr_name_with_optionc']);

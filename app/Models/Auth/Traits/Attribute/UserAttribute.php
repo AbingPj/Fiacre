@@ -148,6 +148,28 @@ trait UserAttribute
             return "{$this->street_address}, {$city_name}, {$state_name}, USA";
         }
     }
+    public function getAtrFullAddress2Attribute()
+    {
+        $city = City::find($this->city);
+        if (!empty($city)) {
+            $city_name = $city->name;
+        } else {
+            $city_name = $this->city;
+        }
+
+        $state =  State::find($this->state);
+        if (!empty($state)) {
+            $state_name = $state->name;
+        } else {
+            $state_name = $this->state;
+        }
+
+        if($this->customer_role == 1){
+            return "";
+        } else{
+            return "{$this->street_address} ~ {$city_name} ~ {$state_name} ~ USA";
+        }
+    }
 
     public function getAtrCustomerRoleAttribute()
     {

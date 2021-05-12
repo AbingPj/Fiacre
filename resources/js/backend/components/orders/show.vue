@@ -28,6 +28,7 @@
 									`sub total:    ${order.atr_subscription_total_amount_f}`,
 									`tx: ${order.billing_type}(${order.billing_type_percentage}) +    ${order.atr_billing_amount_f}`,
 									`referral discount: -     ${order.atr_referral_amount_f}`,
+									`Delivey Fee: -     ${order.delivery_fee}`,
 									`Total:     ${order.atr_subscription_overall_total_amount_f}`,
 									`-`,
 									`Customer: ${user.full_name}`,
@@ -56,6 +57,7 @@
 									`sub total:,,,,, ${order.atr_subscription_total_amount_f}`,
 									`tx: ${order.billing_type}(${order.billing_type_percentage}%) + ,,,,, ${order.atr_billing_amount_f}`,
 									`referral discount: - ,,,,,  ${order.atr_referral_amount_f}`,
+									`Delivery Fee: - ,,,,,  ${order.delivery_fee}`,
 									`Total: ,,,,,${order.atr_subscription_overall_total_amount_f}`,
 									`-`,
 									`Customer: ${user.full_name}`,
@@ -380,19 +382,28 @@
                 <span class="mr-5">Coupon Discount:</span>
                 - ${{displayNumberWithComma(getCouponDiscount)}}
               </h4>
-            </div>
+            </div> -->
+
             <div class="text-right w-100">
               <h4>
                 <span class="mr-5">Delivery Fee:</span>
                 + ${{displayNumberWithComma(order.delivery_fee)}}
               </h4>
             </div>
+
+            	<!--
             <div class="text-right w-100">
               <h4>
                 <span class="mr-5">TAX:</span>
                 + ${{displayNumberWithComma(getTax)}}
               </h4>
             </div> -->
+
+
+
+
+
+
 						<hr />
 						<div class="text-right w-100">
 							<h3>

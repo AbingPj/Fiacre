@@ -107,7 +107,7 @@
 													type="radio"
 													value="deliver"
 													v-model="shipments"
-                                                    :disabled="this.guest == 1"
+													:disabled="this.guest == 1"
 												/>
 												<label
 													class="form-check-label"
@@ -188,6 +188,7 @@
 								:ach="getACHAmount"
 								:user_billing_type="user_billing_type"
 								:referral_details="referral_details"
+                                :shipments_price="shipmentsPrice"
 							>
 							</os-fiacre>
 						</div>
@@ -246,7 +247,8 @@
 		data() {
 			return {
 				products: [],
-				shipments: "pickup",
+				shipments: "deliver",
+				// shipments: "pickup",
 				shipmentsOptions: [
 					{ text: "Deliver", value: "deliver" },
 					{ text: "Pick-up", value: "pickup" },
@@ -280,6 +282,13 @@
 			};
 		},
 		computed: {
+			shipmentsPrice() {
+				if (this.shipments == "deliver") {
+					return this.delivery_fee;
+				} else {
+					return 0;
+				}
+			},
 			totalAmount() {
 				if (this.cart.length == 0) {
 					return 0.0;
@@ -351,6 +360,9 @@
 					total = total + this.getACHAmount;
 				}
 				total = total - this.referral_details.total_user_refferal_amount;
+
+				// total = total + this.shipmentsPrice;
+				total = total + parseFloat(this.shipmentsPrice);
 				return total;
 			},
 

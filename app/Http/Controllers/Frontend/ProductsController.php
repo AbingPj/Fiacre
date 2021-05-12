@@ -82,13 +82,12 @@ class ProductsController extends Controller
             if (Auth::guest() == false) {
                 $user = User::find(Auth::user()->id);
                 $user->selected_org_id = $org->id;
-                $user->selected_org_optionc_id =$org->org_optionc_id;
+                $user->selected_org_optionc_id = $org->org_optionc_id;
                 $user->save();
                 return response()->json($org, 200);
-            }else{
+            } else {
                 return response()->json($org, 200);
             }
-
         } else {
             return response()->json('Sorry, your school is not yet registered', 404);
         }
@@ -138,23 +137,25 @@ class ProductsController extends Controller
             $value->recurring = false;
             $value->recurring_is_disabled = false;
             if (Auth::guest() == false) {
-                if($value->isRecurring_is_disabled($org_id, Auth::user()->id)){
+                if ($value->isRecurring_is_disabled($org_id, Auth::user()->id)) {
                     $value->recurring_is_disabled = $value->isRecurring_is_disabled($org_id, Auth::user()->id);
                     $value->recurring = true;
                 }
             }
             $value->qty = 1;
             if ($value->is_bundle == 1) {
+                $value->recurring = true;
                 $value->price = round($value->getBundlePrice('retailer'), 2);
                 // $value->member_price = $value->getBundlePrice('member');
                 // $value->wholesale_price = $value->getBundlePrice('wholesale');
                 $selected = [];
-                $bundle_products = ProductBundle::where('bundle_id', $value->id)->get();
+                $bundle_products = ProductBundle::where('bundle_id', $value->id)->where('product_id', '!=', 131)->get();
                 foreach ($bundle_products as $key2 => $value2) {
                     $prod = Product::find($value2->product_id);
                     if (!empty($prod)) {
                         $prod->selected = true;
-                        $prod->qty = $value2->quantity;
+                        // $prod->qty = $value2->quantity;
+                        $prod->qty = intVal($value2->quantity);
                         $prod->sub = "sub";
                         array_push($selected, $prod);
                     }
@@ -277,12 +278,13 @@ class ProductsController extends Controller
         return response()->json($products, 200);
     }
 
-    public function getProductsToSwap(Request $request){
+    public function getProductsToSwap(Request $request)
+    {
         $search = $request->search;
         $price = $request->price;
         $id = $request->id;
         $products = Product::with('category:id,name')
-            ->where('id','!=', $id)
+            ->where('id', '!=', $id)
             ->where('price', $price)
             ->where('is_visible', 1)
             ->where('status', '!=', 3)

@@ -17,6 +17,7 @@ use App\Models\ProductSubscriptionOrdered;
 use App\Models\Cart;
 use App\Models\OrderAddressInfo;
 use App\Models\OrganizationSetting;
+use App\Models\Store;
 use App\Models\UserRecurringProduct;
 use App\Services\EmailsService;
 use App\Services\PaceFuzePaymentApiService;
@@ -95,6 +96,7 @@ class FiacrePlaceOrderController extends Controller
                     DB::beginTransaction();
                     // $ordered_products = $request->cart;
                     $org = Organization::find($request->org_id);
+                    $store = Store::find(1);
                     $order = new Order;
                     $order->store_id = 1;
                     $order->order_by = Auth::user()->id;
@@ -105,9 +107,12 @@ class FiacrePlaceOrderController extends Controller
                     // $order->is_pickup = 1;
                     if ($request->shipments == 'deliver') {
                         $order->is_pickup =  0;
+                        $order->delivery_fee =  $store->delivery_fee;
                     } else {
                         $order->is_pickup = 1;
+                        $order->delivery_fee = 0;
                     };
+
                     $order->organization_id = $org->id;
 
                     $userBilling =  BillingInfo::where('user_id', Auth::user()->id)->first();
@@ -293,6 +298,10 @@ class FiacrePlaceOrderController extends Controller
                         ], 422);
                     }
                     $totalAmount = $totalAmount - $order->referral_amount;
+
+                    // total amount + delivery fee
+                    $totalAmount = $totalAmount + $order->delivery_fee;
+
                     Cart::where('user_id', Auth::user()->id)->where('org_id', $request->org_id)->delete();
 
                     if ($totalAmount >= 0) {

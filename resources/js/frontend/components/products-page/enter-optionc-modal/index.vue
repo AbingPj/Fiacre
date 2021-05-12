@@ -15,7 +15,7 @@
 						<div class="row">
 							<div class="col" style="padding: 0px !important">
 								<h5>
-									<i class="fas fa-sitemap"></i> Selecting Organization
+									<i class="fas fa-sitemap"></i> Select School/Parish
                                     <button
 										type="button"
 										class="btn-close float-right"
@@ -30,7 +30,7 @@
 								</h5>
 
 								<div class="my-5 mx-5">
-									<h6>Enter Your OptionC School ID</h6>
+									<h6>Enter the School/Parish name/city/state/ID</h6>
 									<div class="row mb-2">
 										<div class="col-12">
 											<!-- <input

@@ -83,6 +83,15 @@
         </td>
       </tr>
       <tr>
+        <td>Delivery Fee</td>
+        <td>
+          <div class="d-flex justify-content-between">
+            <div>$</div>
+            <div class="text-right">+ {{displayNumber(shipments_price)}}</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
         <td>
           <b>Total</b>
         </td>

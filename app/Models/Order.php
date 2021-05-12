@@ -56,6 +56,7 @@ class Order extends Model
         // 'atr_expected_delivery_date',
         'atr_referral_amount',
         'atr_referral_amount_f',
+        'atr_del_pick_addresss',
         // 'atr_delivery_address',
         // 'atr_pickup_address',
     ];
@@ -67,14 +68,27 @@ class Order extends Model
     // {
     //     return $this->;
     // }
+    public function getAtrDelPickAddresssAttribute()
+    {
+        $data = OrderAddressInfo::where('order_id', $this->id)->first();
+        if (!empty($data)) {
+            if ($this->is_pickup) {
+                return str_replace(',', '~' , $data->address_pickup);
+            } else {
+                return str_replace(',', '~' , $data->address);
+            }
+        } else {
+            return "";
+        }
+    }
     public function getAtrReferralAmountAttribute()
     {
         return $this->referral_amount;
     }
 
-     public function getAtrReferralAmountFAttribute()
+    public function getAtrReferralAmountFAttribute()
     {
-        return number_format($this->referral_amount,2);
+        return number_format($this->referral_amount, 2);
     }
 
     public function getAtrSubscriptionOverallTotalAmountAttribute()
@@ -131,32 +145,34 @@ class Order extends Model
         $billing_type_price = 0;
         $fundraise = 0;
         foreach ($order_prododucts as $key => $item) {
-            if($item->is_subscription == 1){
+            if ($item->is_subscription == 1) {
                 $total = $total + $item->subscription_price;
-                $fundraise = $fundraise + ($item->subscription_price * ($item->fundraise_percentage/100));
-            }else{
+                $fundraise = $fundraise + ($item->subscription_price * ($item->fundraise_percentage / 100));
+            } else {
                 // $total = $total + $item->price;
                 $subtotal = $item->price * $item->quantity;
                 $total = $total + $subtotal;
-                $fundraise = $fundraise + ($subtotal * ($item->fundraise_percentage/100));
+                $fundraise = $fundraise + ($subtotal * ($item->fundraise_percentage / 100));
             }
-
         }
         $billing_type_price = $total * ($this->billing_type_percentage / 100);
         // $total_with_referral_discount = ($total + $billing_type_price) - ;
         $overAlltotal = $total + $billing_type_price;
         $overAlltotal = $overAlltotal - $this->referral_amount;
 
-        if($var == 'overAlltotal'){
+         // total amount + delivery fee
+         $overAlltotal = $overAlltotal + $this->delivery_fee;
+
+        if ($var == 'overAlltotal') {
             return $overAlltotal;
         }
-        if($var == 'billing_type_price'){
+        if ($var == 'billing_type_price') {
             return $billing_type_price;
         }
-        if($var == 'total'){
+        if ($var == 'total') {
             return $total;
         }
-        if($var == 'fundraise'){
+        if ($var == 'fundraise') {
             return $fundraise;
         }
     }

@@ -141,7 +141,7 @@
 							<th>Order Date</th>
 							<th>Customer</th>
 							<th>Order Cost</th>
-							<th>Organization ID</th>
+							<th>Address</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -153,12 +153,12 @@
 							<td>
 								$ {{ order.atr_subscription_overall_total_amount_f }}
 							</td>
-							<td>{{ order.organization.org_optionc_id }}</td>
+							<td>{{ order.atr_del_pick_addresss }}</td>
 							<td>
 								<a
 									:href="'/admin/orders/' + order.id"
 									class="btn btn-sm btn-success"
-									>Voew Order</a
+									>View Order</a
 								>
 							</td>
 						</tr>
@@ -196,7 +196,7 @@
 					maxDate: moment(),
 					// showTodayButton : true,
 				},
-                json_fields: {
+				json_fields: {
 					"Order Id": "id",
 					"Order Date": "atr_date_label",
 					"Customer Name": {
@@ -205,8 +205,43 @@
 							return value.full_name;
 						},
 					},
+                    "Customer Phone": {
+						field: "user",
+						callback: (value) => {
+							return `(${value.contact_number_type}) ${value.contact_number}`;
+						},
+					},
+                    "Customer Address":"user.atr_full_address2",
 					"Order Cost": "atr_subscription_overall_total_amount_f",
 					"Organization ID": "organization.org_optionc_id",
+					"Del Method": {
+						field: "is_pickup",
+						callback: (value) => {
+							if (value == 1) {
+								return "Pick-up";
+							} else {
+								return "Deliver";
+							}
+						},
+					},
+                    "Delivery Fee": "delivery_fee",
+					Address: "atr_del_pick_addresss",
+
+					Products: {
+						field: "order_products",
+						callback: (value) => {
+							var str = "";
+							if (value) {
+								var arr = value;
+								arr.forEach((element) => {
+									str =
+										str +
+										`(sku:${element.atr_product_details.sku}) ${element.atr_product_details.name} -  qty: ${element.updated_quantity}/${element.atr_product_details.unit} ~~~~ \n`;
+								});
+							}
+							return str;
+						},
+					},
 				},
 			};
 		},
