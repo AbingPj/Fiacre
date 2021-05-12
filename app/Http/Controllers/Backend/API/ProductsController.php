@@ -157,7 +157,8 @@ class ProductsController extends Controller
             $bundle = new ProductBundle;
             $bundle->bundle_id = $product->id;
             $bundle->product_id = $value->id;
-            $bundle->quantity = intval($value->qty);
+            // $bundle->quantity = intval($value->qty);
+            $bundle->quantity = $value->qty;
             $bundle->save();
         }
 
@@ -221,7 +222,8 @@ class ProductsController extends Controller
                 $bundle = new ProductBundle;
                 $bundle->bundle_id = $product->id;
                 $bundle->product_id = $value->id;
-                $bundle->quantity = intval($value->qty);
+                // $bundle->quantity = intval($value->qty);
+                $bundle->quantity = $value->qty;
                 $bundle->save();
             }
 
