@@ -54,7 +54,7 @@
                                        :no-drop="false"
                                        :push-tags="true"
                                        :select-on-tab="true"
-                                       placeholder="Search Organization"
+                                       placeholder="Search here"
                                  ></v-select>
 											<div v-if="error_message" class="text-danger">
 												{{ error_message }}

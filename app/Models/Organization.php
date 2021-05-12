@@ -53,7 +53,7 @@ class Organization extends Model
 
 
         $nameAndOptionC =
-            $this->org_name . '(' . $this->org_cityprov . ', ' . $this->org_state . ', ' . $this->org_zipcode . ')';
+            $this->org_name . '(' . $this->org_cityprov . ', ' . $this->org_state . ', ' . $this->org_zipcode . ') ['.$this->org_optionc_id.']';
 
         return $nameAndOptionC;
     }

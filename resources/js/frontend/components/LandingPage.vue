@@ -75,7 +75,7 @@
         </a>
       </b-nav>
       <b-nav justified align="center" class="bg-transparent">
-        <b-nav-text class="text-secondary p-3 mr-3">© 2021 Copyright, fiacrefoods.com</b-nav-text>
+        <b-nav-text class="text-secondary p-3 mr-3">© 2021 Copyright, oheavenly.com</b-nav-text>
       </b-nav>
     </div>
   </div>

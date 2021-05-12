@@ -149,7 +149,8 @@ class ProductsController extends Controller
                 // $value->member_price = $value->getBundlePrice('member');
                 // $value->wholesale_price = $value->getBundlePrice('wholesale');
                 $selected = [];
-                $bundle_products = ProductBundle::where('bundle_id', $value->id)->where('product_id', '!=', 131)->get();
+
+                $bundle_products = ProductBundle::where('bundle_id', $value->id)->where('product_id', '!=', 113)->get();
                 foreach ($bundle_products as $key2 => $value2) {
                     $prod = Product::find($value2->product_id);
                     if (!empty($prod)) {
