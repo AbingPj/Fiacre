@@ -87,6 +87,7 @@
 	<div class="cart-container bg-white border-0">
 		<div class="col-md-12 cart-header">
 			<h5 class="text-secondary">ORDER SUMMARY</h5>
+			<hr>
 		</div>
 		<div class="col-md-12 text-center">
 			<button

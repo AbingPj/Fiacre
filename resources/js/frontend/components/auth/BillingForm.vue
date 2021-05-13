@@ -383,7 +383,7 @@
 
                              <md-card-content>
 								<div class="p-3 org-select">
-									<b>Enter Your Organization(School/Parish) ID:</b>
+									<b>Enter Your School/Parish:</b>
 									<br />
                                      <v-select
                                        v-model="optionc_id"
@@ -403,7 +403,7 @@
                                        :no-drop="false"
                                        :push-tags="true"
                                        :select-on-tab="true"
-                                       placeholder="Search Organization"
+                                       placeholder="Search School/Parish"
                                  ></v-select>
 								</div>
 							</md-card-content>

@@ -56,7 +56,7 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <p>No. of Subscription Products</p>
+                      <p>No. of Products</p>
                       <p>{{order.number_of_products}}</p>
                     </div>
                     <!-- <div class="text-center">
@@ -78,15 +78,16 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6">
-                      Organization:
-                      <br>
+                      Parish/Church:
                       <b> {{order.organization.org_name}}</b>
                       <br />
+                      Expected Delivery Date:
+                      <b>{{order.atr_expected_delivery_date}}</b>
                       <br />
                       <a
                         style="color:#339f25;"
                         :href="'/order/'+order.id"
-                      >Details to see the Order Summary</a>
+                      >Click here to see Order Details</a>
                     </div>
                     <div class="col-md-6">
                       <!-- <div class="float-right" :style="'color:'+setStatusColor(order.status)">

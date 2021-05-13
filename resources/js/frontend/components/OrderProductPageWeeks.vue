@@ -10,9 +10,9 @@
 				<h2 style="color: #339f25">
 					{{ order_product.product_details.name }}
 				</h2>
-				<h5>Organization: {{ order.organization.org_name }}</h5>
+				<h5>School/Parish: {{ order.organization.org_name }}</h5>
 				<h6>
-					<i>Org. Address: {{ order.organization.atr_address }}</i>
+					<i>Address: {{ order.organization.atr_address }}</i>
 				</h6>
 			</div>
 		</div>

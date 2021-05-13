@@ -25,22 +25,22 @@
 							<b>Order #{{ order.id }}</b>
 							<download-excel
 								:footer="[
-									`sub total:    ${order.atr_subscription_total_amount_f}`,
-									`tx: ${order.billing_type}(${order.billing_type_percentage}) +    ${order.atr_billing_amount_f}`,
-									`referral discount: -     ${order.atr_referral_amount_f}`,
+									`Sub-total:    ${order.atr_subscription_total_amount_f}`,
+									`Tax: ${order.billing_type}(${order.billing_type_percentage}) +    ${order.atr_billing_amount_f}`,
+									`Referral discount: -     ${order.atr_referral_amount_f}`,
 									`Delivey Fee: -     ${order.delivery_fee}`,
 									`Total:     ${order.atr_subscription_overall_total_amount_f}`,
 									`-`,
 									`Customer: ${user.full_name}`,
-									`Organization: ${order.organization.org_name}`,
+									`School/Parish: ${order.organization.org_name}`,
 									`-`,
 									`${OrAddress}`,
 									`${OrDate}`,
 									`-`,
 								]"
 								:header="[
-									`Order id:${order.id}`,
-									`date: ${order.date_label}`,
+									`Order ID:${order.id}`,
+									`Order Date: ${order.date_label}`,
 								]"
 								class="btn btn-success float-right mx-1"
 								:fields="json_fields"
@@ -54,22 +54,22 @@
 							</download-excel>
 							<download-excel
 								:footer="[
-									`sub total:,,,,, ${order.atr_subscription_total_amount_f}`,
-									`tx: ${order.billing_type}(${order.billing_type_percentage}%) + ,,,,, ${order.atr_billing_amount_f}`,
-									`referral discount: - ,,,,,  ${order.atr_referral_amount_f}`,
+									`Sub-Total:,,,,, ${order.atr_subscription_total_amount_f}`,
+									`Tax: ${order.billing_type}(${order.billing_type_percentage}%) + ,,,,, ${order.atr_billing_amount_f}`,
+									`Referral Discount: - ,,,,,  ${order.atr_referral_amount_f}`,
 									`Delivery Fee: - ,,,,,  ${order.delivery_fee}`,
 									`Total: ,,,,,${order.atr_subscription_overall_total_amount_f}`,
 									`-`,
 									`Customer: ${user.full_name}`,
-									`Organization: ${order.organization.org_name}`,
+									`School/Parish: ${order.organization.org_name}`,
 									`-`,
 									`${OrAddress}`,
 									`${OrDate}`,
 									`-`,
 								]"
 								:header="[
-									`Order id:${order.id}`,
-									`date: ${order.date_label}`,
+									`Order ID:${order.id}`,
+									`Order Date: ${order.date_label}`,
 								]"
 								class="btn btn-success float-right mx-1"
 								:fields="json_fields"

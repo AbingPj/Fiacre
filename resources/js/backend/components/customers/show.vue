@@ -1,148 +1,174 @@
 <template>
-<div class="flex-grow-1 vue-material-wrapper">
-  <b-container class="py-5">
-    <div class="row">
-      <div class="col-md-12">
-        <h2 class="card-title mb-0">
-          <div class="d-flex">
-            <div class="mr-2">
-              <a href="/admin/customers" class="btn btn-success float-right rounded-0 text-light">
-                <i class="fas fa-chevron-circle-left"></i>
-              </a>
-            </div>
-            <div>Customer Profile</div>
-            <div class="ml-auto">
-              <!-- <a
+  <div class="flex-grow-1 vue-material-wrapper">
+    <b-container class="py-5">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="card-title mb-0">
+            <div class="d-flex">
+              <div class="mr-2">
+                <a
+                  href="/admin/customers"
+                  class="btn btn-success float-right rounded-0 text-light"
+                >
+                  <i class="fas fa-chevron-circle-left"></i>
+                </a>
+              </div>
+              <div>Customer Profile</div>
+              <div class="ml-auto">
+                <!-- <a
                   :href="'/admin/emails?email='+propscustomer.email"
                   class="btn btn-success float-right"
                 >
                   <i class="fas fa-envelope mr-2"></i>Send Email
                 </a> -->
+              </div>
+              <!-- <div></div> -->
             </div>
-            <!-- <div></div> -->
-          </div>
-        </h2>
-        <br />
-        <!-- <h3 class="text-success">
+          </h2>
+          <br />
+          <!-- <h3 class="text-success">
             <b>Order #{{order.id}}</b>
           </h3>-->
+        </div>
       </div>
-    </div>
-    <br />
-    <br />
-    <p class="font-weight-bold">This profile is cannot be edited.</p>
-    <br />
-    <b-row>
-      <b-col md="8">
-        <b-row>
-          <b-col md="3">
-            <img :src="propscustomer.image_path" class="w-100" />
-          </b-col>
-          <b-col>
-            <h4 class="font-weight-bold">User Information</h4>
-            <b-row>
-              <b-col md="10">
-                <md-field>
-                  <label>Email</label>
-                  <md-input :value="propscustomer.email" disabled></md-input>
-                </md-field>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col md="2">
-                <md-field>
-                  <label>Title</label>
-                  <md-input :value="propscustomer.title" disabled></md-input>
-                </md-field>
-              </b-col>
-              <b-col md="5">
-                <md-field>
-                  <label>First Name</label>
-                  <md-input :value="propscustomer.first_name" disabled></md-input>
-                </md-field>
-              </b-col>
-              <b-col md="5">
-                <md-field>
-                  <label>Last Name</label>
-                  <md-input :value="propscustomer.last_name" disabled></md-input>
-                </md-field>
-              </b-col>
-            </b-row>
-            <md-field>
-              <label>Address</label>
-              <md-input :value="propscustomer.street_address" disabled></md-input>
-            </md-field>
-            <b-row>
-              <b-col md="4">
-                <md-field>
-                  <label>City</label>
-                  <md-input :value="propscustomer.city" disabled></md-input>
-                </md-field>
-              </b-col>
-              <b-col md="4">
-                <md-field>
-                  <label>State</label>
-                  <md-input :value="propscustomer.state" disabled></md-input>
-                </md-field>
-              </b-col>
-              <b-col md="4">
-                <md-field>
-                  <label>Zip</label>
-                  <md-input :value="propscustomer.zipcode" disabled></md-input>
-                </md-field>
-              </b-col>
-            </b-row>
-            <md-field>
-              <label>Contact Number</label>
-              <md-input :value="'[ '+propscustomer.contact_number_type+' ] '+propscustomer.contact_number" disabled></md-input>
-            </md-field>
+      <br />
+      <br />
+      <p class="font-weight-bold">This profile is cannot be edited.</p>
+      <br />
+      <b-row>
+        <b-col md="8">
+          <b-row>
+            <b-col md="3">
+              <img :src="propscustomer.image_path" class="w-100" />
+            </b-col>
+            <b-col>
+              <h4 class="font-weight-bold">User Information</h4>
+              <b-row>
+                <b-col md="10">
+                  <md-field>
+                    <label>Email</label>
+                    <md-input :value="propscustomer.email" disabled></md-input>
+                  </md-field>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col md="2">
+                  <md-field>
+                    <label>Title</label>
+                    <md-input :value="propscustomer.title" disabled></md-input>
+                  </md-field>
+                </b-col>
+                <b-col md="5">
+                  <md-field>
+                    <label>First Name</label>
+                    <md-input
+                      :value="propscustomer.first_name"
+                      disabled
+                    ></md-input>
+                  </md-field>
+                </b-col>
+                <b-col md="5">
+                  <md-field>
+                    <label>Last Name</label>
+                    <md-input
+                      :value="propscustomer.last_name"
+                      disabled
+                    ></md-input>
+                  </md-field>
+                </b-col>
+              </b-row>
+              <md-field>
+                <label>Address</label>
+                <md-input
+                  :value="propscustomer.street_address"
+                  disabled
+                ></md-input>
+              </md-field>
+              <b-row>
+                <b-col md="4">
+                  <md-field>
+                    <label>City</label>
+                    <md-input :value="propscustomer.city" disabled></md-input>
+                  </md-field>
+                </b-col>
+                <b-col md="4">
+                  <md-field>
+                    <label>State</label>
+                    <md-input :value="propscustomer.state" disabled></md-input>
+                  </md-field>
+                </b-col>
+                <b-col md="4">
+                  <md-field>
+                    <label>Zip</label>
+                    <md-input
+                      :value="propscustomer.zipcode"
+                      disabled
+                    ></md-input>
+                  </md-field>
+                </b-col>
+              </b-row>
+              <md-field>
+                <label>Contact Number</label>
+                <md-input
+                  :value="
+                    '[ ' +
+                    propscustomer.contact_number_type +
+                    ' ] ' +
+                    propscustomer.contact_number
+                  "
+                  disabled
+                ></md-input>
+              </md-field>
 
-            <div v-if="userType === '3'">
-              <h4 class="font-weight-bold">Business Information</h4>
-              <b-row>
-                <b-col md="4">
-                  <img :src="business_image" class="w-100" />
-                </b-col>
-              </b-row>
-              <md-field>
-                <label>Position / Designation</label>
-                <md-input v-model="business_designation" disabled></md-input>
-              </md-field>
-              <md-field>
-                <label>Organization / Business Name</label>
-                <md-input v-model="business_name" disabled></md-input>
-              </md-field>
-              <md-field>
-                <label>Business Street Address</label>
-                <md-input v-model="business_street_address" disabled></md-input>
-              </md-field>
-              <b-row>
-                <b-col md="4">
-                  <md-field>
-                    <label>Business City</label>
-                    <!-- <md-select v-model="business_city" disabled></md-select> -->
-                    <md-input v-model="business_city" disabled></md-input>
-                  </md-field>
-                </b-col>
-                <b-col md="4">
-                  <md-field>
-                    <label>Business State</label>
-                    <!-- <md-select v-model="business_state" disabled></md-select> -->
-                    <md-input v-model="business_state" disabled></md-input>
-                  </md-field>
-                </b-col>
-                <b-col md="4">
-                  <md-field>
-                    <label>Business Zip</label>
-                    <md-input v-model="business_zipcode" disabled></md-input>
-                  </md-field>
-                </b-col>
-              </b-row>
-            </div>
-          </b-col>
-        </b-row>
-      </b-col>
-      <!--
+              <div v-if="userType === '3'">
+                <h4 class="font-weight-bold">Business Information</h4>
+                <b-row>
+                  <b-col md="4">
+                    <img :src="business_image" class="w-100" />
+                  </b-col>
+                </b-row>
+                <md-field>
+                  <label>Position / Designation</label>
+                  <md-input v-model="business_designation" disabled></md-input>
+                </md-field>
+                <md-field>
+                  <label>Organization / Business Name</label>
+                  <md-input v-model="business_name" disabled></md-input>
+                </md-field>
+                <md-field>
+                  <label>Business Street Address</label>
+                  <md-input
+                    v-model="business_street_address"
+                    disabled
+                  ></md-input>
+                </md-field>
+                <b-row>
+                  <b-col md="4">
+                    <md-field>
+                      <label>Business City</label>
+                      <!-- <md-select v-model="business_city" disabled></md-select> -->
+                      <md-input v-model="business_city" disabled></md-input>
+                    </md-field>
+                  </b-col>
+                  <b-col md="4">
+                    <md-field>
+                      <label>Business State</label>
+                      <!-- <md-select v-model="business_state" disabled></md-select> -->
+                      <md-input v-model="business_state" disabled></md-input>
+                    </md-field>
+                  </b-col>
+                  <b-col md="4">
+                    <md-field>
+                      <label>Business Zip</label>
+                      <md-input v-model="business_zipcode" disabled></md-input>
+                    </md-field>
+                  </b-col>
+                </b-row>
+              </div>
+            </b-col>
+          </b-row>
+        </b-col>
+        <!--
       <b-col>
         <md-card class="mb-4">
           <md-card-content>
@@ -170,37 +196,34 @@
         </md-card>
       </b-col>
       -->
-      <b-col>
-        <md-card class="mb-4">
+        <b-col>
+          <md-card class="mb-4">
             <md-card-content>
-                <div class="p-3">
-						Selected Organization
-
-						<br />
-                        <div v-if="org.org_name">
-                             <br />
-                                <span>
-                                    name: <b>{{ org.org_name }}</b></span
-                                >
-                                <br />
-                                <span>
-                                    optionC id:<b>{{
-                                        org.org_optionc_id
-                                    }}</b></span>
-                         </div>
-                        <div v-else>
-                            <br />
-                             <b>The customer did not select an organization yet.</b>
-                        </div>
-						<br />
-
-				</div>
+              <div class="p-3">
+                Selected School/Parish
+                <br />
+                <div v-if="org.org_name">
+                  <br />
+                  <span>
+                    name: <b>{{ org.org_name }}</b></span
+                  >
+                  <br />
+                  <span>
+                    optionC id: <b>{{ org.org_optionc_id }}</b></span
+                  >
+                </div>
+                <div v-else>
+                  <br />
+                  <b>The customer did not select an organization yet.</b>
+                </div>
+                <br />
+              </div>
             </md-card-content>
-        </md-card>
-      </b-col>
-    </b-row>
-  </b-container>
-</div>
+          </md-card>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -210,7 +233,7 @@ export default {
     return {
       //   selectedAmount: this.propscustomer.sunclub_choice_id,
       //   userType: this.propscustomer.customer_role
-      org:{},
+      org: {},
       selectedAmount: 1,
       userType: 2,
       business_image: "",
@@ -224,8 +247,8 @@ export default {
   },
 
   created() {
-    if(this.organization){
-            this.org = this.organization;
+    if (this.organization) {
+      this.org = this.organization;
     }
 
     this.selectedAmount = "" + this.propscustomer.sunclub_choice_id;

@@ -412,7 +412,7 @@ export default {
   data() {
     return {
       search: "",
-      display: "box",
+      display: "list",
       products: [],
       cart: [],
       categories: [],

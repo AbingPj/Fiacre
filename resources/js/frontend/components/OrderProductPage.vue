@@ -270,7 +270,7 @@
                 <table class="table">
                   <tbody>
                     <tr>
-                      <td colspan="2">Organization:
+                      <td colspan="2">School/Parish:
                            <br>
                             <b>{{order.organization.org_name}}</b>
                           <br>
@@ -333,8 +333,12 @@
                       </td>
                     </tr>
                     <tr class="table-light">
-                      <td></td>
-                      <td></td>
+                      <td>
+                        Expected Delivery Date:
+                      </td>
+                      <td>
+                        <b>{{order.atr_expected_delivery_date}}</b>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
