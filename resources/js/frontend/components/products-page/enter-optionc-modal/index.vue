@@ -198,11 +198,11 @@
 					.catch((err) => {
 						if (err.response) {
 							if (err.response.status == 422) {
-								this.error_message = "Please enter your optionC school id";
+								this.error_message = "Please select school/parish first.";
 							} else if (err.response.status == 404) {
 								// console.log(err.response.status)
 								this.error_message =
-									"Sorry, your school is not yet registered";
+									"Sorry, your school/parish is not yet registered";
 							} else {
 								alert("Something Went Wrong");
 							}
