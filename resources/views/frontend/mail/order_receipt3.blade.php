@@ -101,7 +101,7 @@
                 <td>
                     {{$billing_type}}
                 </td>
-                <td>{{$billing_method_price}}</th>
+                <td>{{$billing_method_price}}</td>
             </tr>
             <tr style="border-collapse:collapse; height:30px;">
                 <td></td>
@@ -110,7 +110,7 @@
                 <td>
                    Referral Amount
                 </td>
-                <td>-{{$order->referral_amount}}</th>
+                <td>-{{$order->referral_amount}}</td>
             </tr>
             <tr style="border-collapse:collapse; height:30px;">
                 <td></td>
@@ -119,15 +119,15 @@
                 <td>
                    Delivery Fee
                 </td>
-                <td>{{$order->deliver_fee}}</th>
+                <td>{{$order->deliver_fee}}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                     <td  style="width:75px;"></td>
                     <td></td>
                     <td></td>
                     <td>TAX</td>
                     <td class="sun-text-right"> + {{number_format($class->order->atr_total_tax,2)}}</th>
-                </tr>
+                </tr> --}}
             <tr style="border-collapse:collapse; height:30px;">
                 <td></td>
                 <td></td>
