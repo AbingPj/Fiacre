@@ -84,7 +84,8 @@
         <br>
         <br>Expected Delivery Date:
         <b>{{$class->order->atr_expected_delivery_date}}</b>
-
+        <br>
+        School/Parish Recipient:<b>{{order->organization}}</b>
     </p>
     {{-- <p class="sun-text-left">(printed: {{$class->printed}})</p> --}}
     <br>
@@ -114,21 +115,30 @@
                 <td style="width:75px;"></td>
                 <td></td>
                 <td></td>
-                <td>Sub - Total</td>
+                <td>Order Amount</td>
                 <td class="sun-text-right">{{$class->order->atr_total_amount_f}}</td>
             </tr>
-                <tr>
+            <tr style="border-collapse:collapse; height:30px;">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    {{$billing_type}}
+                </td>
+                <td>{{$billing_method_price}}</th>
+            </tr>
+                <!-- <tr>
                     <td  style="width:75px;"></td>
                     <td></td>
                     <td></td>
                     <td>Discount ({{$class->order->discount_percentage}} %)</td>
                     <td class="sun-text-right">  -  {{$class->order->atr_discount_f}}</th>
-                </tr>
-                <tr>
+                </tr> -->
+                <!-- <tr>
                     <td  style="width:75px;"></td>
                     <td></td>
                     <td></td>
-                    <td> Coupon Discount
+                    <td> Coupon Discount 
                         <br>
                         @if($class->order->has_coupon)
 
@@ -146,6 +156,15 @@
 
                     </td>
                     <td class="sun-text-right">  -  {{$class->order->atr_coupon_discount_f}}</th>
+                </tr> -->
+                <tr style="border-collapse:collapse; height:30px;">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                    Referral Amount
+                    </td>
+                    <td>-{{$order->referral_amount}}</th>
                 </tr>
                 <tr>
                     <td  style="width:75px;"></td>
@@ -154,18 +173,18 @@
                     <td>Delivery Fee</td>
                     <td class="sun-text-right"> + {{number_format($class->order->delivery_fee,2)}}</th>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td  style="width:75px;"></td>
                     <td></td>
                     <td></td>
                     <td>TAX</td>
                     <td class="sun-text-right"> + {{number_format($class->order->atr_total_tax,2)}}</th>
-                </tr>
+                </tr> -->
                <tr>
                     <th  style="width:75px;"></th>
                     <th></th>
                     <th></th>
-                    <th>Total</th>
+                    <th>Total Amount</th>
                     <th class="sun-text-right">$ {{$class->order->atr_overall_total_f}}</th>
                </tr>
           </tfoot>

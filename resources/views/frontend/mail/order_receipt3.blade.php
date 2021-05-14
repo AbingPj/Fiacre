@@ -34,15 +34,15 @@
     <br />
     <h1 style="text-align:center"><b>Order Confirmation</b></h1>
     <hr />
-     <p>Hello <b>{{$customer_name}}</b></p>
+     <p>Hello <b>{{$customer_name}}</b>,</p>
     <br />
     <p>
-    Thank you for your purchase. This email confirms your order.
-    <br />
+    Thank you for your purchase. This email confirms your order.</p>
+    <p>
     While we get your order ready, please just double check the details below and let us know if anything needs changing.
     </p>
     <h2> ORDER NO.  #{{$order_number}}</h2>
-    <h2> ORDER DATE <b>{{$order_date}}</b></h2>
+    <h3> ORDER DATE {{$order_date}}</b></h3>
     <br>
     <h2>Your Order</h2>
     <table class="table">
@@ -50,7 +50,7 @@
             <tr>
                 <th style="text-align:left" width="60px" >Item</th>
                 <th style="text-align:left"></th>
-                <th style="text-align:left">Ammount</th>
+                <th style="text-align:left">Amount</th>
                 <th style="text-align:left"></th>
                 <th style="text-align:left">Total</th>
             </tr>
@@ -87,23 +87,6 @@
             </td>
             <td>{{$item->price}}</td>
             <td>{{$item->price * $item->updated_quantity}}</td> --}}
-
-
-            {{-- <tr>
-                <td>
-                    <img class="cart-item-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRVh6t-D6yOEQ2lpI_uNJMIm_RXSPlQXf1HCl4CsIkcIRlQHb7_&usqp=CAU">
-                </td>
-                <td>
-                    Product 1
-                    <br>
-                    #123sad123
-                </td>
-                <td>
-                    10
-                </td>
-                <td>80</td>
-                <td>800</td>
-            </tr> --}}
             <tr style="border-collapse:collapse; height:30px;">
                 <td></td>
                 <td></td>
@@ -125,10 +108,26 @@
                 <td></td>
                 <td></td>
                 <td>
-                   Discount
+                   Referral Amount
                 </td>
-                <td>{{$order->referral_amount}}</th>
+                <td>-{{$order->referral_amount}}</th>
             </tr>
+            <tr style="border-collapse:collapse; height:30px;">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                   Delivery Fee
+                </td>
+                <td>{{$order->deliver_fee}}</th>
+            </tr>
+            <tr>
+                    <td  style="width:75px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td>TAX</td>
+                    <td class="sun-text-right"> + {{number_format($class->order->atr_total_tax,2)}}</th>
+                </tr>
             <tr style="border-collapse:collapse; height:30px;">
                 <td></td>
                 <td></td>
@@ -140,7 +139,8 @@
     </table>
     <br>
     <p>
-    {{-- Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b> --}}
+    School/Parish Recipient:<b>{{order->organization}}</b>
+    Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b>
     </p>
     <br>
     <p>
@@ -153,7 +153,7 @@
     <h2>
         <b>Thanks for shopping with us!</b>
     </h2>
-    <p>You can check the status of your orders at any time on our Orders Page .</p>
+    <p>You can check the status of your orders at any time on your Orders Page .</p>
     <br>
     <p>We welcome you to our store anytime. If you need assistance or have any questions,
     please email us at

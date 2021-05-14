@@ -118,14 +118,18 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>Discount({{$discount_percentage}}%)</td>
-                <td>- {{$discount}}</td>
+                <!-- <td>Discount({{$discount_percentage}}%)</td> -->
+                <!-- <td>- {{$discount}}</td> -->
+                <td>
+                    {{$billing_type}}
+                </td>
+                <td>{{$billing_method_price}}</th>
             </tr>
             <tr style="border-collapse:collapse; height:30px;">
                 <td></td>
                 <td></td>
                 <td></td>
-                <td> Coupon Discount
+                <td> Referral Amount
                     <br>
                     @if($order->has_coupon)
 
