@@ -188,18 +188,20 @@
               >
               </os-fiacre>
             </div>
-
+            <div
+              class="col-md-12 text-left place-order-btn-container mt-auto"
+            >
+              <p>
+                <input type="checkbox" id="checkDonate" v-model="checkDonate" />
+                 By checking this box, a portion of this order will be donated to your chosen school or parish.
+              </p>
+            </div>
             <div
               class="col-md-12 text-center place-order-btn-container mt-auto"
             >
               <h6 v-if="guest == 0" class="text-danger">
                 {{ errorMessage }}
-              </h6>
-              <p>
-                Make a donation?
-                <input type="checkbox" id="checkDonate" v-model="checkDonate" />
-                <!-- <label for="checkDonate">{{ checkDonate }}</label> -->
-              </p>
+              </h6>              
               <button
                 type="button"
                 class="btn btn-lg btn-primary w-100"

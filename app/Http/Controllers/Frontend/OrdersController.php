@@ -210,7 +210,7 @@ class OrdersController extends Controller
 
         $date = new Carbon($order->date);
         $order->date_label =  $date->format('m/d/Y');
-
+        $organization = $order->organization;
         $user = User::find($order->order_by);
 
         if ($order->order_by == 0) {
@@ -262,7 +262,7 @@ class OrdersController extends Controller
         $class->order = $order;
         $class->totalamount = number_format($totalamount, 2);
         $class->printed = Carbon::now()->format('F d, Y');
-
+        $class->org = $organization;
         return $class;
     }
 }

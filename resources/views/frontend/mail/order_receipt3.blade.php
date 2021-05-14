@@ -165,8 +165,7 @@
     </p>
     <br>
     <br>
-    © {{$online_store_name}} <br>
-     {{$online_store_address}}
+    © {{$online_store_name}}
 
     @include('beautymail::templates.sunny.contentEnd')
 

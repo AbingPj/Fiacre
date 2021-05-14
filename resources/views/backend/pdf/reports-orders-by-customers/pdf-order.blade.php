@@ -85,7 +85,7 @@
         <br>Expected Delivery Date:
         <b>{{$class->order->atr_expected_delivery_date}}</b>
         <br>
-        School/Parish Recipient:<b>{{order->organization}}</b>
+        {{-- School/Parish Recipient:<b>{{class->org}}</b> --}}
     </p>
     {{-- <p class="sun-text-left">(printed: {{$class->printed}})</p> --}}
     <br>
