@@ -778,7 +778,7 @@ export default {
           }
         }
       } else {
-        this.errorMessage = "You Dont Have Selected Products.";
+        this.errorMessage = "Please select a product first.";
         window.scrollTo(0, 0);
       }
     },
