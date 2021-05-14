@@ -415,7 +415,7 @@
 				if (this.cart.length > 0) {
 					this.fiacreCustomerOrder();
 				} else {
-					this.errorMessage = "You Dont Have Selected Products.";
+					this.errorMessage = "Please shop for products first.";
 					window.scrollTo(0, 0);
 					LoadingOverlayHide();
 					this.placeorderButtonDisabled = false;

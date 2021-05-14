@@ -139,8 +139,8 @@
     </table>
     <br>
     <p>
-    <!-- School/Parish Recipient: <b>{{order->organization}}</b> -->
-    Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b>
+    {{-- School/Parish Recipient: <b>{{order->organization}}</b> --}}
+    {{-- Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b> --}}
     </p>
     <br>
     <p>
