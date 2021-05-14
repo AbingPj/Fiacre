@@ -89,7 +89,7 @@
 		<div class="row">
 			<div class="col-sm-12 cart-items">
 				<div v-if="cart.length == 0" class="text-center mt-5">
-					<h3>You Dont Have Selected Products.</h3>
+					<h3>Please select a product first.</h3>
 					<h5>
 						<a href="/products">Back To Products</a>
 					</h5>
