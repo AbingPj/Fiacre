@@ -119,7 +119,7 @@
                 <td>
                    Delivery Fee
                 </td>
-                <td>{{$order->deliver_fee}}</td>
+                <td>{{$order->delivery_fee}}</td>
             </tr>
             {{-- <tr>
                     <td  style="width:75px;"></td>
@@ -139,7 +139,7 @@
     </table>
     <br>
     <p>
-    Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b>
+    {{-- Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b> --}}
     </p>
     <br>
     <p>

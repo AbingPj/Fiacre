@@ -264,7 +264,7 @@ class FiacrePlaceOrderController extends Controller
                     if ($order->referral_amount >= $totalAmount) {
                         DB::rollBack();
                         return response()->json([
-                            "data_message" => "Order Amount must be heigher than Referral Amount. Please shop more."
+                            "data_message" => "Order amount must be higher than referral amount. Please shop more."
                         ], 422);
                     }
 
