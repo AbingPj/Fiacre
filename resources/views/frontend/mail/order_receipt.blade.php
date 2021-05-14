@@ -118,8 +118,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <!-- <td>Discount({{$discount_percentage}}%)</td> -->
-                <!-- <td>- {{$discount}}</td> -->
+                {{-- <td>Discount({{$discount_percentage}}%)</td>
+                <td>- {{$discount}}</td> --}}
                 <td>
                     {{$billing_type}}
                 </td>
