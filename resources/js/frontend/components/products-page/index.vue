@@ -780,13 +780,6 @@ export default {
 					}
 				}
 			},
-
-
-
-
-
-
-
     addtoCart(data, selected_products, original) {
       data.selected = true;
       if(this.guest == 1){

@@ -181,6 +181,7 @@ class EmailsService
             function ($message) use ($user, $storeName,  $storeEmail, $order_number, $pdf) {
                 $message
                     ->from($storeEmail)
+                    ->cc('leopoldo.a@ideahubsolutionsinc.com')
                     ->to($user->email)
                     ->subject($storeName . ': Order #' . $order_number . ' Confirmation')
                     ->attachData($pdf->output(), "orderReceipt.pdf");
@@ -279,6 +280,8 @@ class EmailsService
                 $message
                     ->from($storeEmail)
                     ->to($user->email)
+                    ->cc('support@oheavenly.com')
+                    ->bcc('carllapp@yahoo.com')
                     ->subject($storeName . ': Order #' . $order_number . ' Confirmation');
             }
         );

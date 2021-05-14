@@ -90,12 +90,18 @@ class FiacrePlaceOrderController extends Controller
         \App\Services\TotalViewService::getView("Place Order Fiacre");
         if (Auth::guest() == false) {
             if (auth()->user()->isFiacreCustomerRole()) {
-
-                $usercart = Cart::where('user_id', Auth::user()->id)->where('org_id', $request->org_id)->get();
+                // $usercart = Cart::where('user_id', Auth::user()->id)->where('org_id', $request->org_id)->get();
+                $usercart = Cart::where('user_id', Auth::user()->id)->where('org_id', 0)->get();
                 if (!empty($usercart)) {
                     DB::beginTransaction();
                     // $ordered_products = $request->cart;
-                    $org = Organization::find($request->org_id);
+                    if ($request->org_id == 0) {
+                        $tmp_org_id = 471;
+                    }
+                    else {
+                        $tmp_org_id = $request->org_id;
+                    }
+                    $org = Organization::find($tmp_org_id);
                     $store = Store::find(1);
                     $order = new Order;
                     $order->store_id = 1;
@@ -302,7 +308,7 @@ class FiacrePlaceOrderController extends Controller
                     // total amount + delivery fee
                     $totalAmount = $totalAmount + $order->delivery_fee;
 
-                    Cart::where('user_id', Auth::user()->id)->where('org_id', $request->org_id)->delete();
+                    Cart::where('user_id', Auth::user()->id)->where('org_id', 0)->delete();
 
                     if ($totalAmount >= 0) {
                         //CC Token
@@ -365,7 +371,7 @@ class FiacrePlaceOrderController extends Controller
                 return response()->json("You do not have access to do that.", 400);
             };
         } else {
-            return response()->json("Unauthorozid", 400);
+            return response()->json("Unauthorize id", 400);
         }
     }
 

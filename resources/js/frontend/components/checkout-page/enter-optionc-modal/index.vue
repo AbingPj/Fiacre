@@ -1,0 +1,330 @@
+<template>
+	<div
+		class="modal fade"
+		id="enterOptionCIdModal2"
+		tabindex="-1"
+		role="dialog"
+		aria-labelledby="enterOptionCIdModal2"
+		aria-hidden="true"
+		data-backdrop="static"
+	>
+		<div class="modal-dialog guest-payment-modaol-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body guest-payment-modal-body">
+					<div class="container product-container">
+						<div class="row">
+							<div class="col" style="padding: 0px !important">
+								<h5>
+									<i class="fas fa-sitemap"></i> Select School/Parish
+                                    <button
+										type="button"
+										class="btn-close float-right"
+										data-dismiss="modal"
+										aria-label="Close"
+									>
+										<i
+											class="fa fa-times-circle"
+											aria-hidden="true"
+										></i>
+									</button>
+								</h5>
+
+								<div class="my-5 mx-5">
+									<h6>Enter the School/Parish name/city/state/ID</h6>
+									<div class="row mb-2">
+										<div class="col-12">
+											<!-- <input
+												v-model="optionc_id"
+												class="form-control form-control-sm"
+												type="text"
+											/> -->
+											<v-select
+                                       v-model="optionc_id"
+                                       label="atr_name_with_optionc"
+                                       @search="searchOrgs"
+                                        :create-option="org => ({ atr_name_with_optionc: org, org_name:org, org_optionc_id:org  })"
+                                       :reduce="org => org.org_optionc_id"
+                                       :options="orgs"
+                                       :multiple="false"
+                                       :disabled="false"
+                                       :clearable="true"
+                                       :searchable="true"
+                                       :filterable="true"
+                                       :taggable="true"
+                                       :no-drop="false"
+                                       :push-tags="true"
+                                       :select-on-tab="true"
+                                       placeholder="Search here"
+                                 ></v-select>
+											<div v-if="error_message" class="text-danger">
+												{{ error_message }}
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="w-100 text-right mt-4">
+												<button
+													@click="select_org()"
+													class="btn btn-sm btn-info"
+												>
+													Select
+												</button>
+											</div>
+										</div>
+									</div>
+
+
+
+
+                                          <!-- <v-select
+                                            label="name"
+                                            v-model="address.state"
+                                            :reduce="state => state.id"
+                                            :options="states2"
+                                            :clearable="false"
+                                        ></v-select> -->
+
+
+
+                                    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Body -->
+			</div>
+		</div>
+		<!-- Modal Dialog -->
+	</div>
+</template>
+
+<script>
+	import cookies from "js-cookie";
+	export default {
+		props: ["guest", "user"],
+		mounted() {
+			// console.log("mounted");
+			// $("#enterOptionCIdModal2").modal("show");
+			$("#enterOptionCIdModal2").on("shown.bs.modal", function () {
+				$(document).off("focusin.modal");
+			});
+		},
+		created() {
+			// console.log("created");
+            this.getOrgs('');
+			if (this.guest == 0) {
+				if (this.user.organization) {
+                    this.optionc_id = this.user.organization.org_optionc_id;
+                    setTimeout(() => {
+                        // this.proceed();
+                    }, 500);
+				}
+			}
+		},
+		data() {
+			return {
+				optionc_id: null,
+				error_message: null,
+                 timer:null,
+                 timer2:null,
+                 orgs:[],
+			};
+		},
+		methods: {
+            searchOrgs(search, loading) {
+				if (this.timer2) {
+					clearTimeout(this.timer2);
+					this.timer2 = null;
+				}
+
+				this.timer2 = setTimeout(() => {
+					this.getOrgs(search);
+				}, 300);
+			},
+
+			async getOrgs(searching = null) {
+				let param;
+				param = {
+					search: searching,
+				};
+				await axios({
+					method: "get",
+					url: "/data/searchOrganization",
+					params: param,
+				}).then((res) => {
+					this.orgs = res.data;
+				});
+			},
+			select_org() {
+				this.error_message = null;
+				LoadingOverlay();
+				var data = {
+					optionc_id: this.optionc_id,
+				};
+				axios
+					.post(`/proceed/optioncid`, data)
+					.then((res) => {
+						this.$parent.org_id = res.data.id;
+						this.$parent.org_name = res.data.org_name;
+						this.$parent.fiacreCustomerOrder();
+						// var ff_org_id = cookies.get("ff-org-id");
+						// if (ff_org_id != res.data.id) {
+                        //     if (this.guest == 0) {
+                        //          this.$events.fire("updateCartBadge4", res.data.id);
+                        //     }else{
+                        //         var cart = [];
+						// 	    localStorage.setItem("cart", JSON.stringify(cart));
+						// 	    localStorage.setItem("cart_badge", cart.length);
+						// 	    this.$events.fire("updateCartBadge", "update cart");
+                        //     }
+						// }
+						// cookies.remove("ff-org-id");
+						// cookies.remove("ff-org-name");
+						// cookies.remove("ff-org-address");
+						// const expiryTime = new Date(new Date().getTime() + 86400 * 1000);
+						// cookies.set("ff-org-id", res.data.id, {
+						// 	expires: expiryTime,
+						// });
+						// cookies.set("ff-org-name", res.data.org_name, {
+						// 	expires: expiryTime,
+						// });
+						// cookies.set("ff-org-address", res.data.atr_address, {
+						// 	expires: expiryTime,
+						// });
+						// console.log(res);
+						// LoadingOverlayHide();
+						// $("#enterOptionCIdModal2").modal("hide");
+					})
+					.catch((err) => {
+						if (err.response) {
+							if (err.response.status == 422) {
+								this.error_message = "Please select school/parish first.";
+							} else if (err.response.status == 404) {
+								// console.log(err.response.status)
+								this.error_message =
+									// "Sorry, your school/parish is not yet registered. ";
+									"Don't see your school or parish? Contact us at support@oheavenly.com for consideration.";
+							} else {
+								alert("Something Went Wrong");
+							}
+						}
+						console.error(err);
+						LoadingOverlayHide();
+					});
+			},
+			proceed() {
+				this.error_message = null;
+				LoadingOverlay();
+				var data = {
+					optionc_id: this.optionc_id,
+				};
+				axios
+					.post(`/proceed/optioncid`, data)
+					.then((res) => {
+						this.$parent.org_id = res.data.id;
+						this.$parent.org_name = res.data.org_name;
+						this.$parent.getResults();
+						var ff_org_id = cookies.get("ff-org-id");
+						if (ff_org_id != res.data.id) {
+                            if (this.guest == 0) {
+                                 this.$events.fire("updateCartBadge4", res.data.id);
+                            }else{
+                                var cart = [];
+							    localStorage.setItem("cart", JSON.stringify(cart));
+							    localStorage.setItem("cart_badge", cart.length);
+							    this.$events.fire("updateCartBadge", "update cart");
+                            }
+						}
+						cookies.remove("ff-org-id");
+						cookies.remove("ff-org-name");
+						cookies.remove("ff-org-address");
+						const expiryTime = new Date(new Date().getTime() + 86400 * 1000);
+						cookies.set("ff-org-id", res.data.id, {
+							expires: expiryTime,
+						});
+						cookies.set("ff-org-name", res.data.org_name, {
+							expires: expiryTime,
+						});
+						cookies.set("ff-org-address", res.data.atr_address, {
+							expires: expiryTime,
+						});
+
+						// console.log(res);
+						LoadingOverlayHide();
+						$("#enterOptionCIdModal2").modal("hide");
+					})
+					.catch((err) => {
+						if (err.response) {
+							if (err.response.status == 422) {
+								this.error_message = "Please select school/parish first.";
+							} else if (err.response.status == 404) {
+								// console.log(err.response.status)
+								this.error_message =
+									// "Sorry, your school/parish is not yet registered. ";
+									"Don't see your school or parish? Contact us at support@oheavenly.com for consideration.";
+							} else {
+								alert("Something Went Wrong");
+							}
+						}
+						console.error(err);
+						LoadingOverlayHide();
+					});
+			},
+		},
+	};
+</script>
+
+<style>
+	/* .fade-enter-active,
+																					.fade-leave-active {
+																						transition: opacity 0.5s;
+																					}
+																					.fade-enter,
+																					.fade-leave-to {
+																						opacity: 0;
+																					}
+
+																					.slide-fade-enter-active {
+																						transition: all 0.3s ease;
+																					}
+																					.slide-fade-leave-active {
+																						transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+																					}
+																					.slide-fade-enter,
+																					.slide-fade-leave-to {
+																						transform: translateX(10px);
+																						opacity: 0;
+																					} */
+</style>
+
+<style lang="scss" scoped>
+	@import "resources/sass/mixins";
+
+	.guest-payment-modaol-dialog {
+		max-width: 550px;
+	}
+	.guest-payment-modal-body {
+		padding: 10px 10px;
+	}
+	// .product-container {
+	//   //   background-color: red;
+	//   position: relative;
+	//   padding: 0px;
+	// }
+	.btn-close {
+		//   position: absolute;
+		//   top: 10px;
+		//   right: 10px;
+		background: transparent;
+		border: 0px;
+		color: gray;
+		font-size: 20px;
+		padding: 0px;
+	}
+	.my-select {
+		padding: 0px;
+		margin: 0px;
+		border-top: 0px;
+		border-left: 0px;
+		border-right: 0px;
+	}
+</style>

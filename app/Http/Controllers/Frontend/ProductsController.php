@@ -98,8 +98,7 @@ class ProductsController extends Controller
         $org_id = (int) $request->org_id;
 
         if ($request->has('name') && $request->has('category')) {
-            $products = Product::productOrg($org_id)
-                ->with('category:id,name', 'sub_category:id,name')
+            $products = Product::with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.name', 'LIKE', "%$request->name%")
                 ->where('products.category_id', $request->category)
@@ -107,24 +106,21 @@ class ProductsController extends Controller
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('name')) {
-            $products = Product::productOrg($org_id)
-                ->with('category:id,name', 'sub_category:id,name')
+            $products = Product::with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.name', 'LIKE', "%$request->name%")
                 ->where('products.status', '!=', 3)
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else if ($request->has('category')) {
-            $products = Product::productOrg($org_id)
-                ->with('category:id,name', 'sub_category:id,name')
+            $products = Product::with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.category_id', $request->category)
                 ->where('products.status', '!=', 3)
                 ->OrderBy('products.created_at', 'DESC')
                 ->paginate(50);
         } else {
-            $products = Product::productOrg($org_id)
-                ->with('category:id,name', 'sub_category:id,name')
+            $products = Product::with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
                 ->where('products.status', '!=', 3)
                 ->OrderBy('products.created_at', 'DESC')
@@ -163,14 +159,14 @@ class ProductsController extends Controller
                 }
                 $value->selected_products = $selected;
             }
-
+            $value->is_subscription = 0;
             if ($request->has('org_id')) {
                 $value->weeks = $value->getSubcriptionWeeks($org_id);
                 if ($value->weeks == '-') {
                     $value->subscription_price = 'no subscription yet';
-                    $value->is_subscription = 0;
+                    // $value->is_subscription = 0;
                 } else {
-                    $value->is_subscription = 1;
+                    // $value->is_subscription = 1;
                     $value->recurring_is_disabled = true;
                     $subscription_price = $value->price * $value->weeks;
                     $value->subscription_price = round($subscription_price, 2);

@@ -103,7 +103,7 @@
 		props: ["guest", "user"],
 		mounted() {
 			// console.log("mounted");
-			$("#enterOptionCIdModal").modal("show");
+			// $("#enterOptionCIdModal").modal("show");
 			$("#enterOptionCIdModal").on("shown.bs.modal", function () {
 				$(document).off("focusin.modal");
 			});
@@ -115,7 +115,7 @@
 				if (this.user.organization) {
                     this.optionc_id = this.user.organization.org_optionc_id;
                     setTimeout(() => {
-                        this.proceed();
+                        // this.proceed();
                     }, 500);
 				}
 			}
