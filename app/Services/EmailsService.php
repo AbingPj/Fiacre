@@ -51,7 +51,7 @@ class EmailsService
             $data,
             function ($message) use ($user, $storeName) {
                 $message
-                    ->from('publicrelations@optionc.com')
+                    ->from('support@oheavenly.com')
                     ->to($user->email)
                     ->subject($storeName . ' Email Confirmation');
             }

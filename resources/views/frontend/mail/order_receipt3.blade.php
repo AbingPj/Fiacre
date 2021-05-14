@@ -28,26 +28,21 @@
           }
     </style>
 
-<div style="text-align:center;">
+<div style="text-align:center; background-color: #404040;">
     <img class="store-logo" src="{{$store_logo}}" alt="">
 </div>
-    <br>
+    <br />
     <h1 style="text-align:center"><b>Order Confirmation</b></h1>
-    <br>
+    <hr />
      <p>Hello <b>{{$customer_name}}</b></p>
-    <br>
+    <br />
     <p>
-    Thank you for your order with
-    <b>{{$online_store_name}}</b>
-     We have received your
-    order dated
-    <b>{{$order_date}}</b>
-     and will process it shortly.
+    Thank you for your purchase. This email confirms your order.
+    <br />
+    While we get your order ready, please just double check the details below and let us know if anything needs changing.
     </p>
-    <br>
-    <h2>
-        ORDER #{{$order_number}}
-    </h2>
+    <h2> ORDER NO.  #{{$order_number}}</h2>
+    <h2> ORDER DATE <b>{{$order_date}}</b></h2>
     <br>
     <h2>Your Order</h2>
     <table class="table">
@@ -55,7 +50,7 @@
             <tr>
                 <th style="text-align:left" width="60px" >Item</th>
                 <th style="text-align:left"></th>
-                <th style="text-align:left">subscription price</th>
+                <th style="text-align:left">Ammount</th>
                 <th style="text-align:left"></th>
                 <th style="text-align:left">Total</th>
             </tr>

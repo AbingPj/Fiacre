@@ -43,7 +43,7 @@
             <!-- <th style="width:120px;">Sunclub Prepaid Balance</th> -->
             <!-- <th>Email</th> -->
             <th style="width:50px;">Email Confirmed</th>
-            <th>Organization Id</th>
+            <th>School/Parish</th>
             <th>Sign-Up Since</th>
             <th>Actions</th>
           </tr>

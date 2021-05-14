@@ -80,7 +80,7 @@ class RecurringProductsOrderCommand extends Command
         //     $value->product_current_details = json_decode($value->product_current_details);
         // }
         if (empty($products)) {
-            print("\n no recurring products. stop process");
+            print("\n No recurring products enabled. Stop process.");
         } else {
             $user =  user::find($user_id);
             $org = Organization::find($org_id);

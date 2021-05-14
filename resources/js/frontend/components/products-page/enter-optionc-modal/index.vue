@@ -202,7 +202,8 @@
 							} else if (err.response.status == 404) {
 								// console.log(err.response.status)
 								this.error_message =
-									"Sorry, your school/parish is not yet registered";
+									// "Sorry, your school/parish is not yet registered. ";
+									"Don't see your school or parish? Contact us at support@oheavenly.com for consideration.";
 							} else {
 								alert("Something Went Wrong");
 							}

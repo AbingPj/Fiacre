@@ -197,7 +197,7 @@
 					// showTodayButton : true,
 				},
 				json_fields: {
-					"Order Id": "id",
+					"Order ID": "id",
 					"Order Date": "atr_date_label",
 					"Customer Name": {
 						field: "user",
@@ -213,8 +213,8 @@
 					},
                     "Customer Address":"user.atr_full_address2",
 					"Order Cost": "atr_subscription_overall_total_amount_f",
-					"Organization ID": "organization.org_optionc_id",
-					"Del Method": {
+					"School/Parish ID": "organization.org_optionc_id",
+					"Delivery Method": {
 						field: "is_pickup",
 						callback: (value) => {
 							if (value == 1) {

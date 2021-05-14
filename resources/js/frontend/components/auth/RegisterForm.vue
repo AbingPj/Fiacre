@@ -142,8 +142,8 @@
                     ></md-checkbox>
                     <span style="padding-bottom:2px;">
                         Check here to indicate that you have read and agree to
-                        our
-                        <a href="/terms-of-use">Terms of Use</a>.
+                        our                        
+                        <a href="/terms-of-use" target="_blank">Terms of Use</a>.
                     </span>
 
                     <span class="md-helper-text text-danger">{{
