@@ -42,7 +42,7 @@
     While we get your order ready, please just double check the details below and let us know if anything needs changing.
     </p>
     <h2> ORDER NO.  #{{$order_number}}</h2>
-    <h3> ORDER DATE {{$order_date}}</b></h3>
+    <h3> Order Date: <b>{{$order_date}}</b></h3>
     <br>
     <h2>Your Order</h2>
     <table class="table">
@@ -139,7 +139,7 @@
     </table>
     <br>
     <p>
-    {{-- Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b> --}}
+    Expected Delivery Date: <b>{{$order->atr_expected_delivery_date}}</b>
     </p>
     <br>
     <p>
