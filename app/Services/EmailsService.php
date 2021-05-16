@@ -280,7 +280,7 @@ class EmailsService
         $this->beautymail->send(
             'frontend.mail.order_receipt3',
             $data,
-            function ($message) use ($user, $storeName,  $storeEmail, $order_number, $emailcc) {
+            function ($message) use ($user, $storeName,  $storeEmail, $order_number) {
                 $message
                     ->from($storeEmail,$storeName)
                     ->to($user->email)
