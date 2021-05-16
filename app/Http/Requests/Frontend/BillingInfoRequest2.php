@@ -24,7 +24,7 @@ class BillingInfoRequest2 extends FormRequest
     public function rules()
     {
         return [
-            'g-recaptcha-response' => 'required|captcha',
+            'g-recaptcha-response' => 'required',
             // 'email' => ['required'],
             'first_name' => ['required'],
             'last_name' => ['required'],
