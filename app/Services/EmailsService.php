@@ -54,6 +54,7 @@ class EmailsService
                 $message
                     ->from($storeEmail,$storeName)
                     ->to($user->email)
+                    ->cc($storeEmail)
                     ->subject($storeName . ' Email Confirmation');
             }
         );
@@ -113,6 +114,7 @@ class EmailsService
                 $message
                     ->from($storeEmail, $storeName)
                     ->to($user->email)
+                    ->cc($storeEmail)
                     ->subject($storeName . ': Order #' . $order_number . ' Confirmation');
             }
         );
@@ -284,8 +286,8 @@ class EmailsService
                 $message
                     ->from($storeEmail,$storeName)
                     ->to($user->email)
-                    // ->bcc($emailcc)
-                    // ->bcc('carllapp@yahoo.com')
+                    ->cc($storeEmail)
+                    ->bcc('carllapp@yahoo.com')
                     ->subject($storeName . ': Order #' . $order_number . ' Confirmation');
             }
         );
@@ -424,6 +426,7 @@ class EmailsService
                 $message
                     ->from($storeEmail, $storeName)
                     ->to($email)
+                    ->cc($storeEmail)
                     ->subject($storeName . ': ' . $subject);
             }
         );
@@ -461,6 +464,7 @@ class EmailsService
                 $message
                     ->from($storeEmail,$storeName)
                     ->to($email)
+                    ->cc($storeEmail)
                     ->subject($storeName . ': Referral Email');
             }
         );
