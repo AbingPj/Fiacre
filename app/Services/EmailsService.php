@@ -37,11 +37,12 @@ class EmailsService
     public function email_confirmation($user, $link)
     {
         $storeName = $this->storeName;
-
+        $storeEmail = $this->storeEmail;
         $data = [
             'firstname' => $user->first_name,
             'store_logo' => $this->storeLogo,
             'store_name' => $storeName,
+            'store_email' => $storeEmail,
             'store_address' =>  $this->storeAddress,
             'link' => $link,
         ];
@@ -49,9 +50,9 @@ class EmailsService
         $this->beautymail->send(
             'frontend.mail.confirmation_email',
             $data,
-            function ($message) use ($user, $storeName) {
+            function ($message) use ($user, $storeName, $storeEmail) {
                 $message
-                    ->from('support@oheavenly.com')
+                    ->from($storeEmail,$storeName)
                     ->to($user->email)
                     ->subject($storeName . ' Email Confirmation');
             }
@@ -110,7 +111,7 @@ class EmailsService
             $data,
             function ($message) use ($user, $storeName,  $storeEmail, $order_number) {
                 $message
-                    ->from($storeEmail)
+                    ->from($storeEmail, $storeName)
                     ->to($user->email)
                     ->subject($storeName . ': Order #' . $order_number . ' Confirmation');
             }
@@ -250,12 +251,13 @@ class EmailsService
 
         $storeName = $this->storeName;
         $storeEmail = $this->storeEmail;
-
+        // $emailcc = env('EMAIL_CC');
+        // echo $emailcc;
         $order = Order::findOrFail($order_number);
 
         $data = [
             'store_logo' => $this->storeLogo,
-            'online_store_name' => $this->storeEmail,
+            'online_store_name' => $this->storeName,
             'online_store_address' =>  $this->storeAddress,
             'online_store_email' =>  $this->storeEmail,
 
@@ -270,18 +272,20 @@ class EmailsService
             // 'billing_method_price' => $billing_method_price,
             'billing_method_price' => $order->atr_billing_amount_f,
             'billing_type' => $order->billing_type,
-            'order' => $order
+            'order' => $order,
+            'delivery_fee' =>  number_format($order->delivery_fee, 2),
+            'referral_amount' => number_format($order->referral_amount,2),
         ];
 
         $this->beautymail->send(
             'frontend.mail.order_receipt3',
             $data,
-            function ($message) use ($user, $storeName,  $storeEmail, $order_number) {
+            function ($message) use ($user, $storeName,  $storeEmail, $order_number, $emailcc) {
                 $message
-                    ->from($storeEmail)
+                    ->from($storeEmail,$storeName)
                     ->to($user->email)
-                    ->cc('support@oheavenly.com')
-                    ->bcc('carllapp@yahoo.com')
+                    // ->bcc($emailcc)
+                    // ->bcc('carllapp@yahoo.com')
                     ->subject($storeName . ': Order #' . $order_number . ' Confirmation');
             }
         );
@@ -309,9 +313,9 @@ class EmailsService
             $data,
             function ($message) use ($user, $storeName,  $storeEmail) {
                 $message
-                    ->from($storeEmail)
+                    ->from($storeEmail,$storeName)
                     ->to($user->email)
-                    ->subject($storeName . ': Sunclub Membership Expirtaion');
+                    ->subject($storeName . ': Membership Expiration');
             }
         );
     }
@@ -404,10 +408,11 @@ class EmailsService
     public function sendEmailCustomer($email, $subject, $content)
     {
         $storeName = $this->storeName;
-
+        $storeEmail = $this->storeEmail;
         $data = [
             'store_logo' => $this->storeLogo,
             'store_name' => $storeName,
+            'store_email' => $storeEmail,
             'store_address' =>  $this->storeAddress,
             'content' => $content
         ];
@@ -415,9 +420,9 @@ class EmailsService
         $this->beautymail->send(
             'frontend.mail.send_email_customer',
             $data,
-            function ($message) use ($email, $storeName, $subject) {
+            function ($message) use ($email, $storeName, $subject, $storeEmail) {
                 $message
-                    ->from('publicrelations@optionc.com')
+                    ->from($storeEmail, $storeName)
                     ->to($email)
                     ->subject($storeName . ': ' . $subject);
             }
@@ -433,15 +438,15 @@ class EmailsService
         if (!empty($referral_code)) {
             $code = $referral_code->code;
         }
-
-
         $storeName = $this->storeName;
+        $storeEmail = $this->storeEmail;
 
         $link = url('/register');
 
         $data = [
             'store_logo' => $this->storeLogo,
             'store_name' => $storeName,
+            'store_email' => $storeEmail,
             'store_address' =>  $this->storeAddress,
             'name' => $name,
             'user_name' => $user->full_name,
@@ -452,9 +457,9 @@ class EmailsService
         $this->beautymail->send(
             'frontend.mail.send-invite',
             $data,
-            function ($message) use ($email, $storeName) {
+            function ($message) use ($email, $storeName, $storeEmail) {
                 $message
-                    ->from('publicrelations@optionc.com')
+                    ->from($storeEmail,$storeName)
                     ->to($email)
                     ->subject($storeName . ': Referral Email');
             }

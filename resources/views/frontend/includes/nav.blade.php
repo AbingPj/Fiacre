@@ -12,10 +12,10 @@
                 @endif
             @endauth
             <div class="p-2 bd-highlight">
-                <i class="fas fa-envelope fa-fw mr-2"></i>{{ $store_settings->email }}
+                <i class="fas fa-envelope fa-fw mr-2"></i><a :href="'mailto:{{ $store_settings->email }}'">{{ $store_settings->email }}</a>
             </div>
             <div class="p-2 bd-highlight">
-                <i class="fas fa-phone-alt fa-fw mr-2"></i>{{ $store_settings->phone }}
+                <i class="fas fa-phone-alt fa-fw mr-2"></i><a :href="'tel:{{ $store_settings->phone }}'">{{ $store_settings->phone }}</a>
             </div>
 
 

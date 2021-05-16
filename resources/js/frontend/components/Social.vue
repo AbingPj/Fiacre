@@ -4,10 +4,10 @@
         <ShareNetwork
             network="facebook"
             :url=link
-            title="Fiacre Referral Link"
-            description="Invite and send your referral trough email. You can get rewards after they submitted your referral code."
-            quote="Invite and send your referral trough email."
-            hashtags="fiacre, referral"
+            title="OHeavenly Referral Link"
+            description="Invite and send your referral through email. You can get rewards after they submitted your referral code."
+            quote="Invite and send your referral through email."
+            hashtags="oheavenly, referral"
         >
             <i class="fas fa-share-square"></i> Share and Earn!
         </ShareNetwork>

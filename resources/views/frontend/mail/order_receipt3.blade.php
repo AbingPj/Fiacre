@@ -110,7 +110,7 @@
                 <td>
                    Referral Amount
                 </td>
-                <td>-{{$order->referral_amount}}</td>
+                <td>-{{number_format($order->referral_amount,2)}}</td>
             </tr>
             <tr style="border-collapse:collapse; height:30px;">
                 <td></td>
@@ -119,7 +119,7 @@
                 <td>
                    Delivery Fee
                 </td>
-                <td>{{$order->delivery_fee}}</td>
+                <td>{{$delivery_fee}}</td>
             </tr>
             {{-- <tr>
                     <td  style="width:75px;"></td>

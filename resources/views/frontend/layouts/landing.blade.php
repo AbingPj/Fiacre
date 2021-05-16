@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title', app_name())</title>
-        <meta name="description" content="@yield('meta_description', 'Fiacre Foods')">
+        <meta name="description" content="@yield('meta_description', 'OHeavenly')">
         <meta name="author" content="@yield('meta_author', 'CL')">
         @yield('meta')
         {{-- See https://laravel.com/docs/5.5/blade#stacks for usage --}}
@@ -22,7 +22,6 @@
     </head>
     <body>
         @include('includes.partials.read-only')
-
         <div id="app" class="d-flex flex-column">
 
             <div class="nav-fixed-landing sticky-top">
@@ -45,9 +44,7 @@
                 guest={{ Auth::guest() ? 1: 0 }}
             ></rewards-modal>
         </div>
-
-
-
+                
         <script src="{{ asset('js/loadingOverlay.js') }}"></script>
         <script>
             var spinHandle = loadingOverlay().activate();

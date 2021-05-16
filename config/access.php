@@ -11,7 +11,7 @@ return [
         'others' => env('OTHER_CAPTCHA', false),
         'billing_profile' => env('BILLING_PROFILE', false),
     ],
-
+    
     // Whether or not registration is enabled
     'registration' => env('ENABLE_REGISTRATION', true),
 

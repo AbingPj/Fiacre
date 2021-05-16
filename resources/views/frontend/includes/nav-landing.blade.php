@@ -5,12 +5,12 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <span class="navbar-text mr-3">
-                 <i class="fas fa-envelope fa-fw mr-1"></i>{{ $store_settings->email }}
+            <span class="navbar-text mr-3">                
+                 <i class="fas fa-envelope fa-fw mr-1"></i><a :href="'mailto:{{ $store_settings->email }}'">{{ $store_settings->email }}</a>
             </span>
 
             <span class="navbar-text">
-                <i class="fas fa-phone-alt fa-fw mr-1"></i>{{ $store_settings->phone }}
+                <i class="fas fa-phone-alt fa-fw mr-1"></i><a :href="'tel:{{ $store_settings->phone }}'">{{ $store_settings->phone }}</a>
             </span>
 
             <ul class="navbar-nav ml-auto">

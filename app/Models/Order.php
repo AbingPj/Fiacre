@@ -204,9 +204,6 @@ class Order extends Model
         return number_format($total_amount, 2);
     }
 
-
-
-
     public function getAtrOverallTotalAttribute()
     {
         $total_amount = $this->getTotalAmount();
@@ -302,7 +299,7 @@ class Order extends Model
         $min = ceil($max / 2);
         $max_date = $max_now->addDays($max);
         $min_date = $min_now->addDays($min);
-        return  $min_date->format('M.d') . ' - ' .  $max_date->format('M.d');
+        return  $min_date->format('M. j, Y ') . ' - ' .  $max_date->format('M. j, Y');
     }
 
     public function getAtrDiscountAttribute()

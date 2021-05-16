@@ -68,7 +68,7 @@ class Store extends Model
         $min = ceil($max / 2);
         $max_date = $max_now->addDays($max);
         $min_date = $min_now->addDays($min);
-        return  $min_date->format('M.d') . ' - ' .  $max_date->format('M.d');
+        return  $min_date->format('M. j, Y') . ' - ' .  $max_date->format('M. d, Y');
     }
 
     // return $this->belongsTo('App\Models\Order');

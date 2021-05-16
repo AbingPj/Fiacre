@@ -28,18 +28,17 @@
 
     </style>
 
-    <div style="text-align:center;">
-        {{-- [Store Logo] --}}
+    <div style="text-align:center; background-color: #404040;">
         <img class="store-logo" src="{{$store_logo}}" alt="">
     </div>
-    <br>
+    <hr />
     <br>
         <h3 style="text-align:left;" ><b>Confirm your email address.</b></h3>
     <br>
     <br>
     <p>Hi {{$firstname}},</p>
     <br>
-    <p>Thank you for shopping with us</p>
+    <p>Thank you for shopping with us.</p>
     <br>
     <p>
         Click the button below to confirm your email address. If you did not create an
@@ -67,8 +66,7 @@
     <br>
     <br>
     <p>
-        © {{$store_name}}<br>
-        {{$store_address}}
+        © {{$store_name}}
     </p>
 
 

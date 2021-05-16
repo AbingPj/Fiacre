@@ -55,7 +55,7 @@
           <h4>
             <b>$ {{ updatePrice(item) }}</b>
           </h4>
-          <b-button squared block variant="outline-success" @click="viewMore()">ORDER</b-button>
+          <!-- <b-button squared block variant="outline-success" @click="viewMore()">SHOP</b-button> -->
         </div>
       </div>
     </div>

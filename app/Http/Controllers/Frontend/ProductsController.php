@@ -96,7 +96,7 @@ class ProductsController extends Controller
     public function getProducts(Request $request)
     {
         $org_id = (int) $request->org_id;
-
+        
         if ($request->has('name') && $request->has('category')) {
             $products = Product::with('category:id,name', 'sub_category:id,name')
                 ->where('products.is_visible', 1)
