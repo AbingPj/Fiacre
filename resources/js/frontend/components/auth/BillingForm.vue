@@ -438,7 +438,7 @@
 		</div>
 		<vue-programmatic-invisible-google-recaptcha
 			ref="invisibleRecaptcha2"
-			:sitekey="'6LcZmaYZAAAAAHVxYaFz_euKnxzFWKFcO3zX94_H'"
+			:sitekey="'6Ld4NNQaAAAAAHRwG6Yu0lgYvcl2nEfSx0AO00Un'"
 			:elementId="'invisibleRecaptcha2'"
 			:badgePosition="'left'"
 			:showBadgeMobile="false"
