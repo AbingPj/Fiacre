@@ -15,7 +15,7 @@
 						<div class="row">
 							<div class="col" style="padding: 0px !important">
 								<h5>
-									<i class="fas fa-sitemap"></i> Select School/Parish
+									<i class="fas fa-sitemap"></i> Would you like a portion of your order to be donated to an organization on the list?
                                     <button
 										type="button"
 										class="btn-close float-right"
