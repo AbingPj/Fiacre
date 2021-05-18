@@ -21,7 +21,9 @@
 						<div class="container product-container">
 							<div class="row">
 								<div class="col">
-									<h5>Select Organization</h5>
+									<h6>Would you like a portion of
+                  your order to be donated to an organization on the list?</h6>
+				  					<h5>Select Organization</h5>
 									<div class="input-group mt-3 mb-0 border-info">
 										<input
 											id="searchInput"

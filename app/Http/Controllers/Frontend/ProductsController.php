@@ -283,7 +283,7 @@ class ProductsController extends Controller
         $products = Product::with('category:id,name')
             ->where('id', '!=', $id)
             ->where('price', $price)
-            ->where('is_visible', 1)
+            // ->where('is_visible', 1)
             ->where('status', '!=', 3)
             ->where('is_bundle', 0)
             ->where(function ($query) use ($search) {

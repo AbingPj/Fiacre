@@ -223,6 +223,10 @@
             <md-card class="mb-4 mt-4">
               <md-card-content>
                 <div v-if="editOrganization" class="p-3">
+                  <h5>
+                    <i class="fas fa-sitemap"></i> Would you like a portion of
+                    your order to be donated to an organization on the list?
+                  </h5>
                   Enter Your School/Parish:
                   <br />
                   <!-- <input

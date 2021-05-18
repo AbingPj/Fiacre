@@ -35,7 +35,7 @@
 												class="form-control form-control-sm"
 												type="text"
 											/> -->
-                      <v-select
+                    <v-select
                         v-model="optionc_id"
                         label="atr_name_with_optionc"
                         @search="searchOrgs"
@@ -58,7 +58,11 @@
                         :push-tags="true"
                         :select-on-tab="true"
                         placeholder="Search here"
-                      ></v-select>
+                      >
+					  	<template slot="option" slot-scope="option">
+        						{{ option.org }}
+    					</template>
+                    </v-select>
                       <div v-if="error_message" class="text-danger">
                         {{ error_message }}
                       </div>
