@@ -39,13 +39,7 @@
                         v-model="optionc_id"
                         label="atr_name_with_optionc"
                         @search="searchOrgs"
-                        :create-option="
-                          (org) => ({
-                            atr_name_with_optionc: org,
-                            org_name: org,
-                            org_optionc_id: org,
-                          })
-                        "
+                        :create-option="org => ({ atr_name_with_optionc: org, org_name:org, org_optionc_id:org  })"
                         :reduce="(org) => org.org_optionc_id"
                         :options="orgs"
                         :multiple="false"
@@ -59,9 +53,9 @@
                         :select-on-tab="true"
                         placeholder="Search here"
                       >
-					  	<template slot="option" slot-scope="option">
+					  	<!-- <template slot="option" slot-scope="option">
         						{{ option.org }}
-    					</template>
+    					</template> -->
                     </v-select>
                       <div v-if="error_message" class="text-danger">
                         {{ error_message }}
