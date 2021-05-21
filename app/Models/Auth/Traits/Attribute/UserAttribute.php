@@ -185,7 +185,7 @@ trait UserAttribute
         if($this->customer_role == 1){
             return "Non-registered";
         }else if($this->customer_role == 4){
-            return "Fiacre Customer";
+            return "Customer";
         } else {
             return "";
         }

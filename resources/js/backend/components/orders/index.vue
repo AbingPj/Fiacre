@@ -225,7 +225,7 @@
 						},
 					},
                     "Delivery Fee": "delivery_fee",
-					Address: "atr_del_pick_addresss",
+					// Address: "atr_del_pick_addresss",
 
 					Products: {
 						field: "order_products",

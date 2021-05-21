@@ -137,7 +137,7 @@
 								<!-- <h5>Status: {{order.status}}</h5> -->
 							</div>
 							<div class="text-right w-50">
-								<h5>{{ order.date_label }}</h5>
+								<h5>Date of Order: {{ order.date_label }}</h5>
 							</div>
 						</div>
 					</div>
@@ -145,7 +145,7 @@
 						<div class="d-flex">
 							<div class="mr-auto w-50">
 								<h3>
-									Place by:
+									Order by:
 									<b>{{ user.full_name }}</b>
 									<span v-if="order.order_by == 0">(Retailer)</span>
 									<span v-if="user.customer_role == 2"
@@ -227,7 +227,7 @@
 							<div
 								class="mr-auto w-50 border-bottom border-secondary pb-0"
 							>
-								<label class="mb-0">Organization</label>
+								<label class="mb-0">Selected School/Parish:</label>
 								<!-- <u> -->
 								<p class="mb-0">
 									{{ order.organization.org_name }}
