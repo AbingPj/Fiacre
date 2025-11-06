@@ -32,7 +32,7 @@ class UserTableSeeder extends Seeder
         User::create([
             'first_name' => 'Sunfarmacy',
             'last_name' => 'Tester',
-            'email' => 'leopoldo.a@ideahubsolutionsinc.com',
+            'email' => 'pj.abing@gmail.com',
             'password' => 'secret123',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
@@ -43,6 +43,17 @@ class UserTableSeeder extends Seeder
             'last_name' => 'Admin 2',
             'email' => 'support@fiacre.com',
             'password' => 'F!@cre@2021',
+            'confirmation_code' => md5(uniqid(mt_rand(), true)),
+            'confirmed' => true,
+            'is_billing_updated' => 1,
+            'customer_role' => 0,
+        ]);
+
+        User::create([
+            'first_name' => 'Fiacre Foods',
+            'last_name' => 'Admin 3',
+            'email' => 'admin@admin.com',
+            'password' => 'admin_123',
             'confirmation_code' => md5(uniqid(mt_rand(), true)),
             'confirmed' => true,
             'is_billing_updated' => 1,
